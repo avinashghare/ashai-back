@@ -1,0 +1,11 @@
+order statuses
+{
+
+pending
+confirm
+cancel
+refundapplied
+refunded
+
+
+}
