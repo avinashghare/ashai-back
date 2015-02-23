@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 21, 2015 at 01:46 PM
+-- Generation Time: Feb 23, 2015 at 01:19 PM
 -- Server version: 5.5.32
 -- PHP Version: 5.4.19
 
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `powerforone`
 --
+CREATE DATABASE IF NOT EXISTS `powerforone` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `powerforone`;
 
 -- --------------------------------------------------------
 
@@ -56,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `blog` (
   `description` text NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `blog`
@@ -75,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `blogcategory` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `blogcategory`
@@ -371,16 +373,23 @@ CREATE TABLE IF NOT EXISTS `powerforone_project` (
   `order` int(11) NOT NULL,
   `views` varchar(255) NOT NULL,
   `video` varchar(255) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `contribution` varchar(255) NOT NULL,
+  `times` varchar(255) NOT NULL,
+  `donate` varchar(255) NOT NULL,
+  `tagline` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `powerforone_project`
 --
 
-INSERT INTO `powerforone_project` (`id`, `name`, `category`, `ngo`, `advertiser`, `json`, `like`, `share`, `follow`, `facebook`, `twitter`, `google`, `status`, `order`, `views`, `video`) VALUES
-(1, 'Project1', 1, 1, 1, 'ksjcnksajc', 10, 9, 11, 'fb.com', 'tw.com', 'gogl.com', '2', 1, 'views', 'videourl'),
-(2, '1', 3, 1, 1, '[{"label":"Meta Title","type":"text","classes":"","placeholder":"","value":"bbb"},{"label":"Meta Description","type":"textarea","classes":"","placeholder":"","value":"bbb"},{"label":"Meta Keywords","type":"textarea","classes":"","placeholder":"","value":"bbb"}]', 2, 2, 2, '2', '2', '2', '1', 2, '2', '2');
+INSERT INTO `powerforone_project` (`id`, `name`, `category`, `ngo`, `advertiser`, `json`, `like`, `share`, `follow`, `facebook`, `twitter`, `google`, `status`, `order`, `views`, `video`, `image`, `content`, `contribution`, `times`, `donate`, `tagline`) VALUES
+(1, 'Project1', 1, 1, 1, 'ksjcnksajc', 10, 9, 11, 'fb.com', 'tw.com', 'gogl.com', '2', 1, 'views', 'videourl', '', '', '', '', '', ''),
+(2, '1', 3, 1, 1, '[{"label":"Meta Title","type":"text","classes":"","placeholder":"","value":"bbb"},{"label":"Meta Description","type":"textarea","classes":"","placeholder":"","value":"bbb"},{"label":"Meta Keywords","type":"textarea","classes":"","placeholder":"","value":"bbb"}]', 2, 2, 2, '2', '2', '2', '1', 2, '2', '2', '', '', '', '', '', ''),
+(3, '9', 1, 1, 1, '[{"label":"Meta Title","type":"text","classes":"","placeholder":"","value":"9"},{"label":"Meta Description","type":"textarea","classes":"","placeholder":"","value":"9"},{"label":"Meta Keywords","type":"textarea","classes":"","placeholder":"","value":"9"}]', 9, 1, 9, '9', '9', '9', '1', 9, '9', '9', 'event4881.jpg', '9', '9', '9', '1', '0');
 
 -- --------------------------------------------------------
 
@@ -394,7 +403,7 @@ CREATE TABLE IF NOT EXISTS `projectdatapoint` (
   `project` int(11) NOT NULL,
   `image` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `projectdatapoint`
