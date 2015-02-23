@@ -95,5 +95,11 @@ class project_model extends CI_Model
 		
 		return $return;
 	}
+    
+	public function getprojectimagebyid($id)
+	{
+		$query=$this->db->query("SELECT `image` FROM `powerforone_project` WHERE `id`='$id'")->row();
+		return $query;
+	}
 }
 ?>
