@@ -463,5 +463,22 @@ class User_model extends CI_Model
             return 1;
 //        }
 	}
+    
+	public function getdonatedropdown()
+	{
+		$donate= array(
+			 "1" => "Yes",
+			 "0" => "No",
+			);
+		return $donate;
+	}
+	public function getsharedropdown()
+	{
+		$share= array(
+			 "1" => "Yes",
+			 "0" => "No",
+			);
+		return $share;
+	}
 }
 ?>

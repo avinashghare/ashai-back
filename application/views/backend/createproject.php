@@ -19,10 +19,38 @@
                                 <input type="text" id="normal-field" class="form-control" name="name" value='<?php echo set_value(' name ');?>'>
                             </div>
                         </div>
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Tagline</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="normal-field" class="form-control" name="tagline" value='<?php echo set_value(' tagline ');?>'>
+                            </div>
+                        </div>
+                        
                         <div class=" form-group">
                             <label class="col-sm-2 control-label" for="normal-field">Category</label>
                             <div class="col-sm-4">
                                 <?php echo form_dropdown( "category",$category,set_value( 'category'), "class='chzn-select form-control'");?>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Contribution</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="normal-field" class="form-control" name="contribution" value='<?php echo set_value(' contribution ');?>'>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Times</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="normal-field" class="form-control" name="times" value='<?php echo set_value(' times ');?>'>
+                            </div>
+                        </div>
+                        
+                        <div class=" form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Content</label>
+                            <div class="col-sm-8">
+                                <textarea name="content" id="" cols="20" rows="10" class="form-control tinymce"><?php echo set_value( 'content');?></textarea>
                             </div>
                         </div>
                         <div class=" form-group">
@@ -35,6 +63,18 @@
                             <label class="col-sm-2 control-label" for="normal-field">Advertiser</label>
                             <div class="col-sm-4">
                                 <?php echo form_dropdown( "advertiser",$advertiser,set_value( 'advertiser'), "class='chzn-select form-control'");?>
+                            </div>
+                        </div>
+                        <div class=" form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Donate</label>
+                            <div class="col-sm-4">
+                                <?php echo form_dropdown( "donate",$donate,set_value( 'donate'), "class='chzn-select form-control'");?>
+                            </div>
+                        </div>
+                        <div class=" form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">share</label>
+                            <div class="col-sm-4">
+                                <?php echo form_dropdown( "share",$share,set_value( 'share'), "class='chzn-select form-control'");?>
                             </div>
                         </div>
 <!--
@@ -53,12 +93,14 @@
                                 <input type="text" id="normal-field" class="form-control" name="like" value='<?php echo set_value(' like ');?>'>
                             </div>
                         </div>
+<!--
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="normal-field">Share</label>
                             <div class="col-sm-4">
                                 <input type="text" id="normal-field" class="form-control" name="share" value='<?php echo set_value(' share ');?>'>
                             </div>
                         </div>
+-->
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="normal-field">Follow</label>
                             <div class="col-sm-4">
@@ -101,6 +143,14 @@
                                 <input type="text" id="normal-field" class="form-control" name="views" value='<?php echo set_value(' views ');?>'>
                             </div>
                         </div>
+                        
+                        <div class=" form-group">
+                          <label class="col-sm-2 control-label" for="normal-field">Image</label>
+                          <div class="col-sm-4">
+                            <input type="file" id="normal-field" class="form-control"  name="image" value="<?php echo set_value('image');?>">
+                          </div>
+                        </div>
+				
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="normal-field">Video</label>
                             <div class="col-sm-4">

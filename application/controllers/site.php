@@ -855,6 +855,8 @@ class Site extends CI_Controller
         $data['category']=$this->category_model->getcategorydropdown();
         $data['advertiser']=$this->advertiser_model->getadvertiserdropdown();
         $data['status']=$this->user_model->getstatusdropdown();
+        $data['donate']=$this->user_model->getdonatedropdown();
+        $data['share']=$this->user_model->getsharedropdown();
         $this->load->view("template",$data);
     }
     public function createprojectsubmit() 
@@ -876,6 +878,12 @@ class Site extends CI_Controller
         $this->form_validation->set_rules("order","Order","trim");
         $this->form_validation->set_rules("views","Views","trim");
         $this->form_validation->set_rules("video","Video","trim");
+        $this->form_validation->set_rules("content","content","trim");
+        $this->form_validation->set_rules("contribution","contribution","trim");
+        $this->form_validation->set_rules("times","times","trim");
+        $this->form_validation->set_rules("donate","donate","trim");
+        $this->form_validation->set_rules("tagline","tagline","trim");
+        
         if($this->form_validation->run()==FALSE)
         {
             $data["alerterror"]=validation_errors();
@@ -885,6 +893,8 @@ class Site extends CI_Controller
             $data['category']=$this->category_model->getcategorydropdown();
             $data['advertiser']=$this->advertiser_model->getadvertiserdropdown();
             $data['status']=$this->user_model->getstatusdropdown();
+            $data['donate']=$this->user_model->getdonatedropdown();
+            $data['share']=$this->user_model->getsharedropdown();
             $this->load->view("template",$data);
         }
         else
@@ -904,7 +914,48 @@ class Site extends CI_Controller
             $order=$this->input->get_post("order");
             $views=$this->input->get_post("views");
             $video=$this->input->get_post("video");
-            if($this->project_model->create($name,$category,$ngo,$advertiser,$json,$like,$share,$follow,$facebook,$twitter,$google,$status,$order,$views,$video)==0)
+            $content=$this->input->get_post("content");
+            $contribution=$this->input->get_post("contribution");
+            $times=$this->input->get_post("times");
+            $donate=$this->input->get_post("donate");
+            $tagline=$this->input->get_post("tagline");
+            
+            $config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			$this->load->library('upload', $config);
+			$filename="image";
+			$image="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image=$uploaddata['file_name'];
+                
+                $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
+                $config_r['maintain_ratio'] = TRUE;
+                $config_t['create_thumb'] = FALSE;///add this
+                $config_r['width']   = 800;
+                $config_r['height'] = 800;
+                $config_r['quality']    = 100;
+                //end of configs
+
+                $this->load->library('image_lib', $config_r); 
+                $this->image_lib->initialize($config_r);
+                if(!$this->image_lib->resize())
+                {
+                    echo "Failed." . $this->image_lib->display_errors();
+                    //return false;
+                }  
+                else
+                {
+                    //print_r($this->image_lib->dest_image);
+                    //dest_image
+                    $image=$this->image_lib->dest_image;
+                    //return false;
+                }
+                
+			}
+            
+            if($this->project_model->create($name,$category,$ngo,$advertiser,$json,$like,$share,$follow,$facebook,$twitter,$google,$status,$order,$views,$video,$content,$contribution,$times,$donate,$tagline,$image)==0)
                 $data["alerterror"]="New project could not be created.";
             else
                 $data["alertsuccess"]="project created Successfully.";
@@ -923,6 +974,8 @@ class Site extends CI_Controller
         $data['category']=$this->category_model->getcategorydropdown();
         $data['advertiser']=$this->advertiser_model->getadvertiserdropdown();
         $data['status']=$this->user_model->getstatusdropdown();
+        $data['donate']=$this->user_model->getdonatedropdown();
+        $data['share']=$this->user_model->getsharedropdown();
         $data["before"]=$this->project_model->beforeedit($this->input->get("id"));
         $this->load->view("templatewith2",$data);
     }
@@ -946,6 +999,11 @@ class Site extends CI_Controller
         $this->form_validation->set_rules("order","Order","trim");
         $this->form_validation->set_rules("views","Views","trim");
         $this->form_validation->set_rules("video","Video","trim");
+        $this->form_validation->set_rules("content","content","trim");
+        $this->form_validation->set_rules("contribution","contribution","trim");
+        $this->form_validation->set_rules("times","times","trim");
+        $this->form_validation->set_rules("donate","donate","trim");
+        $this->form_validation->set_rules("tagline","tagline","trim");
         if($this->form_validation->run()==FALSE)
         {
             $data["alerterror"]=validation_errors();
@@ -955,6 +1013,8 @@ class Site extends CI_Controller
             $data['category']=$this->category_model->getcategorydropdown();
             $data['advertiser']=$this->advertiser_model->getadvertiserdropdown();
             $data['status']=$this->user_model->getstatusdropdown();
+            $data['donate']=$this->user_model->getdonatedropdown();
+            $data['share']=$this->user_model->getsharedropdown();
             $data["before"]=$this->project_model->beforeedit($this->input->get("id"));
             $this->load->view("template",$data);
         }
@@ -976,7 +1036,12 @@ class Site extends CI_Controller
             $order=$this->input->get_post("order");
             $views=$this->input->get_post("views");
             $video=$this->input->get_post("video");
-            if($this->project_model->edit($id,$name,$category,$ngo,$advertiser,$json,$like,$share,$follow,$facebook,$twitter,$google,$status,$order,$views,$video)==0)
+            $content=$this->input->get_post("content");
+            $contribution=$this->input->get_post("contribution");
+            $times=$this->input->get_post("times");
+            $donate=$this->input->get_post("donate");
+            $tagline=$this->input->get_post("tagline");
+            if($this->project_model->edit($id,$name,$category,$ngo,$advertiser,$json,$like,$share,$follow,$facebook,$twitter,$google,$status,$order,$views,$video,$content,$contribution,$times,$donate,$tagline,$image)==0)
                 $data["alerterror"]="New project could not be Updated.";
             else
                 $data["alertsuccess"]="project Updated Successfully.";
