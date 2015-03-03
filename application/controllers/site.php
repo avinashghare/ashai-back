@@ -1668,7 +1668,8 @@ class Site extends CI_Controller
             $ngo=$this->input->get_post("ngo");
             $project=$this->input->get_post("project");
             $status=$this->input->get_post("status");
-            if($this->order_model->create($name,$email,$user,$amount,$ngo,$project,$status)==0)
+            $transactionid=$this->input->get_post("transactionid");
+            if($this->order_model->create($name,$email,$user,$amount,$ngo,$project,$status,$transactionid)==0)
                 $data["alerterror"]="New order could not be created.";
             else
                 $data["alertsuccess"]="order created Successfully.";
@@ -1724,7 +1725,8 @@ class Site extends CI_Controller
             $ngo=$this->input->get_post("ngo");
             $project=$this->input->get_post("project");
             $status=$this->input->get_post("status");
-            if($this->order_model->edit($id,$name,$email,$user,$amount,$ngo,$project,$status)==0)
+            $transactionid=$this->input->get_post("transactionid");
+            if($this->order_model->edit($id,$name,$email,$user,$amount,$ngo,$project,$status,$transactionid)==0)
                 $data["alerterror"]="New order could not be Updated.";
             else
                 $data["alertsuccess"]="order Updated Successfully.";

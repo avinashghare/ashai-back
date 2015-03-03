@@ -47,11 +47,17 @@
                     <?php echo form_dropdown( "status",$status,set_value( 'status',$before->status),"class='chzn-select form-control'");?>
                 </div>
             </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Transaction Id</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="normal-field" class="form-control" name="transactionid" value='<?php echo set_value(' transactionid ',$before->transactionid);?>'>
+                            </div>
+                        </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="normal-field">&nbsp;</label>
                 <div class="col-sm-4">
                     <button type="submit" class="btn btn-primary">Save</button>
-                    <a href='<?php echo site_url("site/viewpage"); ?>' class='btn btn-secondary'>Cancel</a>
+                    <a href='<?php echo site_url("site/vieworder"); ?>' class='btn btn-secondary'>Cancel</a>
                 </div>
             </div>
         </form>
