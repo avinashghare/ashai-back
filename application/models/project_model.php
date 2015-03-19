@@ -3,7 +3,7 @@ if ( !defined( "BASEPATH" ) )
 exit( "No direct script access allowed" );
 class project_model extends CI_Model
 {
-    public function create($name,$category,$ngo,$advertiser,$json,$like,$share,$follow,$facebook,$twitter,$google,$status,$order,$views,$video,$content,$contribution,$times,$donate,$tagline,$image)
+    public function create($name,$category,$ngo,$advertiser,$json,$like,$share,$follow,$facebook,$twitter,$google,$status,$order,$views,$video,$content,$contribution,$times,$donate,$tagline,$image,$video2,$cardtagline,$indiandoner,$foreigndoner,$project)
     {
         $data=array(
             "name" => $name,
@@ -25,16 +25,35 @@ class project_model extends CI_Model
             "times" => $times,
             "donate" => $donate,
             "tagline" => $tagline,
+            "cardtagline" => $cardtagline,
+            "indiandoner" => $indiandoner,
+            "foreigndoner" => $foreigndoner,
             "image" => $image,
-            "video" => $video
+            "video" => $video,
+            "video2" => $video2
         );
         $query=$this->db->insert( "powerforone_project", $data );
         $id=$this->db->insert_id();
+        
+    foreach($project AS $key=>$value)
+        {
+            $this->project_model->createsimilercausebyproduct($value,$id);
+        }
         if(!$query)
             return  0;
         else
             return  $id;
     }
+    
+    public function createsimilercausebyproduct($value,$projectid)
+	{
+		$data  = array(
+			'similarprojectid' => $value,
+			'projectid' => $projectid
+		);
+		$query=$this->db->insert( 'similercauses', $data );
+		return  1;
+	}
     public function beforeedit($id)
     {
         $this->db->where("id",$id);
@@ -47,7 +66,7 @@ class project_model extends CI_Model
         $query=$this->db->get("powerforone_project")->row();
         return $query;
     }
-    public function edit($id,$name,$category,$ngo,$advertiser,$json,$like,$share,$follow,$facebook,$twitter,$google,$status,$order,$views,$video,$content,$contribution,$times,$donate,$tagline,$image)
+    public function edit($id,$name,$category,$ngo,$advertiser,$json,$like,$share,$follow,$facebook,$twitter,$google,$status,$order,$views,$video,$content,$contribution,$times,$donate,$tagline,$image,$video2,$cardtagline,$indiandoner,$foreigndoner,$project)
     {
         $data=array(
             "name" => $name,
@@ -69,11 +88,20 @@ class project_model extends CI_Model
             "times" => $times,
             "donate" => $donate,
             "tagline" => $tagline,
+            "cardtagline" => $cardtagline,
+            "indiandoner" => $indiandoner,
+            "foreigndoner" => $foreigndoner,
             "image" => $image,
-            "video" => $video
+            "video" => $video,
+            "video2" => $video2
         );
         $this->db->where( "id", $id );
         $query=$this->db->update( "powerforone_project", $data );
+        $querydelete=$this->db->query("DELETE FROM `similercauses` WHERE `projectid`='$id'");
+        foreach($project AS $key=>$value)
+        {
+            $this->project_model->createsimilercausebyproduct($value,$id);
+        }
         return 1;
     }
     public function delete($id)
@@ -86,7 +114,6 @@ class project_model extends CI_Model
 	{
 		$query=$this->db->query("SELECT * FROM `powerforone_project`  ORDER BY `id` ASC")->result();
 		$return=array(
-		"" => ""
 		);
 		foreach($query as $row)
 		{
@@ -100,6 +127,24 @@ class project_model extends CI_Model
 	{
 		$query=$this->db->query("SELECT `image` FROM `powerforone_project` WHERE `id`='$id'")->row();
 		return $query;
+	}
+    
+        
+     public function getsimilarcausebyproject($id)
+	{
+         $return=array();
+		$query=$this->db->query("SELECT `id`,`projectid`,`similarprojectid` FROM `similercauses`  WHERE `projectid`='$id'");
+        if($query->num_rows() > 0)
+        {
+            $query=$query->result();
+            foreach($query as $row)
+            {
+                $return[]=$row->similarprojectid;
+            }
+        }
+         return $return;
+         
+		
 	}
 }
 ?>

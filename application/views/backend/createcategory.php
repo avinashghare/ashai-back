@@ -19,12 +19,14 @@
                                 <input type="text" id="normal-field" class="form-control" name="name" value='<?php echo set_value(' name ');?>'>
                             </div>
                         </div>
+<!--
                         <div class=" form-group">
                             <label class="col-sm-2 control-label" for="normal-field">Parent</label>
                             <div class="col-sm-4">
                                 <?php echo form_dropdown( "parent",$parent,set_value( 'parent'), "class='chzn-select form-control'");?>
                             </div>
                         </div>
+-->
 <!--
                         <div class=" form-group">
                             <label class="col-sm-2 control-label" for="normal-field">Json</label>
@@ -39,12 +41,14 @@
                                 <input type="text" id="normal-field" class="form-control" name="order" value='<?php echo set_value(' order ');?>'>
                             </div>
                         </div>
-                        <div class="form-group">
+<!--
+                        <div class="form-group" style="display:none;">
                             <label class="col-sm-2 control-label" for="normal-field">Views</label>
                             <div class="col-sm-4">
                                 <input type="text" id="normal-field" class="form-control" name="views" value='<?php echo set_value(' views ');?>'>
                             </div>
                         </div>
+-->
                         
                         <div class=" form-group">
                           <label class="col-sm-2 control-label" for="normal-field">Image</label>
@@ -52,12 +56,14 @@
                             <input type="file" id="normal-field" class="form-control" name="image" value="<?php echo set_value('image');?>">
                           </div>
                         </div>
+<!--
                         <div class=" form-group">
                             <label class="col-sm-2 control-label" for="normal-field">Description</label>
                             <div class="col-sm-8">
                                 <textarea name="description" id="" cols="20" rows="10" class="form-control tinymce"><?php echo set_value( 'description');?></textarea>
                             </div>
                         </div>
+-->
                         <div class="form-group hidden" >
                             <label class="col-sm-2 control-label" for="normal-field">json</label>
                             <div class="col-sm-4">

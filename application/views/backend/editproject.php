@@ -11,6 +11,41 @@
                     <input type="text" id="normal-field" class="form-control" name="name" value='<?php echo set_value(' name ',$before->name);?>'>
                 </div>
             </div>
+            
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Project Tagline</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="normal-field" class="form-control projecttagline" name="tagline" value='<?php echo set_value(' tagline ',$before->tagline);?>'>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Card Tagline</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="normal-field" class="form-control cardtagline" name="cardtagline" value='<?php echo set_value(' cardtagline ',$before->cardtagline);?>'>
+                            </div>
+                        </div>
+                        
+                      <script>
+                        $('.projecttagline').on('keyup', function() {
+                            limitText(this, 30)
+                        });
+
+                        $('.cardtagline').on('keyup', function() {
+                            limitText(this, 10)
+                        });
+
+                        function limitText(field, maxChar){
+                            var ref = $(field),
+                                val = ref.val();
+                            if ( val.length >= maxChar ){
+                                ref.val(function() {
+                                    console.log(val.substr(0, maxChar))
+                                    return val.substr(0, maxChar);       
+                                });
+                            }
+                        }
+                        </script>
+                        
             <div class=" form-group">
                 <label class="col-sm-2 control-label" for="normal-field">Category</label>
                 <div class="col-sm-4">
@@ -45,7 +80,7 @@
                 </div>
             </div>
             <div class=" form-group">
-                <label class="col-sm-2 control-label" for="normal-field">Advertiser</label>
+                <label class="col-sm-2 control-label" for="normal-field">Cooperator</label>
                 <div class="col-sm-4">
                     <?php echo form_dropdown( "advertiser",$advertiser,set_value( 'advertiser',$before->advertiser),"class='chzn-select form-control'");?>
                 </div>
@@ -57,7 +92,7 @@
                             </div>
                         </div>
                         <div class=" form-group">
-                            <label class="col-sm-2 control-label" for="normal-field">share</label>
+                            <label class="col-sm-2 control-label" for="normal-field">Raise Awareness</label>
                             <div class="col-sm-4">
                                 <?php echo form_dropdown( "share",$share,set_value( 'share',$before->share), "class='chzn-select form-control'");?>
                             </div>
@@ -71,18 +106,22 @@
                 </div>
             </div>
 -->
+<!--
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="normal-field">Likes</label>
                 <div class="col-sm-4">
                     <input type="text" id="normal-field" class="form-control" name="like" value='<?php echo set_value(' like ',$before->like);?>'>
                 </div>
             </div>
+-->
+<!--
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="normal-field">Share</label>
                 <div class="col-sm-4">
                     <input type="text" id="normal-field" class="form-control" name="share" value='<?php echo set_value(' share ',$before->share);?>'>
                 </div>
             </div>
+-->
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="normal-field">Follow</label>
                 <div class="col-sm-4">
@@ -131,9 +170,27 @@
                     <input type="text" id="normal-field" class="form-control" name="video" value='<?php echo set_value(' video ',$before->video);?>'>
                 </div>
             </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="normal-field">Video2</label>
+                <div class="col-sm-4">
+                    <input type="text" id="normal-field" class="form-control" name="video2" value='<?php echo set_value(' video2 ',$before->video2);?>'>
+                </div>
+            </div>
             
+            <div class=" form-group">
+                <label class="col-sm-2 control-label" for="normal-field">Indian Doner</label>
+                <div class="col-sm-4">
+                    <?php echo form_dropdown( "indiandoner",$indiandoner,set_value( 'indiandoner',$before->indiandoner),"class='chzn-select form-control'");?>
+                </div>
+            </div>
+            <div class=" form-group">
+                <label class="col-sm-2 control-label" for="normal-field">Foreign Doner</label>
+                <div class="col-sm-4">
+                    <?php echo form_dropdown( "foreigndoner",$foreigndoner,set_value( 'foreigndoner',$before->foreigndoner),"class='chzn-select form-control'");?>
+                </div>
+            </div>
 				<div class=" form-group">
-				  <label class="col-sm-2 control-label" for="normal-field">Image</label>
+				  <label class="col-sm-2 control-label" for="normal-field">Cover Image</label>
 				  <div class="col-sm-4">
 					<input type="file" id="normal-field" class="form-control" name="image" value="<?php echo set_value('image',$before->image);?>">
 					<?php if($before->image == "")
@@ -146,6 +203,12 @@
 				  </div>
 				</div>
            
+                        <div class=" form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Similar Causes</label>
+                            <div class="col-sm-4">
+                                <?php echo form_dropdown( "project[]",$project,$selectedproject, "id='select2'class='chzn-select form-control' multiple");?>
+                            </div>
+                        </div>
 				<div class=" form-group hidden">
 				  <label class="col-sm-2 control-label" for="normal-field">json</label>
 				  <div class="col-sm-4">

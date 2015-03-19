@@ -13,12 +13,14 @@
             <div class="panel-body">
                 <form class='form-horizontal tasi-form' method='post' action='<?php echo site_url("site/createordersubmit");?>' enctype='multipart/form-data'>
                     <div class="panel-body">
+<!--
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="normal-field">Name</label>
                             <div class="col-sm-4">
                                 <input type="text" id="normal-field" class="form-control" name="name" value='<?php echo set_value(' name ');?>'>
                             </div>
                         </div>
+-->
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="normal-field">Email</label>
                             <div class="col-sm-4">
@@ -31,6 +33,12 @@
                                 <?php echo form_dropdown( "user",$user,set_value( 'user'), "class='chzn-select form-control'");?>
                             </div>
                         </div>
+                        <div class=" form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Type Of Donation</label>
+                            <div class="col-sm-4">
+                                <?php echo form_dropdown( "typeofdonation",$typeofdonation,set_value( 'typeofdonation'), "class='chzn-select form-control'");?>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="normal-field">Amount</label>
                             <div class="col-sm-4">
@@ -41,6 +49,12 @@
                             <label class="col-sm-2 control-label" for="normal-field">NGO</label>
                             <div class="col-sm-4">
                                 <?php echo form_dropdown( "ngo",$ngo,set_value( 'ngo'), "class='chzn-select form-control'");?>
+                            </div>
+                        </div>
+                        <div class=" form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Cooperator</label>
+                            <div class="col-sm-4">
+                                <?php echo form_dropdown( "advertiser",$advertiser,set_value( 'advertiser'), "class='chzn-select form-control'");?>
                             </div>
                         </div>
                         <div class=" form-group">

@@ -16,10 +16,10 @@
                         <tr>
                             <th data-field="id">ID</th>
                             <th data-field="name">Name</th>
-                            <th data-field="parent">Parent</th>
+<!--                            <th data-field="parent">Parent</th>-->
 <!--                            <th data-field="json">Json</th>-->
                             <th data-field="order">Order</th>
-                            <th data-field="views">Views</th>
+<!--                            <th data-field="views">Views</th>-->
                             <th data-field="action">Action</th>
                         </tr>
                     </thead>
@@ -35,7 +35,7 @@
                 {
                     resultrow.parent="";
                 }
-                return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.name + "</td><td>" + resultrow.parent + "</td><td>" + resultrow.order + "</td><td>" + resultrow.views + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editcategory?id=');?>" + resultrow.id + "'><i class='icon-pencil'></i></a><a class='btn btn-danger btn-xs' href='<?php echo site_url('site/deletecategory?id='); ?>" + resultrow.id + "'><i class='icon-trash '></i></a></td></tr>";
+                return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.name + "</td><td>" + resultrow.order + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editcategory?id=');?>" + resultrow.id + "'><i class='icon-pencil'></i></a><a class='btn btn-danger btn-xs' href='<?php echo site_url('site/deletecategory?id='); ?>" + resultrow.id + "'><i class='icon-trash '></i></a></td></tr>";
             }
             generatejquery("<?php echo $base_url;?>");
         </script>

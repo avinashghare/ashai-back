@@ -4,10 +4,11 @@ if ( !defined( 'BASEPATH' ) )
 class projectimage_model extends CI_Model
 {
 	//topic
-	public function create($project,$image)
+	public function create($project,$image,$order)
 	{
 		$data  = array(
 			'project' => $project,
+			'order' => $order,
 			'image' => $image
 		);
 		$query=$this->db->insert( 'projectimage', $data );
@@ -16,8 +17,8 @@ class projectimage_model extends CI_Model
 	}
 	function viewprojectimagebyproject($id)
 	{
-		$query="SELECT `projectimage`.`id`,`projectimage`.`project`, `projectimage`.`image`, `powerforone_project`.`name` AS `projectname`
-        FROM `projectimage` LEFT OUTER JOIN `powerforone_project` ON `powerforone_project`.`id`=`projectimage`.`project` WHERE `projectimage`.`project`='$id'";
+		$query="SELECT `projectimage`.`id`,`projectimage`.`project`,`projectimage`.`order`, `projectimage`.`image`, `powerforone_project`.`name` AS `projectname`
+        FROM `projectimage` LEFT OUTER JOIN `powerforone_project` ON `powerforone_project`.`id`=`projectimage`.`project` WHERE `projectimage`.`project`='$id' ORDER BY `projectimage`.`order`";
         $result=$this->db->query($query)->result();
         
         return $result;
@@ -37,10 +38,11 @@ class projectimage_model extends CI_Model
 		return $query;
 	}
 	
-	public function edit( $id,$project,$image)
+	public function edit( $id,$project,$image,$order)
 	{
 		$data = array(
 			'project' => $project,
+			'order' => $order,
 			'image' => $image
 		);
 		$this->db->where( 'id', $id );

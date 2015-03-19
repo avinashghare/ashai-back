@@ -22,9 +22,7 @@
                         <div class=" form-group">
                             <label class="col-sm-2 control-label" for="normal-field">Address</label>
                             <div class="col-sm-8">
-                                <textarea name="address" id="" cols="20" rows="10" class="form-control tinymce">
-                                    <?php echo set_value( 'address');?>
-                                </textarea>
+                                <textarea name="address" id="" cols="20" rows="10" class="form-control tinymce"><?php echo set_value( 'address');?></textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -55,6 +53,14 @@
                                 <input type="text" id="normal-field" class="form-control" name="website" value='<?php echo set_value(' website ');?>'>
                             </div>
                         </div>
+                        
+                        <div class=" form-group">
+                          <label class="col-sm-2 control-label" for="normal-field">Image</label>
+                          <div class="col-sm-4">
+                            <input type="file" id="normal-field" class="form-control"  name="image" value="<?php echo set_value('image');?>">
+                          </div>
+                        </div>
+				
                         <div class="form-group hidden" >
                             <label class="col-sm-2 control-label" for="normal-field">json</label>
                             <div class="col-sm-4">

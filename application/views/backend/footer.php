@@ -80,6 +80,7 @@
 
   </script>
   
+  <script>tinymce.init({selector:'textarea.tinymce'});</script>
 
 </body>
 </html>

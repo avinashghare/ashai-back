@@ -3,9 +3,17 @@ if ( !defined( "BASEPATH" ) )
 exit( "No direct script access allowed" );
 class ngo_model extends CI_Model
 {
-    public function create($name,$address,$email,$json,$status,$website)
+    public function create($name,$address,$email,$json,$status,$website,$image)
     {
-        $data=array("name" => $name,"address" => $address,"email" => $email,"json" => $json,"status" => $status,"website" => $website);
+        $data=array(
+                    "name" => $name,
+                    "address" => $address,
+                    "email" => $email,
+                    "json" => $json,
+                    "status" => $status,
+                    "image" => $image,
+                    "website" => $website
+                   );
         $query=$this->db->insert( "powerforone_ngo", $data );
         $id=$this->db->insert_id();
         if(!$query)
@@ -25,9 +33,17 @@ class ngo_model extends CI_Model
         $query=$this->db->get("powerforone_ngo")->row();
         return $query;
     }
-    public function edit($id,$name,$address,$email,$json,$status,$website)
+    public function edit($id,$name,$address,$email,$json,$status,$website,$image)
     {
-        $data=array("name" => $name,"address" => $address,"email" => $email,"json" => $json,"status" => $status,"website" => $website);
+        $data=array(
+            "name" => $name,
+            "address" => $address,
+            "email" => $email,
+            "json" => $json,
+            "status" => $status,
+            "image" => $image,
+            "website" => $website
+        );
         $this->db->where( "id", $id );
         $query=$this->db->update( "powerforone_ngo", $data );
         return 1;
@@ -49,6 +65,12 @@ class ngo_model extends CI_Model
 		}
 		
 		return $return;
+	}
+     
+	public function getngoimagebyid($id)
+	{
+		$query=$this->db->query("SELECT `image` FROM `powerforone_ngo` WHERE `id`='$id'")->row();
+		return $query;
 	}
 }
 ?>

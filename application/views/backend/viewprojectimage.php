@@ -15,7 +15,8 @@
 			<thead>
 				<tr>
 					<th>Id</th>
-					<th>project</th>
+					<th>Project</th>
+					<th>Order</th>
 					<th>Image</th>
 					<th> Actions </th>
 				</tr>
@@ -25,6 +26,7 @@
 					<tr>
 						<td><?php echo $row->id;?></td>
 						<td><?php echo $row->projectname;?></td>
+						<td><?php echo $row->order;?></td>
 						<td><img src="<?php echo base_url('uploads')."/".$row->image; ?>" width="100px" height="auto"></td>
 						
 						<td>

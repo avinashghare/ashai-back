@@ -15,12 +15,14 @@
                     <thead>
                         <tr>
                             <th data-field="id">ID</th>
-                            <th data-field="name">Name</th>
+<!--                            <th data-field="name">Name</th>-->
+                            <th data-field="username">User</th>
                             <th data-field="email">Email</th>
-                            <th data-field="user">User</th>
+                            <th data-field="typeofdonation">Type Of Donation</th>
                             <th data-field="amount">Amount</th>
-                            <th data-field="ngo">NGO</th>
-                            <th data-field="project">Project</th>
+                            <th data-field="projectname">Project</th>
+                            <th data-field="ngoname">NGO</th>
+                            <th data-field="advertisername">Cooperator</th>
                             <th data-field="action">Action</th>
                         </tr>
                     </thead>
@@ -32,7 +34,15 @@
         </section>
         <script>
             function drawtable(resultrow) {
-                return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.name + "</td><td>" + resultrow.email + "</td><td>" + resultrow.user + "</td><td>" + resultrow.amount + "</td><td>" + resultrow.ngo + "</td><td>" + resultrow.project + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editorder?id=');?>" + resultrow.id + "'><i class='icon-pencil'></i></a><a class='btn btn-danger btn-xs' href='<?php echo site_url('site/deleteorder?id='); ?>" + resultrow.id + "'><i class='icon-trash '></i></a></td></tr>";
+                if(resultrow.typeofdonation==1)
+                {
+                resultrow.typeofdonation="By Amount";
+                }
+                else
+                {
+                resultrow.typeofdonation="By Post";
+                }
+                return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.username + "</td><td>" + resultrow.email + "</td><td>" + resultrow.typeofdonation + "</td><td>" + resultrow.amount + "</td><td>" + resultrow.projectname + "</td><td>" + resultrow.ngoname + "</td><td>" + resultrow.advertisername + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editorder?id=');?>" + resultrow.id + "'><i class='icon-pencil'></i></a><a class='btn btn-danger btn-xs' href='<?php echo site_url('site/deleteorder?id='); ?>" + resultrow.id + "'><i class='icon-trash '></i></a></td></tr>";
             }
             generatejquery("<?php echo $base_url;?>");
         </script>

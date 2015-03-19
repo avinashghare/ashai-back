@@ -11,6 +11,14 @@
                     <input type="text" id="normal-field" class="form-control" name="name" value='<?php echo set_value(' name ',$before->name);?>'>
                 </div>
             </div>
+            
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Company Name</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="normal-field" class="form-control companyname" name="companyname" value='<?php echo set_value(' companyname ',$before->companyname);?>'>
+                            </div>
+                        </div>
+                        
             <div class=" form-group">
 			  <label class="col-sm-2 control-label" for="normal-field">Expiry Date</label>
 			  <div class="col-sm-4">
@@ -47,7 +55,7 @@
             <div class=" form-group">
                 <label class="col-sm-2 control-label" for="normal-field">Description</label>
                 <div class="col-sm-8">
-                    <textarea name="description" id="" cols="20" rows="10" class="form-control tinymce"><?php echo set_value( 'description',$before->description);?></textarea>
+                    <textarea name="description" id="" cols="20" rows="10" class="form-control"><?php echo set_value( 'description',$before->description);?></textarea>
                 </div>
             </div>
             <div class=" form-group">

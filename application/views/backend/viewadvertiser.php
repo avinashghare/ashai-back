@@ -7,7 +7,7 @@
     <div class="col-lg-12">
         <section class="panel">
             <header class="panel-heading">
-                Advertiser Details
+                Cooperator Details
             </header>
             <div class="drawchintantable">
                 <?php $this->chintantable->createsearch("");?>

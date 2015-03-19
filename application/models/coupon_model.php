@@ -3,7 +3,7 @@ if ( !defined( "BASEPATH" ) )
 exit( "No direct script access allowed" );
 class coupon_model extends CI_Model
 {
-    public function create($name,$order,$json,$text,$description,$image,$expirydate,$couponcode)
+    public function create($name,$order,$json,$text,$description,$image,$expirydate,$couponcode,$companyname)
     {
         $data=array(
             "name" => $name,
@@ -13,6 +13,7 @@ class coupon_model extends CI_Model
             "description" => $description,
             "expirydate" => $expirydate,
             "couponcode" => $couponcode,
+            "companyname" => $companyname,
             "image" => $image
         );
         $query=$this->db->insert( "powerforone_coupon", $data );
@@ -34,7 +35,7 @@ class coupon_model extends CI_Model
         $query=$this->db->get("powerforone_coupon")->row();
         return $query;
     }
-    public function edit($id,$name,$order,$json,$text,$description,$image,$expirydate,$couponcode)
+    public function edit($id,$name,$order,$json,$text,$description,$image,$expirydate,$couponcode,$companyname)
     {
         $data=array(
             "name" => $name,
@@ -44,6 +45,7 @@ class coupon_model extends CI_Model
             "description" => $description,
             "expirydate" => $expirydate,
             "couponcode" => $couponcode,
+            "companyname" => $companyname,
             "image" => $image
         );
         $this->db->where( "id", $id );

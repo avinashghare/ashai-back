@@ -21,6 +21,13 @@
                         </div>
                         
                         <div class=" form-group">
+                          <label class="col-sm-2 control-label" for="normal-field">Company Name</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="normal-field" class="form-control" name="companyname" value="<?php echo set_value('companyname');?>">
+                          </div>
+                        </div>
+
+                        <div class=" form-group">
                           <label class="col-sm-2 control-label" for="normal-field">Expiry Date</label>
                           <div class="col-sm-4">
                             <input type="date" id="normal-field" class="form-control" name="expirydate" value="<?php echo set_value('expirydate');?>">
@@ -50,7 +57,7 @@
                         <div class=" form-group">
                             <label class="col-sm-2 control-label" for="normal-field">Text</label>
                             <div class="col-sm-8">
-                                <textarea name="text" id="" cols="20" rows="10" class="form-control tinymce"><?php echo set_value( 'text');?></textarea>
+                                <textarea name="text" id="" cols="20" rows="10" class="form-control"><?php echo set_value( 'text');?></textarea>
                             </div>
                         </div>
                         <div class=" form-group">
