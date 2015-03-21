@@ -593,11 +593,11 @@ $this->load->view("json",$data);
     $elements[18]->header="image";
     $elements[18]->alias="image";
 
-    $elements[18]=new stdClass();
-    $elements[18]->field="`powerforone_ngo`.`image`";
-    $elements[18]->sort="1";
-    $elements[18]->header="ngoimage";
-    $elements[18]->alias="ngoimage";
+    $elements[19]=new stdClass();
+    $elements[19]->field="`powerforone_ngo`.`image`";
+    $elements[19]->sort="1";
+    $elements[19]->header="ngoimage";
+    $elements[19]->alias="ngoimage";
 
     $search=$this->input->get_post("search");
     $pageno=$this->input->get_post("pageno");
