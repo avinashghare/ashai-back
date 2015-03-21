@@ -45,6 +45,12 @@ class Jsonbyavi extends CI_Controller
     $elements[5]->header="Views";
     $elements[5]->alias="views";
 
+    $elements[6]=new stdClass();
+    $elements[6]->field="`powerforone_category`.`image`";
+    $elements[6]->sort="1";
+    $elements[6]->header="image";
+    $elements[6]->alias="image";
+
     $search=$this->input->get_post("search");
     $pageno=$this->input->get_post("pageno");
     $orderby=$this->input->get_post("orderby");
