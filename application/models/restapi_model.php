@@ -40,5 +40,10 @@ WHERE  `similercauses`.`projectid`='$id' LIMIT 0,3")->result();
         else
             return  $id;
     }
+    
+    public function getstaticpages()
+    {
+        $query=$this->db->query("SELECT ");
+    }
 }
 ?>
