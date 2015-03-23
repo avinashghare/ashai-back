@@ -599,6 +599,18 @@ $this->load->view("json",$data);
     $elements[19]->header="ngoimage";
     $elements[19]->alias="ngoimage";
 
+    $elements[20]=new stdClass();
+    $elements[20]->field="`powerforone_project`.`tagline`";
+    $elements[20]->sort="1";
+    $elements[20]->header="tagline";
+    $elements[20]->alias="tagline";
+
+    $elements[21]=new stdClass();
+    $elements[21]->field="`powerforone_project`.`cardtagline`";
+    $elements[21]->sort="1";
+    $elements[21]->header="cardtagline";
+    $elements[21]->alias="cardtagline";
+
     $search=$this->input->get_post("search");
     $pageno=$this->input->get_post("pageno");
     $orderby=$this->input->get_post("orderby");
