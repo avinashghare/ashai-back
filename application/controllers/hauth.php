@@ -27,11 +27,11 @@ class HAuth extends CI_Controller {
 
 					$user_profile = $service->getUserProfile();
 
-					log_message('info', 'controllers.HAuth.login: user profile:'.PHP_EOL.print_r($user_profile, TRUE));
+                    $sociallogin=$this->user_model->sociallogin($user_profile,$provider);
+                    
+					$data['message'] = $sociallogin;
 
-					$data['user_profile'] = $user_profile;
-
-					$this->load->view('hauth/done',$data);
+					$this->load->view('json',$data);
 				}
 				else // Cannot authenticate user
 				{
