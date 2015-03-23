@@ -291,23 +291,24 @@ class User_model extends CI_Model
     function login($email,$password) 
     {
         $password=md5($password);
-        $query=$this->db->query("SELECT `id` FROM `user` WHERE `email`='$email' AND `password`= '$password'");
+        $query=$this->db->query("SELECT `id`,`name` FROM `user` WHERE `email`='$email' AND `password`= '$password'");
         if($query->num_rows > 0)
         {
             $user=$query->row();
-            $user=$user->id;
+            
             
 
             $newdata = array(
                 'email'     => $email,
                 'password' => $password,
                 'logged_in' => true,
-                'id'=> $user
+                'id'=> $user->id,
+                'name'=> $user->name
             );
 
             $this->session->set_userdata($newdata);
             //print_r($newdata);
-            return $user;
+            return $newdata;
         }
         else
         return false;
@@ -317,12 +318,12 @@ class User_model extends CI_Model
     function authenticate() {
         $is_logged_in = $this->session->userdata( 'logged_in' );
         //print_r($is_logged_in);
-        if ( $is_logged_in !== 'true' || !isset( $is_logged_in ) ) {
+        if ( $is_logged_in != true || !isset( $is_logged_in ) ) {
             return false;
-        } //$is_logged_in !== 'true' || !isset( $is_logged_in )
+        } 
         else {
-            $userid = $this->session->userdata( 'id' );
-         return $userid;
+            $userid = $this->session->all_userdata();
+            return $userid;
         }
     }
     

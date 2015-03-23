@@ -44,7 +44,14 @@ WHERE  `similercauses`.`projectid`='$id' LIMIT 0,3")->result();
     
     public function getstaticpages()
     {
-        $query=$this->db->query("SELECT `id`, `name`, `content`, `order`, `image`, `bannerimage` FROM `staticpage`");
+        $query=$this->db->query("SELECT `id`, `name`, `content`, `order`, `image`, `bannerimage` FROM `staticpage`")->result();
+        return $query;
+    }
+    public function getsinglestaticpage($id)
+    {
+        
+        $query=$this->db->query("SELECT `id`, `name`, `content`, `order`, `image`, `bannerimage` FROM `staticpage` WHERE `id`='$id'")->result();
+        return $query;
     }
 }
 ?>

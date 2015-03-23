@@ -663,6 +663,13 @@ $this->load->view("json",$data);
         $this->load->view("json",$data);
     }
     
+    public function getsinglestaticpage()
+    {
+        $id=$this->input->get_post("id");
+        $data['message']=$this->restapi_model->getsinglestaticpage($id);
+        $this->load->view("json",$data);
+    }
+    
     function getallngo()
     {
         $elements=array();

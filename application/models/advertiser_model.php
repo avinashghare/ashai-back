@@ -25,9 +25,9 @@ class advertiser_model extends CI_Model
         $query=$this->db->get("powerforone_advertiser")->row();
         return $query;
     }
-    public function edit($id,$name,$json,$views)
+    public function edit($id,$name,$json,$views,$image)
     {
-        $data=array("name" => $name,"json" => $json,"views" => $views);
+        $data=array("name" => $name,"json" => $json,"views" => $views,"image"=>$image);
         $this->db->where( "id", $id );
         $query=$this->db->update( "powerforone_advertiser", $data );
         return 1;
