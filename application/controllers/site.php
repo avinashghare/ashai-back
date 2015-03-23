@@ -2287,7 +2287,7 @@ class Site extends CI_Controller
                $data['alertsuccess']="projectimage created Successfully.";
 			
 			$data['redirect']="site/viewprojectimage?id=".$project;
-			$this->load->view("redirect",$data);
+			$this->load->view("redirect2",$data);
 		}
 	}
     
@@ -2373,7 +2373,7 @@ class Site extends CI_Controller
 			$data['alertsuccess']="projectimage edited Successfully.";
 			
 			$data['redirect']="site/viewprojectimage?id=".$project;
-			$this->load->view("redirect",$data);
+			$this->load->view("redirect2",$data);
 			
 		}
 	}
@@ -2387,7 +2387,7 @@ class Site extends CI_Controller
 		$this->projectimage_model->deleteprojectimage($this->input->get('projectimageid'));
 		$data['alertsuccess']="projectimage Deleted Successfully";
 		$data['redirect']="site/viewprojectimage?id=".$projectid;
-		$this->load->view("redirect",$data);
+		$this->load->view("redirect2",$data);
 	}
     
     
@@ -2453,7 +2453,7 @@ class Site extends CI_Controller
                $data['alertsuccess']="projectenquiry created Successfully.";
 			
 			$data['redirect']="site/viewprojectenquiry?id=".$project;
-			$this->load->view("redirect",$data);
+			$this->load->view("redirect2",$data);
 		}
 	}
     
@@ -2511,7 +2511,7 @@ class Site extends CI_Controller
 			$data['alertsuccess']="projectenquiry edited Successfully.";
 			
 			$data['redirect']="site/viewprojectenquiry?id=".$project;
-			$this->load->view("redirect",$data);
+			$this->load->view("redirect2",$data);
 			
 		}
 	}
@@ -2525,7 +2525,7 @@ class Site extends CI_Controller
 		$this->projectenquiry_model->deleteprojectenquiry($this->input->get('projectenquiryid'));
 		$data['alertsuccess']="projectenquiry Deleted Successfully";
 		$data['redirect']="site/viewprojectenquiry?id=".$projectid;
-		$this->load->view("redirect",$data);
+		$this->load->view("redirect2",$data);
 	}
     
     //ordercoupon
@@ -3099,7 +3099,7 @@ class Site extends CI_Controller
                $data['alertsuccess']="projectdatapoint created Successfully.";
 			
 			$data['redirect']="site/viewprojectdatapoint?id=".$project;
-			$this->load->view("redirect",$data);
+			$this->load->view("redirect2",$data);
 		}
 	}
     
@@ -3186,7 +3186,7 @@ class Site extends CI_Controller
 			$data['alertsuccess']="projectdatapoint edited Successfully.";
 			
 			$data['redirect']="site/viewprojectdatapoint?id=".$project;
-			$this->load->view("redirect",$data);
+			$this->load->view("redirect2",$data);
 			
 		}
 	}
@@ -3200,7 +3200,7 @@ class Site extends CI_Controller
 		$this->projectdatapoint_model->deleteprojectdatapoint($this->input->get('projectdatapointid'));
 		$data['alertsuccess']="projectdatapoint Deleted Successfully";
 		$data['redirect']="site/viewprojectdatapoint?id=".$projectid;
-		$this->load->view("redirect",$data);
+		$this->load->view("redirect2",$data);
 	}
     
     

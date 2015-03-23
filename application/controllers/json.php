@@ -641,264 +641,321 @@ $this->load->view("json",$data);
     $data["message"]=$this->restapi_model->getsingleproject($id);
     $this->load->view("json",$data);
   }
-function getallngo()
-{
-$elements=array();
-$elements[0]=new stdClass();
-$elements[0]->field="`powerforone_ngo`.`id`";
-$elements[0]->sort="1";
-$elements[0]->header="ID";
-$elements[0]->alias="id";
+    
+    
+    public function createnewsletter()
+    {
+        $email=$this->input->get_post('email');
+        $this->restapi_model->createnewsletter($email);
+        if($this->newsletter_model->createnewsletter($email)==0)
+        {
+            return 0;
+        }
+        else
+        {
+            return 1; 
+        }
+    }
+    
+    public function getstaticpages()
+    {
+        $data['message']=$this->restapi_model->getstaticpages();
+        $this->load->view("json",$data);
+    }
+    
+    function getallngo()
+    {
+        $elements=array();
+        $elements[0]=new stdClass();
+        $elements[0]->field="`powerforone_ngo`.`id`";
+        $elements[0]->sort="1";
+        $elements[0]->header="ID";
+        $elements[0]->alias="id";
 
 
-$elements[1]=new stdClass();
-$elements[1]->field="`powerforone_ngo`.`name`";
-$elements[1]->sort="1";
-$elements[1]->header="Name";
-$elements[1]->alias="name";
+        $elements[1]=new stdClass();
+        $elements[1]->field="`powerforone_ngo`.`name`";
+        $elements[1]->sort="1";
+        $elements[1]->header="Name";
+        $elements[1]->alias="name";
 
 
-$elements[2]=new stdClass();
-$elements[2]->field="`powerforone_ngo`.`address`";
-$elements[2]->sort="1";
-$elements[2]->header="Address";
-$elements[2]->alias="address";
+        $elements[2]=new stdClass();
+        $elements[2]->field="`powerforone_ngo`.`address`";
+        $elements[2]->sort="1";
+        $elements[2]->header="Address";
+        $elements[2]->alias="address";
 
 
-$elements[3]=new stdClass();
-$elements[3]->field="`powerforone_ngo`.`email`";
-$elements[3]->sort="1";
-$elements[3]->header="Email";
-$elements[3]->alias="email";
+        $elements[3]=new stdClass();
+        $elements[3]->field="`powerforone_ngo`.`email`";
+        $elements[3]->sort="1";
+        $elements[3]->header="Email";
+        $elements[3]->alias="email";
 
 
-$elements[4]=new stdClass();
-$elements[4]->field="`powerforone_ngo`.`json`";
-$elements[4]->sort="1";
-$elements[4]->header="Json";
-$elements[4]->alias="json";
+        $elements[4]=new stdClass();
+        $elements[4]->field="`powerforone_ngo`.`json`";
+        $elements[4]->sort="1";
+        $elements[4]->header="Json";
+        $elements[4]->alias="json";
 
 
-$elements[5]=new stdClass();
-$elements[5]->field="`powerforone_ngo`.`status`";
-$elements[5]->sort="1";
-$elements[5]->header="Status";
-$elements[5]->alias="status";
+        $elements[5]=new stdClass();
+        $elements[5]->field="`powerforone_ngo`.`status`";
+        $elements[5]->sort="1";
+        $elements[5]->header="Status";
+        $elements[5]->alias="status";
 
 
-$elements[6]=new stdClass();
-$elements[6]->field="`powerforone_ngo`.`website`";
-$elements[6]->sort="1";
-$elements[6]->header="Website";
-$elements[6]->alias="website";
+        $elements[6]=new stdClass();
+        $elements[6]->field="`powerforone_ngo`.`website`";
+        $elements[6]->sort="1";
+        $elements[6]->header="Website";
+        $elements[6]->alias="website";
 
-$search=$this->input->get_post("search");
-$pageno=$this->input->get_post("pageno");
-$orderby=$this->input->get_post("orderby");
-$orderorder=$this->input->get_post("orderorder");
-$maxrow=$this->input->get_post("maxrow");
-if($maxrow=="")
-{
-}
-if($orderby=="")
-{
-$orderby="id";
-$orderorder="ASC";
-}
-$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `powerforone_ngo`");
-$this->load->view("json",$data);
-}
-public function getsinglengo()
-{
-$id=$this->input->get_post("id");
-$data["message"]=$this->ngo_model->getsinglengo($id);
-$this->load->view("json",$data);
-}
-function getalladvertiser()
-{
-$elements=array();
-$elements[0]=new stdClass();
-$elements[0]->field="`powerforone_advertiser`.`id`";
-$elements[0]->sort="1";
-$elements[0]->header="ID";
-$elements[0]->alias="id";
-
-
-$elements[1]=new stdClass();
-$elements[1]->field="`powerforone_advertiser`.`name`";
-$elements[1]->sort="1";
-$elements[1]->header="Name";
-$elements[1]->alias="name";
-
-$elements[2]=new stdClass();
-$elements[2]->field="`powerforone_advertiser`.`json`";
-$elements[2]->sort="1";
-$elements[2]->header="Json";
-$elements[2]->alias="json";
-
-$elements[3]=new stdClass();
-$elements[3]->field="`powerforone_advertiser`.`views`";
-$elements[3]->sort="1";
-$elements[3]->header="Views";
-$elements[3]->alias="views";
-
-$search=$this->input->get_post("search");
-$pageno=$this->input->get_post("pageno");
-$orderby=$this->input->get_post("orderby");
-$orderorder=$this->input->get_post("orderorder");
-$maxrow=$this->input->get_post("maxrow");
-if($maxrow=="")
-{
-}
-if($orderby=="")
-{
-$orderby="id";
-$orderorder="ASC";
-}
-$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `powerforone_advertiser`");
-$this->load->view("json",$data);
-}
-public function getsingleadvertiser()
-{
-$id=$this->input->get_post("id");
-$data["message"]=$this->advertiser_model->getsingleadvertiser($id);
-$this->load->view("json",$data);
-}
-function getallorder()
-{
-$elements=array();
-$elements[0]=new stdClass();
-$elements[0]->field="`powerforone_order`.`id`";
-$elements[0]->sort="1";
-$elements[0]->header="ID";
-$elements[0]->alias="id";
-
-$elements[1]=new stdClass();
-$elements[1]->field="`powerforone_order`.`name`";
-$elements[1]->sort="1";
-$elements[1]->header="Name";
-$elements[1]->alias="name";
-
-$elements[2]=new stdClass();
-$elements[2]->field="`powerforone_order`.`email`";
-$elements[2]->sort="1";
-$elements[2]->header="Email";
-$elements[2]->alias="email";
+        $search=$this->input->get_post("search");
+        $pageno=$this->input->get_post("pageno");
+        $orderby=$this->input->get_post("orderby");
+        $orderorder=$this->input->get_post("orderorder");
+        $maxrow=$this->input->get_post("maxrow");
+        if($maxrow=="")
+        {
+        }
+        if($orderby=="")
+        {
+            $orderby="id";
+            $orderorder="ASC";
+        }
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `powerforone_ngo`");
+        $this->load->view("json",$data);
+    }
+    public function getsinglengo()
+    {
+        $id=$this->input->get_post("id");
+        $data["message"]=$this->ngo_model->getsinglengo($id);
+        $this->load->view("json",$data);
+    }
+    function getalladvertiser()
+    {
+        $elements=array();
+        $elements[0]=new stdClass();
+        $elements[0]->field="`powerforone_advertiser`.`id`";
+        $elements[0]->sort="1";
+        $elements[0]->header="ID";
+        $elements[0]->alias="id";
 
 
-$elements[3]=new stdClass();
-$elements[3]->field="`powerforone_order`.`user`";
-$elements[3]->sort="1";
-$elements[3]->header="User";
-$elements[3]->alias="user";
+        $elements[1]=new stdClass();
+        $elements[1]->field="`powerforone_advertiser`.`name`";
+        $elements[1]->sort="1";
+        $elements[1]->header="Name";
+        $elements[1]->alias="name";
 
-$elements[4]=new stdClass();
-$elements[4]->field="`powerforone_order`.`amount`";
-$elements[4]->sort="1";
-$elements[4]->header="Amount";
-$elements[4]->alias="amount";
+        $elements[2]=new stdClass();
+        $elements[2]->field="`powerforone_advertiser`.`json`";
+        $elements[2]->sort="1";
+        $elements[2]->header="Json";
+        $elements[2]->alias="json";
 
+        $elements[3]=new stdClass();
+        $elements[3]->field="`powerforone_advertiser`.`views`";
+        $elements[3]->sort="1";
+        $elements[3]->header="Views";
+        $elements[3]->alias="views";
 
-$elements[5]=new stdClass();
-$elements[5]->field="`powerforone_order`.`ngo`";
-$elements[5]->sort="1";
-$elements[5]->header="NGO";
-$elements[5]->alias="ngo";
+        $search=$this->input->get_post("search");
+        $pageno=$this->input->get_post("pageno");
+        $orderby=$this->input->get_post("orderby");
+        $orderorder=$this->input->get_post("orderorder");
+        $maxrow=$this->input->get_post("maxrow");
+        if($maxrow=="")
+        {
+        }
+        if($orderby=="")
+        {
+            $orderby="id";
+            $orderorder="ASC";
+        }
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `powerforone_advertiser`");
+        $this->load->view("json",$data);
+    }
+    public function getsingleadvertiser()
+    {
+        $id=$this->input->get_post("id");
+        $data["message"]=$this->advertiser_model->getsingleadvertiser($id);
+        $this->load->view("json",$data);
+    }
+    function getallorder()
+    {
+        $elements=array();
+        $elements[0]=new stdClass();
+        $elements[0]->field="`powerforone_order`.`id`";
+        $elements[0]->sort="1";
+        $elements[0]->header="ID";
+        $elements[0]->alias="id";
 
+        $elements[1]=new stdClass();
+        $elements[1]->field="`powerforone_order`.`name`";
+        $elements[1]->sort="1";
+        $elements[1]->header="Name";
+        $elements[1]->alias="name";
 
-$elements[6]=new stdClass();
-$elements[6]->field="`powerforone_order`.`project`";
-$elements[6]->sort="1";
-$elements[6]->header="Project";
-$elements[6]->alias="project";
-
-$search=$this->input->get_post("search");
-$pageno=$this->input->get_post("pageno");
-$orderby=$this->input->get_post("orderby");
-$orderorder=$this->input->get_post("orderorder");
-$maxrow=$this->input->get_post("maxrow");
-if($maxrow=="")
-{
-}
-if($orderby=="")
-{
-$orderby="id";
-$orderorder="ASC";
-}
-$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `powerforone_order`");
-$this->load->view("json",$data);
-}
-public function getsingleorder()
-{
-$id=$this->input->get_post("id");
-$data["message"]=$this->order_model->getsingleorder($id);
-$this->load->view("json",$data);
-}
-function getallcoupon()
-{
-$elements=array();
-$elements[0]=new stdClass();
-$elements[0]->field="`powerforone_coupon`.`id`";
-$elements[0]->sort="1";
-$elements[0]->header="ID";
-$elements[0]->alias="id";
-
-
-$elements[1]=new stdClass();
-$elements[1]->field="`powerforone_coupon`.`name`";
-$elements[1]->sort="1";
-$elements[1]->header="Name";
-$elements[1]->alias="name";
+        $elements[2]=new stdClass();
+        $elements[2]->field="`powerforone_order`.`email`";
+        $elements[2]->sort="1";
+        $elements[2]->header="Email";
+        $elements[2]->alias="email";
 
 
-$elements[2]=new stdClass();
-$elements[2]->field="`powerforone_coupon`.`order`";
-$elements[2]->sort="1";
-$elements[2]->header="Order";
-$elements[2]->alias="order";
+        $elements[3]=new stdClass();
+        $elements[3]->field="`powerforone_order`.`user`";
+        $elements[3]->sort="1";
+        $elements[3]->header="User";
+        $elements[3]->alias="user";
+
+        $elements[4]=new stdClass();
+        $elements[4]->field="`powerforone_order`.`amount`";
+        $elements[4]->sort="1";
+        $elements[4]->header="Amount";
+        $elements[4]->alias="amount";
 
 
-$elements[3]=new stdClass();
-$elements[3]->field="`powerforone_coupon`.`json`";
-$elements[3]->sort="1";
-$elements[3]->header="Json";
-$elements[3]->alias="json";
+        $elements[5]=new stdClass();
+        $elements[5]->field="`powerforone_order`.`ngo`";
+        $elements[5]->sort="1";
+        $elements[5]->header="NGO";
+        $elements[5]->alias="ngo";
+
+
+        $elements[6]=new stdClass();
+        $elements[6]->field="`powerforone_order`.`project`";
+        $elements[6]->sort="1";
+        $elements[6]->header="Project";
+        $elements[6]->alias="project";
+
+        $search=$this->input->get_post("search");
+        $pageno=$this->input->get_post("pageno");
+        $orderby=$this->input->get_post("orderby");
+        $orderorder=$this->input->get_post("orderorder");
+        $maxrow=$this->input->get_post("maxrow");
+        if($maxrow=="")
+        {
+        }
+        if($orderby=="")
+        {
+            $orderby="id";
+            $orderorder="ASC";
+        }
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `powerforone_order`");
+        $this->load->view("json",$data);
+    }
+    public function getsingleorder()
+    {
+        $id=$this->input->get_post("id");
+        $data["message"]=$this->order_model->getsingleorder($id);
+        $this->load->view("json",$data);
+    }
+    function getallcoupon()
+    {
+        $elements=array();
+        $elements[0]=new stdClass();
+        $elements[0]->field="`powerforone_coupon`.`id`";
+        $elements[0]->sort="1";
+        $elements[0]->header="ID";
+        $elements[0]->alias="id";
+
+
+        $elements[1]=new stdClass();
+        $elements[1]->field="`powerforone_coupon`.`name`";
+        $elements[1]->sort="1";
+        $elements[1]->header="Name";
+        $elements[1]->alias="name";
+
+
+        $elements[2]=new stdClass();
+        $elements[2]->field="`powerforone_coupon`.`order`";
+        $elements[2]->sort="1";
+        $elements[2]->header="Order";
+        $elements[2]->alias="order";
+
+
+        $elements[3]=new stdClass();
+        $elements[3]->field="`powerforone_coupon`.`json`";
+        $elements[3]->sort="1";
+        $elements[3]->header="Json";
+        $elements[3]->alias="json";
 
 
 
-$elements[4]->field="`powerforone_coupon`.`text`";
-$elements[4]->sort="1";
-$elements[4]->header="Text";
-$elements[4]->alias="text";
+        $elements[4]->field="`powerforone_coupon`.`text`";
+        $elements[4]->sort="1";
+        $elements[4]->header="Text";
+        $elements[4]->alias="text";
 
 
-$elements[5]=new stdClass();
-$elements[5]->field="`powerforone_coupon`.`description`";
-$elements[5]->sort="1";
-$elements[5]->header="Description";
-$elements[5]->alias="description";
+        $elements[5]=new stdClass();
+        $elements[5]->field="`powerforone_coupon`.`description`";
+        $elements[5]->sort="1";
+        $elements[5]->header="Description";
+        $elements[5]->alias="description";
 
-$search=$this->input->get_post("search");
-$pageno=$this->input->get_post("pageno");
-$orderby=$this->input->get_post("orderby");
-$orderorder=$this->input->get_post("orderorder");
-$maxrow=$this->input->get_post("maxrow");
-if($maxrow=="")
-{
-}
-if($orderby=="")
-{
-$orderby="id";
-$orderorder="ASC";
-}
-$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `powerforone_coupon`");
-$this->load->view("json",$data);
-}
-public function getsinglecoupon()
-{
-$id=$this->input->get_post("id");
-$data["message"]=$this->coupon_model->getsinglecoupon($id);
-$this->load->view("json",$data);
-}
+        $search=$this->input->get_post("search");
+        $pageno=$this->input->get_post("pageno");
+        $orderby=$this->input->get_post("orderby");
+        $orderorder=$this->input->get_post("orderorder");
+        $maxrow=$this->input->get_post("maxrow");
+        if($maxrow=="")
+        {
+        }
+        if($orderby=="")
+        {
+            $orderby="id";
+            $orderorder="ASC";
+        }
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `powerforone_coupon`");
+        $this->load->view("json",$data);
+    }
+    public function getsinglecoupon()
+    {
+        $id=$this->input->get_post("id");
+        $data["message"]=$this->coupon_model->getsinglecoupon($id);
+        $this->load->view("json",$data);
+    }
+    
+    
+    
+    //for user authenticating and login
+     public function login()
+    {
+        $email=$this->input->get("email");
+        $password=$this->input->get("password");
+        $data['message']=$this->user_model->login($email,$password);
+        $this->load->view('json',$data);
+    }
+    public function logout()
+    {
+        $this->session->sess_destroy();
+        
+		$this->load->view('json',true);
+    }
+    public function authenticate()
+    {
+        $data['message']=$this->user_model->authenticate();
+		$this->load->view('json',$data);
+    }
+    public function signup()
+    {
+        $firstname=$this->input->get_post("firstname");
+        $lastname=$this->input->get_post("lastname");
+        $phoneno=$this->input->get_post("phoneno");
+        $email=$this->input->get_post("email");
+        $password=$this->input->get_post("password");
+        $data['message']=$this->user_model->frontendsignup($firstname, $lastname, $phoneno, $email, $password);
+        $this->load->view('json',$data);
+        
+    }
+    
+    //ends here user authenticate functions for frontend
     
 } ?>

@@ -480,5 +480,35 @@ class User_model extends CI_Model
 			);
 		return $share;
 	}
+    
+    
+    function frontendsignup($firstname, $lastname, $phoneno, $email,$password) 
+    {
+         $password=md5($password);   
+        $query=$this->db->query("SELECT `id` FROM `user` WHERE `email`='$email'");
+        if($query->num_rows == 0)
+        {
+            $this->db->query("INSERT INTO `user`(`firstname`, `lastname`, `password`, `email`, `website`, `contact`, `address`, `city`, `pincode`, `dob`, `accesslevel`, `facebookuserid`, `status`, `photo`, `phoneno`, `google`, `state`, `country`, `deletestatus`) VALUES ('$firstname','$lastname','$password','$email',NULL,'$phoneno',NULL,NULL,NULL,NULL,3,NULL,NULL,NULL,'$phoneno',NULL,NULL,NULL,0)");
+            $user=$this->db->insert_id();
+            $newdata = array(
+                'firstname' => $firstname,
+                'lastname' => $lastname,
+                'email'     => $email,
+                'password' => $password,
+                'accesslevel' => 3,
+                'logged_in' => true,
+                'id'=> $user
+            );
+
+            $this->session->set_userdata($newdata);
+            
+           return $newdata;
+        }
+        else
+         return false;
+        
+        
+    }
+    
 }
 ?>
