@@ -951,14 +951,14 @@ $this->load->view("json",$data);
         $data['message']=$this->user_model->authenticate();
 		$this->load->view('json',$data);
     }
-    public function signup()
+    public function register()
     {
-        $firstname=$this->input->get_post("firstname");
-        $lastname=$this->input->get_post("lastname");
-        $phoneno=$this->input->get_post("phoneno");
+        $name=$this->input->get_post("name");
+//        $lastname=$this->input->get_post("lastname");
+//        $phoneno=$this->input->get_post("phoneno");
         $email=$this->input->get_post("email");
         $password=$this->input->get_post("password");
-        $data['message']=$this->user_model->frontendsignup($firstname, $lastname, $phoneno, $email, $password);
+        $data['message']=$this->user_model->frontendsignup($name, $email, $password);
         $this->load->view('json',$data);
         
     }
