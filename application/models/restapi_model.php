@@ -31,15 +31,25 @@ WHERE  `similercauses`.`projectid`='$id' LIMIT 0,3")->result();
     }
     public function createnewsletter($email)
     {
+        $ispresent=$this->db->query("SELECT * FROM `newsletter` WHERE `email`='$email'")->result();
+//        print_r($ispresent);
+        
         $data=array(
                     "email" => $email
                    );
-        $query=$this->db->insert( "newsletter", $data );
-        $id=$this->db->insert_id();
-        if(!$query)
-            return  0;
-        else
+        if(empty($ispresent))
+        {
+            
+            $query=$this->db->insert( "newsletter", $data );
+            $id=$this->db->insert_id();
             return  $id;
+            
+        }
+        else
+        {
+            return 0;
+        }
+            
     }
     
     public function getstaticpages()
@@ -52,6 +62,60 @@ WHERE  `similercauses`.`projectid`='$id' LIMIT 0,3")->result();
         
         $query=$this->db->query("SELECT `id`, `name`, `content`, `order`, `image`, `bannerimage` FROM `staticpage` WHERE `id`='$id'")->result();
         return $query;
+    }
+    
+    public function createcontactus($name,$contact,$email,$country,$city,$message)
+    {
+        $data=array(
+                    "name" => $name,
+                    "contact" => $contact,
+                    "email" => $email,
+                    "country" => $country,
+                    "city" => $city,
+                    "message" => $message
+                   );
+        $query=$this->db->insert( "contactus", $data );
+        $id=$this->db->insert_id();
+        if(!$query)
+            return  0;
+        else
+            return  $id;
+    }
+    
+    public function createworkwithus($name,$contact,$email,$country,$city,$message)
+    {
+        $data=array(
+                    "name" => $name,
+                    "contact" => $contact,
+                    "email" => $email,
+                    "country" => $country,
+                    "city" => $city,
+                    "message" => $message
+                   );
+        $query=$this->db->insert( "workwithus", $data );
+        $id=$this->db->insert_id();
+        if(!$query)
+            return  0;
+        else
+            return  $id;
+    }
+    
+    public function createpfo($name,$contact,$email,$country,$city,$message)
+    {
+        $data=array(
+                    "name" => $name,
+                    "contact" => $contact,
+                    "email" => $email,
+                    "country" => $country,
+                    "city" => $city,
+                    "message" => $message
+                   );
+        $query=$this->db->insert( "pfo", $data );
+        $id=$this->db->insert_id();
+        if(!$query)
+            return  0;
+        else
+            return  $id;
     }
 }
 ?>

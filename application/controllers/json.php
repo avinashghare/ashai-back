@@ -646,15 +646,9 @@ $this->load->view("json",$data);
     public function createnewsletter()
     {
         $email=$this->input->get_post('email');
-        $this->restapi_model->createnewsletter($email);
-        if($this->newsletter_model->createnewsletter($email)==0)
-        {
-            return 0;
-        }
-        else
-        {
-            return 1; 
-        }
+        $data['message']=$this->restapi_model->createnewsletter($email);
+        $this->load->view("json",$data);
+        
     }
     
     public function getstaticpages()
@@ -669,6 +663,61 @@ $this->load->view("json",$data);
         $data['message']=$this->restapi_model->getsinglestaticpage($id);
         $this->load->view("json",$data);
     }
+    
+    public function createcontactus()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        // DIDNT GET THESE FIELS IN DATABASE
+        //project type
+        $name = $data['name'];
+        $contact = $data['contact'];
+        $email = $data['email'];
+        $country = $data['country'];
+        $city = $data['city'];
+        $message = $data['message'];
+        
+        $data['message']=$this->restapi_model-> createcontactus($name,$contact,$email,$country,$city,$message);
+        
+        $this->load->view('json', $data);
+    }
+    
+    
+    public function createworkwithus()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        // DIDNT GET THESE FIELS IN DATABASE
+        //project type
+        $name = $data['name'];
+        $contact = $data['contact'];
+        $email = $data['email'];
+        $country = $data['country'];
+        $city = $data['city'];
+        $message = $data['message'];
+        
+        $data['message']=$this->restapi_model-> createworkwithus($name,$contact,$email,$country,$city,$message);
+        
+        $this->load->view('json', $data);
+    }
+    
+    public function createpfo()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        // DIDNT GET THESE FIELS IN DATABASE
+        //project type
+        $name = $data['name'];
+        $contact = $data['contact'];
+        $email = $data['email'];
+        $country = $data['country'];
+        $city = $data['city'];
+        $message = $data['message'];
+        
+        $data['message']=$this->restapi_model-> createpfo($name,$contact,$email,$country,$city,$message);
+        
+        $this->load->view('json', $data);
+    }
+    
+    
+    
     
     function getallngo()
     {
@@ -935,8 +984,11 @@ $this->load->view("json",$data);
     //for user authenticating and login
      public function login()
     {
-        $email=$this->input->get("email");
-        $password=$this->input->get("password");
+        $data = json_decode(file_get_contents('php://input'), true);
+        $email=$data['email'];
+        $password=$data['password'];
+//        $email=$this->input->get("email");
+//        $password=$this->input->get("password");
         $data['message']=$this->user_model->login($email,$password);
         $this->load->view('json',$data);
     }
@@ -953,11 +1005,17 @@ $this->load->view("json",$data);
     }
     public function register()
     {
-        $name=$this->input->get_post("name");
-//        $lastname=$this->input->get_post("lastname");
-//        $phoneno=$this->input->get_post("phoneno");
-        $email=$this->input->get_post("email");
-        $password=$this->input->get_post("password");
+        
+        $data = json_decode(file_get_contents('php://input'), true);
+        $email=$data['email'];
+        $password=$data['password'];
+        $name=$data['name'];
+        
+//        $name=$this->input->get_post("name");
+////        $lastname=$this->input->get_post("lastname");
+////        $phoneno=$this->input->get_post("phoneno");
+//        $email=$this->input->get_post("email");
+//        $password=$this->input->get_post("password");
         $data['message']=$this->user_model->frontendsignup($name, $email, $password);
         $this->load->view('json',$data);
         
