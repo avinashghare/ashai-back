@@ -29,9 +29,11 @@ class HAuth extends CI_Controller {
 
                     $sociallogin=$this->user_model->sociallogin($user_profile,$provider);
                     
-					$data['message'] = $sociallogin;
+                    redirect($this->input->get_post("returnurl"));
+                    
+					// $data['message'] = $sociallogin;
 
-					$this->load->view('json',$data);
+					// $this->load->view('json',$data);
 				}
 				else // Cannot authenticate user
 				{
