@@ -611,6 +611,12 @@ $this->load->view("json",$data);
     $elements[21]->header="cardtagline";
     $elements[21]->alias="cardtagline";
 
+    $elements[22]=new stdClass();
+    $elements[22]->field="`powerforone_project`.`cardimage`";
+    $elements[22]->sort="1";
+    $elements[22]->header="cardimage";
+    $elements[22]->alias="cardimage";
+
     $search=$this->input->get_post("search");
     $pageno=$this->input->get_post("pageno");
     $orderby=$this->input->get_post("orderby");
@@ -640,7 +646,7 @@ $this->load->view("json",$data);
      }
      else
      {
-        $where.=" WHERE `powerforone_project`.`category` IN $category";
+        $where.=" WHERE `powerforone_project`.`category` IN ($category)";
      }
     $elements=array();
     $elements[0]=new stdClass();
@@ -791,6 +797,12 @@ $this->load->view("json",$data);
     $elements[21]->sort="1";
     $elements[21]->header="cardtagline";
     $elements[21]->alias="cardtagline";
+
+    $elements[22]=new stdClass();
+    $elements[22]->field="`powerforone_project`.`cardimage`";
+    $elements[22]->sort="1";
+    $elements[22]->header="cardimage";
+    $elements[22]->alias="cardimage";
 
     $search=$this->input->get_post("search");
     $pageno=$this->input->get_post("pageno");
