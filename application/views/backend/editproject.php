@@ -31,7 +31,7 @@
                         });
 
                         $('.cardtagline').on('keyup', function() {
-                            limitText(this, 10)
+                            limitText(this, 30)
                         });
 
                         function limitText(field, maxChar){
@@ -129,17 +129,33 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="normal-field">Facebook</label>
+                <label class="col-sm-2 control-label" for="normal-field">Facebook Link</label>
                 <div class="col-sm-4">
                     <input type="text" id="normal-field" class="form-control" name="facebook" value='<?php echo set_value(' facebook ',$before->facebook);?>'>
                 </div>
             </div>
+            
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Facebook Text</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="normal-field" class="form-control" name="facebooktext" value='<?php echo set_value(' facebooktext ',$before->facebooktext);?>'>
+                            </div>
+                        </div>
+                        
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="normal-field">Twitter</label>
+                <label class="col-sm-2 control-label" for="normal-field">Twitter Link</label>
                 <div class="col-sm-4">
                     <input type="text" id="normal-field" class="form-control" name="twitter" value='<?php echo set_value(' twitter ',$before->twitter);?>'>
                 </div>
             </div>
+            
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Twitter Text</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="normal-field" class="form-control" name="twittertext" value='<?php echo set_value(' twittertext ',$before->twittertext);?>'>
+                            </div>
+                        </div>
+                        
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="normal-field">Google</label>
                 <div class="col-sm-4">
@@ -198,6 +214,20 @@
 						 else
 						 { ?>
 							<img src="<?php echo base_url('uploads')."/".$before->image; ?>" width="140px" height="140px">
+						<?php }
+					?>
+				  </div>
+				</div>
+           
+				<div class=" form-group">
+				  <label class="col-sm-2 control-label" for="normal-field">Card Image</label>
+				  <div class="col-sm-4">
+					<input type="file" id="normal-field" class="form-control" name="cardimage" value="<?php echo set_value('cardimage',$before->cardimage);?>">
+					<?php if($before->cardimage == "")
+						 { }
+						 else
+						 { ?>
+							<img src="<?php echo base_url('uploads')."/".$before->cardimage; ?>" width="140px" height="140px">
 						<?php }
 					?>
 				  </div>

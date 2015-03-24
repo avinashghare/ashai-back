@@ -944,6 +944,11 @@ class Site extends CI_Controller
             $indiandoner=$this->input->get_post("indiandoner");
             $foreigndoner=$this->input->get_post("foreigndoner");
             $project=$this->input->get_post("project");
+            $timesinword=$this->input->get_post("timesinword");
+            $facebooktext=$this->input->get_post("facebooktext");
+            $twittertext=$this->input->get_post("twittertext");
+            $sharevalue=$this->input->get_post("sharevalue");
+            $cardimage=$this->input->get_post("cardimage");
             
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -955,32 +960,21 @@ class Site extends CI_Controller
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
                 
-                $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
-                $config_r['maintain_ratio'] = TRUE;
-                $config_t['create_thumb'] = FALSE;///add this
-                $config_r['width']   = 800;
-                $config_r['height'] = 800;
-                $config_r['quality']    = 100;
-                //end of configs
-
-                $this->load->library('image_lib', $config_r); 
-                $this->image_lib->initialize($config_r);
-                if(!$this->image_lib->resize())
-                {
-                    echo "Failed." . $this->image_lib->display_errors();
-                    //return false;
-                }  
-                else
-                {
-                    //print_r($this->image_lib->dest_image);
-                    //dest_image
-                    $image=$this->image_lib->dest_image;
-                    //return false;
-                }
+			}
+            
+            $config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			$this->load->library('upload', $config);
+			$filename="cardimage";
+			$cardimage="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$cardimage=$uploaddata['file_name'];
                 
 			}
             
-            if($this->project_model->create($name,$category,$ngo,$advertiser,$json,$like,$share,$follow,$facebook,$twitter,$google,$status,$order,$views,$video,$content,$contribution,$times,$donate,$tagline,$image,$video2,$cardtagline,$indiandoner,$foreigndoner,$project)==0)
+            if($this->project_model->create($name,$category,$ngo,$advertiser,$json,$like,$share,$follow,$facebook,$twitter,$google,$status,$order,$views,$video,$content,$contribution,$times,$donate,$tagline,$image,$video2,$cardtagline,$indiandoner,$foreigndoner,$project,$timesinword,$facebooktext,$twittertext,$sharevalue,$cardimage)==0)
                 $data["alerterror"]="New project could not be created.";
             else
                 $data["alertsuccess"]="project created Successfully.";
@@ -1079,6 +1073,30 @@ class Site extends CI_Controller
             $foreigndoner=$this->input->get_post("foreigndoner");
             $project=$this->input->get_post("project");
             
+            $timesinword=$this->input->get_post("timesinword");
+            $facebooktext=$this->input->get_post("facebooktext");
+            $twittertext=$this->input->get_post("twittertext");
+            $sharevalue=$this->input->get_post("sharevalue");
+            $cardimage=$this->input->get_post("cardimage");
+            
+            $config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			$this->load->library('upload', $config);
+			$filename="cardimage";
+			$cardimage="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$cardimage=$uploaddata['file_name'];
+                
+			}
+            
+            if($cardimage=="")
+            {
+            $cardimage=$this->project_model->getprojectcardimagebyid($id);
+               // print_r($cardimage);
+                $cardimage=$cardimage->cardimage;
+            }
             
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -1090,28 +1108,6 @@ class Site extends CI_Controller
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
                 
-                $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
-                $config_r['maintain_ratio'] = TRUE;
-                $config_t['create_thumb'] = FALSE;///add this
-                $config_r['width']   = 800;
-                $config_r['height'] = 800;
-                $config_r['quality']    = 100;
-                //end of configs
-
-                $this->load->library('image_lib', $config_r); 
-                $this->image_lib->initialize($config_r);
-                if(!$this->image_lib->resize())
-                {
-                    echo "Failed." . $this->image_lib->display_errors();
-                    //return false;
-                }  
-                else
-                {
-                    //print_r($this->image_lib->dest_image);
-                    //dest_image
-                    $image=$this->image_lib->dest_image;
-                    //return false;
-                }
                 
 			}
             
@@ -1123,7 +1119,7 @@ class Site extends CI_Controller
             }
             
 //            print_r($project);
-            if($this->project_model->edit($id,$name,$category,$ngo,$advertiser,$json,$like,$share,$follow,$facebook,$twitter,$google,$status,$order,$views,$video,$content,$contribution,$times,$donate,$tagline,$image,$video2,$cardtagline,$indiandoner,$foreigndoner,$project)==0)
+            if($this->project_model->edit($id,$name,$category,$ngo,$advertiser,$json,$like,$share,$follow,$facebook,$twitter,$google,$status,$order,$views,$video,$content,$contribution,$times,$donate,$tagline,$image,$video2,$cardtagline,$indiandoner,$foreigndoner,$project,$timesinword,$facebooktext,$twittertext,$sharevalue,$cardimage)==0)
                 $data["alerterror"]="New project could not be Updated.";
             else
                 $data["alertsuccess"]="project Updated Successfully.";

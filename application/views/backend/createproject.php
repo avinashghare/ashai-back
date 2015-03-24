@@ -14,7 +14,7 @@
                 <form class='form-horizontal tasi-form' method='post' action='<?php echo site_url("site/createprojectsubmit");?>' enctype='multipart/form-data'>
                     <div class="panel-body">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label" for="normal-field">Offer</label>
+                            <label class="col-sm-2 control-label" for="normal-field">Name</label>
                             <div class="col-sm-4">
                                 <input type="text" id="normal-field" class="form-control" name="name" value='<?php echo set_value(' name ');?>'>
                             </div>
@@ -58,6 +58,13 @@
                             <label class="col-sm-2 control-label" for="normal-field">Times</label>
                             <div class="col-sm-4">
                                 <input type="text" id="normal-field" class="form-control" name="times" value='<?php echo set_value(' times ');?>'>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Times(In Words)</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="normal-field" class="form-control" name="timesinword" value='<?php echo set_value(' timesinword ');?>'>
                             </div>
                         </div>
                         
@@ -124,17 +131,33 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label" for="normal-field">Facebook</label>
+                            <label class="col-sm-2 control-label" for="normal-field">Facebook link</label>
                             <div class="col-sm-4">
                                 <input type="text" id="normal-field" class="form-control" name="facebook" value='<?php echo set_value(' facebook ');?>'>
                             </div>
                         </div>
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Facebook Text</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="normal-field" class="form-control" name="facebooktext" value='<?php echo set_value(' facebooktext ');?>'>
+                            </div>
+                        </div>
+                        
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="normal-field">Twitter</label>
                             <div class="col-sm-4">
                                 <input type="text" id="normal-field" class="form-control" name="twitter" value='<?php echo set_value(' twitter ');?>'>
                             </div>
                         </div>
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Twitter Text</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="normal-field" class="form-control" name="twittertext" value='<?php echo set_value(' twittertext ');?>'>
+                            </div>
+                        </div>
+                        
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="normal-field">Google</label>
                             <div class="col-sm-4">
@@ -194,6 +217,13 @@
                         </div>
 				
                         <div class=" form-group">
+                          <label class="col-sm-2 control-label" for="normal-field">Card Image</label>
+                          <div class="col-sm-4">
+                            <input type="file" id="normal-field" class="form-control"  name="cardimage" value="<?php echo set_value('cardimage');?>">
+                          </div>
+                        </div>
+				
+                        <div class=" form-group">
                             <label class="col-sm-2 control-label" for="normal-field">Similar Causes</label>
                             <div class="col-sm-4">
                                 <?php echo form_dropdown( "project[]",$project,set_value( 'project'), "id='select2'class='chzn-select form-control' multiple");?>
@@ -227,7 +257,7 @@
                         });
 
                         $('.cardtagline').on('keyup', function() {
-                            limitText(this, 10)
+                            limitText(this, 30)
                         });
 
                         function limitText(field, maxChar){
