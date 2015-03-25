@@ -111,12 +111,12 @@ class HAuth extends CI_Controller {
         if(isset($data["message"]->id_str))
         {
             // $this->userpost_model->addpostid($data["message"]->id_str,$post);
-
+            redirect($this->input->get_post("returnurl"));
             $this->load->view("json",$data);
         }
         else
         {
-
+            redirect($this->input->get_post("returnurl"));
 		    	$this->load->view("json",$data);
         }
 
@@ -143,10 +143,12 @@ class HAuth extends CI_Controller {
 
             if(isset($data["message"]['id']))
             {
+                redirect($this->input->get_post("returnurl"));
 							$this->load->view("json",$data);
             }
             else
             {
+                redirect($this->input->get_post("returnurl"));
 							$this->load->view("json",$data);
             }
         }
@@ -162,12 +164,14 @@ class HAuth extends CI_Controller {
 
             if(isset($data["message"]["id"]))
             {
+                redirect($this->input->get_post("returnurl"));
 
             $this->load->view("json",$data);
             }
             else
             {
 
+                redirect($this->input->get_post("returnurl"));
                 $this->load->view("json",$data);
             }
         }
