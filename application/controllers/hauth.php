@@ -105,27 +105,21 @@ class HAuth extends CI_Controller {
         $twitterid = $twitter->getUserProfile();
         $twitterid = $twitterid->identifier;
 
-        $userid=$this->session->userdata('id');
-        $querytwitter=$this->db->query("SELECT `twitterid` FROM `user` WHERE `id`='$userid'")->row();
-        $twitternid=$querytwitter->twitterid;
+
 
         $data["message"]=$twitter->api()->post("statuses/update.json?status=$message");
         if(isset($data["message"]->id_str))
         {
             // $this->userpost_model->addpostid($data["message"]->id_str,$post);
-            $data['alertsuccess']="Tweeted Successfully.";
-            // $data['redirect']="site/viewtwitterpost";
-            $this->load->view("redirect",$data);
+
+            $this->load->view("json",$data);
         }
         else
         {
-					$data['alerterror'] = "Tweet Error";
-          $data['redirect']="site/viewtwitterpost";
-		    $this->load->view("redirect",$data);
-        }
+
+		    	$this->load->view("json",$data);
         }
 
-//        $this->load->view("json",$data);
     }
     public function postfb()
     {
@@ -138,10 +132,6 @@ class HAuth extends CI_Controller {
         $facebookid = $facebook->getUserProfile();
         $facebookid = $facebookid->identifier;
 
-        $userid=$this->session->userdata('id');
-        $queryfacebook=$this->db->query("SELECT `facebookid` FROM `user` WHERE `id`='$userid'")->row();
-        $facebooknid=$queryfacebook->facebookid;
-
 
 
         if($image=="")
@@ -153,16 +143,11 @@ class HAuth extends CI_Controller {
 
             if(isset($data["message"]['id']))
             {
-								$data['alertsuccess']="Posted Successfully.";
-								$this->userpost_model->addpostid($data["message"]['id'],$post);
-								$data['redirect']="site/viewfacebookpost";
-								$this->load->view("redirect",$data);
+							$this->load->view("json",$data);
             }
             else
             {
-                $data['alerterror'] = "Post Error";
-                $data['redirect']="site/viewfacebookpost";
-                $this->load->view("redirect",$data);
+							$this->load->view("json",$data);
             }
         }
         else
@@ -177,22 +162,15 @@ class HAuth extends CI_Controller {
 
             if(isset($data["message"]["id"]))
             {
-			$data['alertsuccess']="Posted Successfully.";
-            $this->userpost_model->addpostid($data["message"]["id"],$post);
-            $data['redirect']="site/viewfacebookpost";
-            $this->load->view("redirect",$data);
+
+            $this->load->view("json",$data);
             }
             else
             {
-                $data['alerterror'] = "Post Error";
-                $data['redirect']="site/viewfacebookpost";
-                $this->load->view("redirect",$data);
+
+                $this->load->view("json",$data);
             }
         }
-
-
-        }
-
 
     }
 

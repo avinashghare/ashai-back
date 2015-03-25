@@ -32,6 +32,7 @@ $config =
 			"Google" => array (
 				"enabled" => true,
 				"keys"    => array ( "id" => "937720646213-lj33q01bhu9cjmoo5ho7nteon1kkg9at.apps.googleusercontent.com", "secret" => "4RzGNHTu7p5kG1XGSXdCNYIv" ),
+				"scope"   => "email, user_about_me, user_birthday, user_hometown, user_website, offline_access, read_stream, publish_stream, read_friendlists,publish_actions"
 			),
 
 			"Facebook" => array (
@@ -41,7 +42,7 @@ $config =
 
 			"Twitter" => array (
 				"enabled" => true,
-				"keys"    => array ( "key" => "i4FTSJyX0lmUPry0A513KyjSG", "secret" => "tw7EqZkXpKOKhwYszU6WXM3SdHCnbvdraPjnDZf3sXcaJpRrl1" )
+				"keys"    => array ( "key" => "OyqptjsjeFqLlzfSZKk1AB386", "secret" => "sFuCATn4UeOmtAKAomWbVIUdi248HLNqaj106YtDvQCNcVAqkB" )
 			),
 
 			// windows live
