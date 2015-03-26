@@ -971,6 +971,13 @@ $this->load->view("json",$data);
     }
     
     
+    public function getsingleblog()
+    {
+        $id=$this->input->get_post("id");
+        $data['message']=$this->restapi_model->getsingleblog($id);
+        $this->load->view("json",$data);
+    }
+    
     
     function getallngo()
     {

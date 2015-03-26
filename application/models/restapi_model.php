@@ -118,5 +118,15 @@ WHERE  `similercauses`.`projectid`='$id' LIMIT 0,3")->result();
         }
             
     }
+    
+    public function getsingleblog($id)
+    {
+        
+        $query=$this->db->query("SELECT `blog`.`id`, `blog`.`blogcategory`, `blog`.`title`, `blog`.`image`, `blog`.`description`, `blog`.`timestamp`,`blogcategory`.`name` AS `blogcategoryname` 
+FROM `blog` 
+LEFT OUTER JOIN `blogcategory` ON `blogcategory`.`id`=`blog`.`blogcategory` WHERE `blog`.`id`='$id'")->result();
+        return $query;
+    }
+    
 }
 ?>
