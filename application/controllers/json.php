@@ -838,7 +838,11 @@ $this->load->view("json",$data);
     
     public function createnewsletter()
     {
-        $email=$this->input->get_post('email');
+        $data = json_decode(file_get_contents('php://input'), true);
+        // DIDNT GET THESE FIELS IN DATABASE
+        //project type
+        $email = $data['email'];
+//        $email=$this->input->get_post('email');
         $data['message']=$this->restapi_model->createnewsletter($email);
         $this->load->view("json",$data);
         
@@ -908,7 +912,63 @@ $this->load->view("json",$data);
         
         $this->load->view('json', $data);
     }
-    
+    function getallblog()
+    {
+        $elements=array();
+        
+        $elements[0]=new stdClass();
+        $elements[0]->field="`blog`.`id`";
+        $elements[0]->sort="1";
+        $elements[0]->header="ID";
+        $elements[0]->alias="id";
+        
+        $elements[1]=new stdClass();
+        $elements[1]->field="`blog`.`title`";
+        $elements[1]->sort="1";
+        $elements[1]->header="Title";
+        $elements[1]->alias="title";
+        
+        $elements[2]=new stdClass();
+        $elements[2]->field="`blog`.`image`";
+        $elements[2]->sort="1";
+        $elements[2]->header="image";
+        $elements[2]->alias="image";
+        
+        $elements[3]=new stdClass();
+        $elements[3]->field="`blog`.`description`";
+        $elements[3]->sort="1";
+        $elements[3]->header="Description";
+        $elements[3]->alias="description";
+        
+        $elements[4]=new stdClass();
+        $elements[4]->field="`blog`.`blogcategory`";
+        $elements[4]->sort="1";
+        $elements[4]->header="blogcategoryid";
+        $elements[4]->alias="blogcategoryid";
+        
+        $elements[5]=new stdClass();
+        $elements[5]->field="`blogcategory`.`name`";
+        $elements[5]->sort="1";
+        $elements[5]->header="blogcategoryname";
+        $elements[5]->alias="blogcategoryname";
+        
+        $search=$this->input->get_post("search");
+        $pageno=$this->input->get_post("pageno");
+        $orderby=$this->input->get_post("orderby");
+        $orderorder=$this->input->get_post("orderorder");
+        $maxrow=$this->input->get_post("maxrow");
+        if($maxrow=="")
+        {
+            $maxrow=2;
+        }
+        if($orderby=="")
+        {
+            $orderby="id";
+            $orderorder="ASC";
+        }
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `blog` LEFT OUTER JOIN `blogcategory` ON `blog`.`blogcategory`=`blogcategory`.`id`");
+        $this->load->view("json",$data);
+    }
     
     
     
