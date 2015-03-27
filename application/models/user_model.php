@@ -509,6 +509,26 @@ class User_model extends CI_Model
 
 
     }
+    
+    function updatepost($id,$project)
+    {
+        echo "hey project".$project;
+        $projectdata=$this->db->query("SELECT * FROM `powerforone_project` WHERE `id`='$project'")->row();
+        print_r($projectdata);
+//        $data=array(
+//            "name" => $name,
+//            "email" => $email,
+//            "user" => $user,
+//            "amount" => $amount,
+//            "ngo" => $ngo,
+//            "status" => $status,
+//            "transactionid" => $transactionid,
+//            "typeofdonation" => $typeofdonation,
+//            "advertiser" => $advertiser,
+//            "project" => $project
+//        );
+//        $query=$this->db->insert( "powerforone_order", $data );
+    }
 
     function sociallogin($user_profile,$provider)
     {

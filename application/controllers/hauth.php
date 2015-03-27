@@ -128,7 +128,8 @@ class HAuth extends CI_Controller {
         $message=$this->input->get_post("message");
         $image=$this->input->get_post("image");
         $link=$this->input->get_post("link");
-
+        $project=$this->input->get_post("project");
+        echo "out".$message;
         $facebookid = $facebook->getUserProfile();
         $facebookid = $facebookid->identifier;
 
@@ -143,8 +144,10 @@ class HAuth extends CI_Controller {
 
             if(isset($data["message"]['id']))
             {
-                redirect($this->input->get_post("returnurl"));
-							$this->load->view("json",$data);
+                echo "hauth".$project;
+                $this->user_model->updatepost($data["message"]['id'],$project);
+//                redirect($this->input->get_post("returnurl"));
+//							$this->load->view("json",$data);
             }
             else
             {
@@ -164,6 +167,7 @@ class HAuth extends CI_Controller {
 
             if(isset($data["message"]["id"]))
             {
+                
                 redirect($this->input->get_post("returnurl"));
 
             $this->load->view("json",$data);
@@ -171,6 +175,7 @@ class HAuth extends CI_Controller {
             else
             {
 
+                
                 redirect($this->input->get_post("returnurl"));
                 $this->load->view("json",$data);
             }

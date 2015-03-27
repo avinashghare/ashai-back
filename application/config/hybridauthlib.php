@@ -31,13 +31,14 @@ $config =
 
 			"Google" => array (
 				"enabled" => true,
-				"keys"    => array ( "id" => "937720646213-lj33q01bhu9cjmoo5ho7nteon1kkg9at.apps.googleusercontent.com", "secret" => "4RzGNHTu7p5kG1XGSXdCNYIv" ),
-				"scope"   => "email, user_about_me, user_birthday, user_hometown, user_website, offline_access, read_stream, publish_stream, read_friendlists,publish_actions"
+				"keys"    => array ( "id" => "937720646213-lj33q01bhu9cjmoo5ho7nteon1kkg9at.apps.googleusercontent.com", "secret" => "4RzGNHTu7p5kG1XGSXdCNYIv" )
+				
 			),
 
 			"Facebook" => array (
 				"enabled" => true,
 				"keys"    => array ( "id" => "362872267247263", "secret" => "7c33f7681c8227c46d493a99f9748cb7" ),
+                "scope"   => "email, user_about_me, user_birthday, user_hometown, user_website, offline_access, read_stream, publish_stream, read_friendlists,publish_actions"
 			),
 
 			"Twitter" => array (
