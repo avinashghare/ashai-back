@@ -102,6 +102,7 @@ class HAuth extends CI_Controller {
         $twitter = $this->hybridauthlib->authenticate("Twitter");
         $message=$this->input->get_post("message");
         $post=$this->input->get('id');
+        $project=$this->input->get('project');
         $twitterid = $twitter->getUserProfile();
         $twitterid = $twitterid->identifier;
 
@@ -111,13 +112,14 @@ class HAuth extends CI_Controller {
         if(isset($data["message"]->id_str))
         {
             // $this->userpost_model->addpostid($data["message"]->id_str,$post);
+            $this->user_model->updatetweet($data["message"]->id_str,$project,$twitterid);
             redirect($this->input->get_post("returnurl"));
             $this->load->view("json",$data);
         }
         else
         {
             redirect($this->input->get_post("returnurl"));
-		    	$this->load->view("json",$data);
+		  $this->load->view("json",$data);
         }
 
     }
@@ -145,14 +147,14 @@ class HAuth extends CI_Controller {
             if(isset($data["message"]['id']))
             {
 //                echo "hauth".$project;
-//                $this->user_model->updatepost($data["message"]['id'],$project);
+                $this->user_model->updatepost($data["message"]['id'],$project,$facebookid);
                 redirect($this->input->get_post("returnurl"));
 //							$this->load->view("json",$data);
             }
             else
             {
                 redirect($this->input->get_post("returnurl"));
-							$this->load->view("json",$data);
+//							$this->load->view("json",$data);
             }
         }
         else

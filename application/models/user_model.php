@@ -510,24 +510,77 @@ class User_model extends CI_Model
 
     }
     
-    function updatepost($id,$project)
+    function updatepost($id,$project,$facebookid)
     {
-        echo "hey project".$project;
-        $projectdata=$this->db->query("SELECT * FROM `powerforone_project` WHERE `id`='$project'")->row();
-        print_r($projectdata);
-//        $data=array(
-//            "name" => $name,
-//            "email" => $email,
-//            "user" => $user,
-//            "amount" => $amount,
-//            "ngo" => $ngo,
-//            "status" => $status,
-//            "transactionid" => $transactionid,
-//            "typeofdonation" => $typeofdonation,
-//            "advertiser" => $advertiser,
-//            "project" => $project
-//        );
-//        $query=$this->db->insert( "powerforone_order", $data );
+        $query=$this->db->query("SELECT * FROM `powerforone_order` WHERE `user`='$facebookid'");
+        if($query->num_rows == 0)
+        {
+            $projectdata=$this->db->query("SELECT * FROM `powerforone_project` WHERE `id`='$project'")->row();
+            $data=array(
+                "name" => $projectdata->name,
+                "email" => "",
+                "user" => $facebookid,
+                "amount" => $projectdata->sharevalue,
+                "ngo" => $projectdata->ngo,
+                "status" => $projectdata->status,
+                "transactionid" => $id,
+                "typeofdonation" => "2",
+                "advertiser" => $advertiser,
+                "project" => $project
+            );
+            $query=$this->db->insert( "powerforone_order", $data );
+            $id=$this->db->insert_id();
+            if(!$query)
+            {
+                return  0;
+            }
+            else
+            {
+
+            $data  = array(
+                'share' => $projectdata->share + 1
+            );
+            $this->db->where( 'id', $project );
+            $query=$this->db->update( 'powerforone_project', $data );
+                return  $id;
+            }
+        }
+    }
+    function updatetweet($id,$project,$twitterid)
+    {
+        $query=$this->db->query("SELECT * FROM `powerforone_order` WHERE `powerforone_order`.`user`='$twitterid'");
+        if($query->num_rows == 0)
+        {
+            $projectdata=$this->db->query("SELECT * FROM `powerforone_project` WHERE `id`='$project'")->row();
+            $data=array(
+                "name" => $projectdata->name,
+                "email" => "",
+                "user" => $twitterid,
+                "amount" => $projectdata->sharevalue,
+                "ngo" => $projectdata->ngo,
+                "status" => $projectdata->status,
+                "transactionid" => $id,
+                "typeofdonation" => "1",
+                "advertiser" => $advertiser,
+                "project" => $project
+            );
+            $query=$this->db->insert( "powerforone_order", $data );
+            $id=$this->db->insert_id();
+            if(!$query)
+            {
+                return  0;
+            }
+            else
+            {
+
+            $data  = array(
+                'share' => $projectdata->share + 1
+            );
+            $this->db->where( 'id', $project );
+            $query=$this->db->update( 'powerforone_project', $data );
+                return  $id;
+            }
+        }
     }
 
     function sociallogin($user_profile,$provider)
