@@ -127,6 +127,15 @@ FROM `blog`
 LEFT OUTER JOIN `blogcategory` ON `blogcategory`.`id`=`blog`.`blogcategory` WHERE `blog`.`id`='$id'")->result();
         return $query;
     }
+    public function getsingleuser($id)
+    {
+        
+        $query=$this->db->query("SELECT `user`.`id`, `user`.`name`, `user`.`email`, `user`.`accesslevel`, `user`.`timestamp`, `user`.`status`, `user`.`image`, `user`.`username`, `user`.`socialid`, `user`.`logintype`, `user`.`json`, `user`.`dob`, `user`.`street`, `user`.`address`, `user`.`city`, `user`.`state`, `user`.`country`, `user`.`pincode`, `user`.`facebook`, `user`.`google`, `user`.`twitter` 
+        FROM `user` 
+        LEFT OUTER JOIN `accesslevel` ON `accesslevel`.`id`=`user`.`accesslevel`
+        WHERE `user`.`id`='$id'")->result();
+        return $query;
+    }
     
 }
 ?>
