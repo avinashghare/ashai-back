@@ -137,5 +137,13 @@ LEFT OUTER JOIN `blogcategory` ON `blogcategory`.`id`=`blog`.`blogcategory` WHER
         return $query;
     }
     
+
+    public function addpaymentdetails($ourjson)
+    {
+        
+        $query=$this->db->query("INSERT INTO `paymentjson`(`json`) VALUES ('$ourjson')");
+        return $query;
+    }
+    
 }
 ?>

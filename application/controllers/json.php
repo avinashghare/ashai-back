@@ -1290,6 +1290,16 @@ $this->load->view("json",$data);
         
     }
     
+     
+    public function addpaymentdetails()
+    {
+//        $id=$this->input->get_post("id");
+        $postvalue=$_POST;
+        $ourjson=json_encode ($postvalue);
+        $data['message']=$this->restapi_model->addpaymentdetails($ourjson);
+        $this->load->view("json",$data);
+    }
+    
     //ends here user authenticate functions for frontend
     
 } ?>
