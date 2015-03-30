@@ -157,7 +157,7 @@ LEFT OUTER JOIN `blogcategory` ON `blogcategory`.`id`=`blog`.`blogcategory` WHER
         return $query;
     }
     
-    public function createfrontendorder($name,$email,$mobile,$city,$address,$pan,$dob,$amount,$project,$user)
+    public function createfrontendorder($name,$email,$mobile,$city,$address,$pan,$dob,$amount,$project,$user,$istax)
     {
         $projectdata=$this->project_model->beforeedit($project);
         $ngo=$projectdata->ngo;
@@ -174,6 +174,7 @@ LEFT OUTER JOIN `blogcategory` ON `blogcategory`.`id`=`blog`.`blogcategory` WHER
             "project" => $project,
             "user" => $user,
             "ngo" => $ngo,
+            "istax" => $istax,
             "status" => 1,
             "advertiser" => $advertiser
         );
