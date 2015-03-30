@@ -138,12 +138,51 @@ LEFT OUTER JOIN `blogcategory` ON `blogcategory`.`id`=`blog`.`blogcategory` WHER
     }
     
 
-    public function addpaymentdetails($ourjson)
+    public function addpaymentdetailsold($ourjson)
     {
         
         $query=$this->db->query("INSERT INTO `paymentjson`(`json`) VALUES ('$ourjson')");
         return $query;
     }
     
+
+    public function addpaymentdetails($orderid,$transactionid,$status)
+    {
+        if($status=="Credit")
+        {
+        $status=2;
+        }
+        
+        $query=$this->db->query("UPDATE `powerforone_order` SET `transactionid`='$transactionid',`status`='$status' WHERE `id`='$orderid'");
+        return $query;
+    }
+    
+    public function createfrontendorder($name,$email,$mobile,$city,$address,$pan,$dob,$amount,$project,$user)
+    {
+        $projectdata=$this->project_model->beforeedit($project);
+        $ngo=$projectdata->ngo;
+        $advertiser=$projectdata->advertiser;
+        $data=array(
+            "name" => $name,
+            "email" => $email,
+            "mobile" => $mobile,
+            "city" => $city,
+            "address" => $address,
+            "pan" => $pan,
+            "dob" => $dob,
+            "amount" => $amount,
+            "project" => $project,
+            "user" => $user,
+            "ngo" => $ngo,
+            "status" => 1,
+            "advertiser" => $advertiser
+        );
+        $query=$this->db->insert( "powerforone_order", $data );
+        $id=$this->db->insert_id();
+        if(!$query)
+        return  0;
+        else
+        return  $id;
+    }
 }
 ?>

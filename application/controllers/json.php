@@ -1291,7 +1291,7 @@ $this->load->view("json",$data);
     }
     
      
-    public function addpaymentdetails()
+    public function addpaymentdetailsold()
     {
 //        $id=$this->input->get_post("id");
         $postvalue=$_POST;
@@ -1300,6 +1300,46 @@ $this->load->view("json",$data);
         $this->load->view("json",$data);
     }
     
+    public function createfrontendorder()
+    {
+        
+        $data = json_decode(file_get_contents('php://input'), true);
+        $name=$data['name'];
+        $email=$data['email'];
+        $mobile=$data['mobile'];
+        $city=$data['city'];
+        $address=$data['address'];
+        $pan=$data['pan'];
+        $dob=$data['dob'];
+        $amount=$data['amount'];
+        $project=$data['project'];
+        $user=$data['user'];
+        
+        
+        $data['message']=$this->restapi_model->createfrontendorder($name,$email,$mobile,$city,$address,$pan,$dob,$amount,$project,$user);
+        $this->load->view('json',$data);
+        
+    }
+    
+    
+     public function addpaymentdetails()
+    {
+//        $id=$this->input->get_post("id");
+        $postvalue=$_POST;
+	   $postvalue["custom_fields"]=json_decode($postvalue["custom_fields"]);
+        //$ourjson=json_encode($postvalue);
+        
+        
+      $transactionid=$postvalue["payment_id"];
+        $orderid=$postvalue["custom_fields"]->Field_99652->value;
+         $status=$postvalue["status"];
+         
+// $postvalue["status"]=="Credit" status should be 2
+        // $postvalue["payment_id"]  for transaction id
+//$ourjson=$postvalue["custom_fields"]->Field_99652->value - this is orderid;
+        $data['message']=$this->restapi_model->addpaymentdetails($orderid,$transactionid,$status);
+        $this->load->view("json",$data);
+    }
     //ends here user authenticate functions for frontend
     
 } ?>
