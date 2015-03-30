@@ -512,7 +512,7 @@ class User_model extends CI_Model
     
     function updatepost($id,$project,$facebookid)
     {
-        $query=$this->db->query("SELECT * FROM `powerforone_order` WHERE `user`='$facebookid'");
+        $query=$this->db->query("SELECT * FROM `powerforone_order` WHERE `user`='$facebookid' AND `typeofdonation`='1' AND `project`='$project'");
         if($query->num_rows == 0)
         {
             $projectdata=$this->db->query("SELECT * FROM `powerforone_project` WHERE `id`='$project'")->row();
@@ -524,7 +524,7 @@ class User_model extends CI_Model
                 "ngo" => $projectdata->ngo,
                 "status" => $projectdata->status,
                 "transactionid" => $id,
-                "typeofdonation" => "2",
+                "typeofdonation" => "1",
                 "advertiser" => $advertiser,
                 "project" => $project
             );
@@ -548,7 +548,7 @@ class User_model extends CI_Model
     }
     function updatetweet($id,$project,$twitterid)
     {
-        $query=$this->db->query("SELECT * FROM `powerforone_order` WHERE `powerforone_order`.`user`='$twitterid'");
+        $query=$this->db->query("SELECT * FROM `powerforone_order` WHERE `powerforone_order`.`user`='$twitterid' AND `typeofdonation`='2' AND `project`='$project'");
         if($query->num_rows == 0)
         {
             $projectdata=$this->db->query("SELECT * FROM `powerforone_project` WHERE `id`='$project'")->row();
@@ -560,7 +560,7 @@ class User_model extends CI_Model
                 "ngo" => $projectdata->ngo,
                 "status" => $projectdata->status,
                 "transactionid" => $id,
-                "typeofdonation" => "1",
+                "typeofdonation" => "2",
                 "advertiser" => $advertiser,
                 "project" => $project
             );
