@@ -617,6 +617,24 @@ $this->load->view("json",$data);
     $elements[22]->header="cardimage";
     $elements[22]->alias="cardimage";
 
+    $elements[23]=new stdClass();
+    $elements[23]->field="`powerforone_ngo`.`website`";
+    $elements[23]->sort="1";
+    $elements[23]->header="ngowebsite";
+    $elements[23]->alias="ngowebsite";
+
+//    $elements[24]=new stdClass();
+//    $elements[24]->field="`powerforone_advertiser`.`website`";
+//    $elements[24]->sort="1";
+//    $elements[24]->header="advertiserwebsite";
+//    $elements[24]->alias="advertiserwebsite";
+
+    $elements[24]=new stdClass();
+    $elements[24]->field="`powerforone_advertiser`.`image`";
+    $elements[24]->sort="1";
+    $elements[24]->header="advertiserimage";
+    $elements[24]->alias="advertiserimage";
+
     $search=$this->input->get_post("search");
     $pageno=$this->input->get_post("pageno");
     $orderby=$this->input->get_post("orderby");
@@ -632,7 +650,7 @@ $this->load->view("json",$data);
         $orderby="id";
         $orderorder="ASC";
     }
-    $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `powerforone_project` LEFT OUTER JOIN `powerforone_category` ON `powerforone_project`.`category`=`powerforone_category`.`id` LEFT OUTER JOIN `powerforone_ngo` ON `powerforone_project`.`ngo`=`powerforone_ngo`.`id`",$where);
+    $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `powerforone_project` LEFT OUTER JOIN `powerforone_category` ON `powerforone_project`.`category`=`powerforone_category`.`id` LEFT OUTER JOIN `powerforone_ngo` ON `powerforone_project`.`ngo`=`powerforone_ngo`.`id` LEFT OUTER JOIN `powerforone_advertiser` ON `powerforone_project`.`advertiser`=`powerforone_advertiser`.`id`",$where);
     $this->load->view("json",$data);
   }
      function getprojectbycategoryarray()

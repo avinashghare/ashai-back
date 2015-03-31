@@ -41,7 +41,7 @@
                             </div>
                         </div>
 -->
-                        <div class=" form-group">
+                        <div class=" form-group" style="display:none;">
                             <label class="col-sm-2 control-label" for="normal-field">Status</label>
                             <div class="col-sm-4">
                                 <?php echo form_dropdown( "status",$status,set_value( 'status'), "class='chzn-select form-control'");?>
