@@ -451,7 +451,7 @@ $this->load->view("json",$data);
      function getprojectbycategory()
   {
         
-     $where="";
+     $where="WHERE `powerforone_project`.`status`==1";
      $category=$this->input->get_post('category');
      if($category==0)
      {
@@ -459,7 +459,7 @@ $this->load->view("json",$data);
      }
      else
      {
-        $where.=" WHERE `powerforone_project`.`category`='$category'";
+        $where.=" AND `powerforone_project`.`category`='$category'";
      }
     $elements=array();
     $elements[0]=new stdClass();
@@ -635,6 +635,12 @@ $this->load->view("json",$data);
     $elements[24]->header="advertiserimage";
     $elements[24]->alias="advertiserimage";
 
+    $elements[25]=new stdClass();
+    $elements[25]->field="`powerforone_project`.`location`";
+    $elements[25]->sort="1";
+    $elements[25]->header="location";
+    $elements[25]->alias="location";
+
     $search=$this->input->get_post("search");
     $pageno=$this->input->get_post("pageno");
     $orderby=$this->input->get_post("orderby");
@@ -656,7 +662,7 @@ $this->load->view("json",$data);
      function getprojectbycategoryarray()
   {
         
-     $where="";
+     $where="WHERE `powerforone_project`.`status`==1";
      $category=$this->input->get_post('category');
      if(empty($category))
      {
@@ -664,7 +670,7 @@ $this->load->view("json",$data);
      }
      else
      {
-        $where.=" WHERE `powerforone_project`.`category` IN ($category)";
+        $where.=" AND `powerforone_project`.`category` IN ($category)";
      }
     $elements=array();
     $elements[0]=new stdClass();
@@ -822,6 +828,30 @@ $this->load->view("json",$data);
     $elements[22]->header="cardimage";
     $elements[22]->alias="cardimage";
 
+    $elements[23]=new stdClass();
+    $elements[23]->field="`powerforone_ngo`.`website`";
+    $elements[23]->sort="1";
+    $elements[23]->header="ngowebsite";
+    $elements[23]->alias="ngowebsite";
+
+//    $elements[24]=new stdClass();
+//    $elements[24]->field="`powerforone_advertiser`.`website`";
+//    $elements[24]->sort="1";
+//    $elements[24]->header="advertiserwebsite";
+//    $elements[24]->alias="advertiserwebsite";
+
+    $elements[24]=new stdClass();
+    $elements[24]->field="`powerforone_advertiser`.`image`";
+    $elements[24]->sort="1";
+    $elements[24]->header="advertiserimage";
+    $elements[24]->alias="advertiserimage";
+
+    $elements[25]=new stdClass();
+    $elements[25]->field="`powerforone_project`.`location`";
+    $elements[25]->sort="1";
+    $elements[25]->header="location";
+    $elements[25]->alias="location";
+
     $search=$this->input->get_post("search");
     $pageno=$this->input->get_post("pageno");
     $orderby=$this->input->get_post("orderby");
@@ -837,7 +867,7 @@ $this->load->view("json",$data);
         $orderby="id";
         $orderorder="ASC";
     }
-    $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `powerforone_project` LEFT OUTER JOIN `powerforone_category` ON `powerforone_project`.`category`=`powerforone_category`.`id` LEFT OUTER JOIN `powerforone_ngo` ON `powerforone_project`.`ngo`=`powerforone_ngo`.`id`",$where, "GROUP BY `powerforone_project`.`id` ");
+    $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `powerforone_project` LEFT OUTER JOIN `powerforone_category` ON `powerforone_project`.`category`=`powerforone_category`.`id` LEFT OUTER JOIN `powerforone_ngo` ON `powerforone_project`.`ngo`=`powerforone_ngo`.`id`  LEFT OUTER JOIN `powerforone_advertiser` ON `powerforone_project`.`advertiser`=`powerforone_advertiser`.`id`",$where, "GROUP BY `powerforone_project`.`id` ");
     $this->load->view("json",$data);
   }
 //public function getsingleproject()
