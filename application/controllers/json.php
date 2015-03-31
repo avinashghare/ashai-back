@@ -1362,11 +1362,12 @@ $this->load->view("json",$data);
         $amount=$data['amount'];
         $project=$data['project'];
         $istax=$data['istax'];
+        $anonymous=$data['anonymous'];
 //        $user=$data['user'];
         $user=$this->session->userdata('id');
         
         
-        $data['message']=$this->restapi_model->createfrontendorder($name,$email,$mobile,$city,$address,$pan,$dob,$amount,$project,$user,$istax);
+        $data['message']=$this->restapi_model->createfrontendorder($name,$email,$mobile,$city,$address,$pan,$dob,$amount,$project,$user,$istax,$anonymous);
         $this->load->view('json',$data);
         
     }

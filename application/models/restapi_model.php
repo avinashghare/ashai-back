@@ -184,7 +184,7 @@ GROUP BY `powerforone_project`.`id`")->result();
         return $query;
     }
     
-    public function createfrontendorder($name,$email,$mobile,$city,$address,$pan,$dob,$amount,$project,$user,$istax)
+    public function createfrontendorder($name,$email,$mobile,$city,$address,$pan,$dob,$amount,$project,$user,$istax,$anonymous)
     {
         $projectdata=$this->project_model->beforeedit($project);
         $ngo=$projectdata->ngo;
@@ -202,6 +202,7 @@ GROUP BY `powerforone_project`.`id`")->result();
             "user" => $user,
             "ngo" => $ngo,
             "istax" => $istax,
+            "anonymous" => $anonymous,
             "status" => 1,
             "advertiser" => $advertiser
         );
