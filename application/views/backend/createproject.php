@@ -16,7 +16,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="normal-field">Name</label>
                             <div class="col-sm-4">
-                                <input type="text" id="normal-field" class="form-control" name="name" value='<?php echo set_value(' name ');?>'>
+                                <input type="text" id="normal-field" class="form-control projectnamelimit" name="name" value='<?php echo set_value(' name ');?>'>
                             </div>
                         </div>
                         
@@ -41,6 +41,12 @@
                             </div>
                         </div>
                         
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Location</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="normal-field" class="form-control" name="location" value='<?php echo set_value(' location ');?>'>
+                            </div>
+                        </div>
                         <div class=" form-group">
                             <label class="col-sm-2 control-label" for="normal-field">Category</label>
                             <div class="col-sm-4">
@@ -84,6 +90,12 @@
                             <label class="col-sm-2 control-label" for="normal-field">Cooperator</label>
                             <div class="col-sm-4">
                                 <?php echo form_dropdown( "advertiser",$advertiser,set_value( 'advertiser'), "class='chzn-select form-control'");?>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Share Value</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="normal-field" class="form-control" name="sharevalue" value='<?php echo set_value(' sharevalue ');?>'>
                             </div>
                         </div>
                         <div class=" form-group">
@@ -210,6 +222,7 @@
                 </div>
             </div>
                         <div class=" form-group">
+                         <span>( 1280 X 500 )</span>
                           <label class="col-sm-2 control-label" for="normal-field">Cover Image</label>
                           <div class="col-sm-4">
                             <input type="file" id="normal-field" class="form-control"  name="image" value="<?php echo set_value('image');?>">
@@ -217,6 +230,7 @@
                         </div>
 				
                         <div class=" form-group">
+                         <span>( 350 X 200 )</span>
                           <label class="col-sm-2 control-label" for="normal-field">Card Image</label>
                           <div class="col-sm-4">
                             <input type="file" id="normal-field" class="form-control"  name="cardimage" value="<?php echo set_value('cardimage');?>">
@@ -226,7 +240,7 @@
                         <div class=" form-group">
                             <label class="col-sm-2 control-label" for="normal-field">Similar Causes</label>
                             <div class="col-sm-4">
-                                <?php echo form_dropdown( "project[]",$project,set_value( 'project'), "id='select2'class='chzn-select form-control' multiple");?>
+                                <?php echo form_dropdown( "project[]",$project,set_value( 'project'), "id='select2'  class='chzn-select form-control similarcauseclass' multiple");?>
                             </div>
                         </div>
                         <div class="form-group hidden" >
@@ -252,12 +266,28 @@
 
 <script type="text/javascript">
       
-                        $('.projecttagline').on('keyup', function() {
-                            limitText(this, 30)
+    
+    $(function () {
+    $("#select2").select2({
+        maximumSelectionSize: 3,
+        formatSelectionTooBig: function (limit) {
+
+            // Callback
+
+            return 'You Already Selected Three Similar Causes';
+        }
+    });
+});
+//                        $('.projecttagline').on('keyup', function() {
+//                            limitText(this, 30)
+//                        });
+
+                        $('.projectnamelimit').on('keyup', function() {
+                            limitText(this, 45)
                         });
 
                         $('.cardtagline').on('keyup', function() {
-                            limitText(this, 30)
+                            limitText(this, 81)
                         });
 
                         function limitText(field, maxChar){

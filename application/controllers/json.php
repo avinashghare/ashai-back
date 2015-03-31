@@ -981,8 +981,8 @@ $this->load->view("json",$data);
     
     public function getsingleuser()
     {
-//        $id=$this->input->get_post("id");
-        $id=$this->session->userdata('id');
+        $id=$this->input->get_post("id");
+//        $id=$this->session->userdata('id');
         $data['message']=$this->restapi_model->getsingleuser($id);
         $this->load->view("json",$data);
     }

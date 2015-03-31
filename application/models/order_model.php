@@ -3,7 +3,7 @@ if ( !defined( "BASEPATH" ) )
 exit( "No direct script access allowed" );
 class order_model extends CI_Model
 {
-    public function create($name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser)
+    public function create($name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser,$mobile,$city,$address,$pan,$dob,$istax)
     {
         $data=array(
             "name" => $name,
@@ -15,6 +15,12 @@ class order_model extends CI_Model
             "transactionid" => $transactionid,
             "typeofdonation" => $typeofdonation,
             "advertiser" => $advertiser,
+            "mobile" => $mobile,
+            "city" => $city,
+            "address" => $address,
+            "pan" => $pan,
+            "dob" => $dob,
+            "istax" => $istax,
             "project" => $project
         );
         $query=$this->db->insert( "powerforone_order", $data );
@@ -36,7 +42,7 @@ class order_model extends CI_Model
         $query=$this->db->get("powerforone_order")->row();
         return $query;
     }
-    public function edit($id,$name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser)
+    public function edit($id,$name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser,$mobile,$city,$address,$pan,$dob,$istax)
     {
         $data=array(
             "name" => $name,

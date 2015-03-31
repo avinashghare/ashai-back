@@ -8,7 +8,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="normal-field">Name</label>
                 <div class="col-sm-4">
-                    <input type="text" id="normal-field" class="form-control" name="name" value='<?php echo set_value(' name ',$before->name);?>'>
+                    <input type="text" id="normal-field" class="form-control projectnamelimit" name="name" value='<?php echo set_value(' name ',$before->name);?>'>
                 </div>
             </div>
             
@@ -25,27 +25,12 @@
                             </div>
                         </div>
                         
-                      <script>
-                        $('.projecttagline').on('keyup', function() {
-                            limitText(this, 30)
-                        });
-
-                        $('.cardtagline').on('keyup', function() {
-                            limitText(this, 30)
-                        });
-
-                        function limitText(field, maxChar){
-                            var ref = $(field),
-                                val = ref.val();
-                            if ( val.length >= maxChar ){
-                                ref.val(function() {
-                                    console.log(val.substr(0, maxChar))
-                                    return val.substr(0, maxChar);       
-                                });
-                            }
-                        }
-                        </script>
-                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Location</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="normal-field" class="form-control" name="location" value='<?php echo set_value(' location ',$before->location);?>'>
+                            </div>
+                        </div>
             <div class=" form-group">
                 <label class="col-sm-2 control-label" for="normal-field">Category</label>
                 <div class="col-sm-4">
@@ -92,6 +77,13 @@
                     <?php echo form_dropdown( "advertiser",$advertiser,set_value( 'advertiser',$before->advertiser),"class='chzn-select form-control'");?>
                 </div>
             </div>
+                       
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Share Value</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="normal-field" class="form-control" name="sharevalue" value='<?php echo set_value(' sharevalue ',$before->sharevalue);?>'>
+                            </div>
+                        </div>
                         <div class=" form-group">
                             <label class="col-sm-2 control-label" for="normal-field">Donate</label>
                             <div class="col-sm-4">
@@ -213,6 +205,7 @@
                 </div>
             </div>
 				<div class=" form-group">
+                  <span>( 1280 X 500 )</span>
 				  <label class="col-sm-2 control-label" for="normal-field">Cover Image</label>
 				  <div class="col-sm-4">
 					<input type="file" id="normal-field" class="form-control" name="image" value="<?php echo set_value('image',$before->image);?>">
@@ -227,6 +220,7 @@
 				</div>
            
 				<div class=" form-group">
+                  <span>( 350 X 200 )</span>
 				  <label class="col-sm-2 control-label" for="normal-field">Card Image</label>
 				  <div class="col-sm-4">
 					<input type="file" id="normal-field" class="form-control" name="cardimage" value="<?php echo set_value('cardimage',$before->cardimage);?>">
@@ -266,7 +260,30 @@
 
 
 <script type="text/javascript">
-     
+    
+    $('.projectnamelimit').on('keyup', function() {
+                            limitText(this, 45)
+                        });
+
+//     $('.projecttagline').on('keyup', function() {
+//                            limitText(this, 30)
+//                        });
+
+                        $('.cardtagline').on('keyup', function() {
+                            limitText(this, 81)
+                        });
+
+                        function limitText(field, maxChar){
+                            var ref = $(field),
+                                val = ref.val();
+                            if ( val.length >= maxChar ){
+                                ref.val(function() {
+                                    console.log(val.substr(0, maxChar))
+                                    return val.substr(0, maxChar);       
+                                });
+                            }
+                        }
+    
     $(document).ready(function () {
 //        console.log($(".fieldjsoninput").val());
         filljsoninput(".fieldjsoninput",".fieldjson");

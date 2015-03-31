@@ -5,14 +5,12 @@
     <div class="panel-body">
         <form class='form-horizontal tasi-form' method='post' action='<?php echo site_url("site/editordersubmit");?>' enctype='multipart/form-data'>
             <input type="hidden" id="normal-field" class="form-control" name="id" value="<?php echo set_value('id',$before->id);?>" style="display:none;">
-<!--
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="normal-field">Name</label>
                 <div class="col-sm-4">
                     <input type="text" id="normal-field" class="form-control" name="name" value='<?php echo set_value(' name ',$before->name);?>'>
                 </div>
             </div>
--->
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="normal-field">Email</label>
                 <div class="col-sm-4">
@@ -26,6 +24,44 @@
                 </div>
             </div>
             
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="normal-field">mobile</label>
+                <div class="col-sm-4">
+                    <input type="text" id="normal-field" class="form-control" name="mobile" value='<?php echo set_value(' mobile ',$before->mobile);?>'>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="normal-field">city</label>
+                <div class="col-sm-4">
+                    <input type="text" id="normal-field" class="form-control" name="city" value='<?php echo set_value(' city ',$before->city);?>'>
+                </div>
+            </div>
+            <div class=" form-group">
+                <label class="col-sm-2 control-label" for="normal-field">Address</label>
+                <div class="col-sm-8">
+                    <textarea name="address" id="" cols="20" rows="10" class="form-control tinymce"><?php echo set_value( 'address',$before->address);?></textarea>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="normal-field">pan</label>
+                <div class="col-sm-4">
+                    <input type="text" id="normal-field" class="form-control" name="pan" value='<?php echo set_value(' pan ',$before->pan);?>'>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="normal-field">dob</label>
+                <div class="col-sm-4">
+                    <input type="date" id="normal-field" class="form-control" name="dob" value='<?php echo set_value(' dob ',$before->dob);?>'>
+                </div>
+            </div>
+            
+            <div class=" form-group">
+                <label class="col-sm-2 control-label" for="normal-field">Tax</label>
+                <div class="col-sm-4">
+                    <?php echo form_dropdown( "istax",$istax,set_value( 'istax',$before->istax),"class='chzn-select form-control'");?>
+                </div>
+            </div>
             <div class=" form-group">
                 <label class="col-sm-2 control-label" for="normal-field">Type Of Donation</label>
                 <div class="col-sm-4">

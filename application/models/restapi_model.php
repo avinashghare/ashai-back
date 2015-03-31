@@ -130,6 +130,24 @@ LEFT OUTER JOIN `blogcategory` ON `blogcategory`.`id`=`blog`.`blogcategory` WHER
     public function getsingleuser($id)
     {
         
+        $query['user']=$this->db->query("SELECT `user`.`id`, `user`.`name`, `user`.`email`, `user`.`accesslevel`, `user`.`timestamp`, `user`.`status`, `user`.`image`, `user`.`username`, `user`.`socialid`, `user`.`logintype`, `user`.`json`, `user`.`dob`, `user`.`street`, `user`.`address`, `user`.`city`, `user`.`state`, `user`.`country`, `user`.`pincode`, `user`.`facebook`, `user`.`google`, `user`.`twitter` 
+        FROM `user` 
+        LEFT OUTER JOIN `accesslevel` ON `accesslevel`.`id`=`user`.`accesslevel`
+        WHERE `user`.`id`='$id'")->result();
+        $query['order']=$this->db->query("SELECT SUM(`amount`) as `amount` FROM `powerforone_order` WHERE `user`='$id'")->row();
+        $query['project']=$this->db->query("SELECT `powerforone_order`.`project` as `projectid`, `powerforone_project`.`id`  AS `id` ,  `powerforone_project`.`name`  AS `name` ,  `powerforone_project`.`category`  AS `category` ,  `powerforone_project`.`ngo`  AS `ngo` ,  `powerforone_project`.`advertiser`  AS `advertiser` ,  `powerforone_project`.`json`  AS `json` ,  `powerforone_project`.`like`  AS `like` ,  `powerforone_project`.`share`  AS `share` ,  `powerforone_project`.`follow`  AS `follow` ,  `powerforone_project`.`facebook`  AS `facebook` ,  `powerforone_project`.`twitter`  AS `twitter` ,  `powerforone_project`.`google`  AS `google` ,  `powerforone_project`.`status`  AS `status` ,  `powerforone_project`.`order`  AS `order` ,  `powerforone_project`.`views`  AS `views` ,  `powerforone_project`.`video`  AS `video` ,  `powerforone_ngo`.`name`  AS `ngoname` ,  `powerforone_category`.`name`  AS `categoryname` ,  `powerforone_project`.`image`  AS `image` ,  `powerforone_ngo`.`image`  AS `ngoimage` ,  `powerforone_project`.`tagline`  AS `tagline` ,  `powerforone_project`.`cardtagline`  AS `cardtagline` ,  `powerforone_project`.`cardimage`  AS `cardimage` 
+FROM `powerforone_order` 
+LEFT OUTER JOIN `powerforone_project` ON `powerforone_project`.`id`=`powerforone_order`.`project`
+LEFT OUTER JOIN `powerforone_category` ON `powerforone_project`.`category`=`powerforone_category`.`id` 
+LEFT OUTER JOIN `powerforone_ngo` ON `powerforone_project`.`ngo`=`powerforone_ngo`.`id`
+WHERE `powerforone_order`.`user`='$id'
+GROUP BY `powerforone_project`.`id`")->result();
+        return $query;
+    }
+    
+    public function getsingleuserold($id)
+    {
+        
         $query=$this->db->query("SELECT `user`.`id`, `user`.`name`, `user`.`email`, `user`.`accesslevel`, `user`.`timestamp`, `user`.`status`, `user`.`image`, `user`.`username`, `user`.`socialid`, `user`.`logintype`, `user`.`json`, `user`.`dob`, `user`.`street`, `user`.`address`, `user`.`city`, `user`.`state`, `user`.`country`, `user`.`pincode`, `user`.`facebook`, `user`.`google`, `user`.`twitter` 
         FROM `user` 
         LEFT OUTER JOIN `accesslevel` ON `accesslevel`.`id`=`user`.`accesslevel`

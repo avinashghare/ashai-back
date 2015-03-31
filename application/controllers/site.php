@@ -901,6 +901,8 @@ class Site extends CI_Controller
         $this->form_validation->set_rules("donate","donate","trim");
         $this->form_validation->set_rules("tagline","tagline","trim");
         $this->form_validation->set_rules("cardtagline","cardtagline","trim");
+        $this->form_validation->set_rules("sharevalue","sharevalue","trim");
+        $this->form_validation->set_rules("location","location","trim");
         
         if($this->form_validation->run()==FALSE)
         {
@@ -950,6 +952,8 @@ class Site extends CI_Controller
             $twittertext=$this->input->get_post("twittertext");
             $sharevalue=$this->input->get_post("sharevalue");
             $cardimage=$this->input->get_post("cardimage");
+            $sharevalue=$this->input->get_post("sharevalue");
+            $location=$this->input->get_post("location");
             
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -975,7 +979,7 @@ class Site extends CI_Controller
                 
 			}
             
-            if($this->project_model->create($name,$category,$ngo,$advertiser,$json,$like,$share,$follow,$facebook,$twitter,$google,$status,$order,$views,$video,$content,$contribution,$times,$donate,$tagline,$image,$video2,$cardtagline,$indiandoner,$foreigndoner,$project,$timesinword,$facebooktext,$twittertext,$sharevalue,$cardimage)==0)
+            if($this->project_model->create($name,$category,$ngo,$advertiser,$json,$like,$share,$follow,$facebook,$twitter,$google,$status,$order,$views,$video,$content,$contribution,$times,$donate,$tagline,$image,$video2,$cardtagline,$indiandoner,$foreigndoner,$project,$timesinword,$facebooktext,$twittertext,$sharevalue,$cardimage,$sharevalue,$location)==0)
                 $data["alerterror"]="New project could not be created.";
             else
                 $data["alertsuccess"]="project created Successfully.";
@@ -1029,6 +1033,8 @@ class Site extends CI_Controller
         $this->form_validation->set_rules("donate","donate","trim");
         $this->form_validation->set_rules("tagline","tagline","trim");
         $this->form_validation->set_rules("cardtagline","cardtagline","trim");
+        $this->form_validation->set_rules("sharevalue","sharevalue","trim");
+        $this->form_validation->set_rules("location","location","trim");
         if($this->form_validation->run()==FALSE)
         {
             $data["alerterror"]=validation_errors();
@@ -1079,6 +1085,8 @@ class Site extends CI_Controller
             $twittertext=$this->input->get_post("twittertext");
             $sharevalue=$this->input->get_post("sharevalue");
             $cardimage=$this->input->get_post("cardimage");
+            $sharevalue=$this->input->get_post("sharevalue");
+            $location=$this->input->get_post("location");
             
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -1120,7 +1128,7 @@ class Site extends CI_Controller
             }
             
 //            print_r($project);
-            if($this->project_model->edit($id,$name,$category,$ngo,$advertiser,$json,$like,$share,$follow,$facebook,$twitter,$google,$status,$order,$views,$video,$content,$contribution,$times,$donate,$tagline,$image,$video2,$cardtagline,$indiandoner,$foreigndoner,$project,$timesinword,$facebooktext,$twittertext,$sharevalue,$cardimage)==0)
+            if($this->project_model->edit($id,$name,$category,$ngo,$advertiser,$json,$like,$share,$follow,$facebook,$twitter,$google,$status,$order,$views,$video,$content,$contribution,$times,$donate,$tagline,$image,$video2,$cardtagline,$indiandoner,$foreigndoner,$project,$timesinword,$facebooktext,$twittertext,$sharevalue,$cardimage,$sharevalue,$location)==0)
                 $data["alerterror"]="New project could not be Updated.";
             else
                 $data["alertsuccess"]="project Updated Successfully.";
@@ -1779,6 +1787,8 @@ class Site extends CI_Controller
         $data['status']=$this->order_model->getstatusdropdown();
         $data['advertiser']=$this->advertiser_model->getadvertiserdropdown();
         $data['typeofdonation']=$this->order_model->getdonationtypedropdown();
+        $data['typeofdonation']=$this->order_model->getdonationtypedropdown();
+        $data['istax']=$this->order_model->getistaxdropdown();
         $data["page"]="createorder";
         $data["title"]="Create order";
         $this->load->view("template",$data);
@@ -1794,6 +1804,12 @@ class Site extends CI_Controller
         $this->form_validation->set_rules("ngo","NGO","trim");
         $this->form_validation->set_rules("project","Project","trim");
         $this->form_validation->set_rules("status","status","trim");
+        $this->form_validation->set_rules("mobile","mobile","trim");
+        $this->form_validation->set_rules("city","city","trim");
+        $this->form_validation->set_rules("address","address","trim");
+        $this->form_validation->set_rules("pan","pan","trim");
+        $this->form_validation->set_rules("dob","dob","trim");
+        $this->form_validation->set_rules("istax","istax","trim");
         if($this->form_validation->run()==FALSE)
         {
             $data["alerterror"]=validation_errors();
@@ -1804,7 +1820,7 @@ class Site extends CI_Controller
             $data['advertiser']=$this->advertiser_model->getadvertiserdropdown();
             $data['project']=$this->project_model->getprojectdropdown();
             $data['status']=$this->order_model->getstatusdropdown();
-            $data['typeofdonation']=$this->order_model->getdonationtypedropdown();
+            $data['istax']=$this->order_model->getistaxdropdown();
             $this->load->view("template",$data);
         }
         else
@@ -1819,7 +1835,13 @@ class Site extends CI_Controller
             $transactionid=$this->input->get_post("transactionid");
             $typeofdonation=$this->input->get_post("typeofdonation");
             $advertiser=$this->input->get_post("advertiser");
-            if($this->order_model->create($name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser)==0)
+            $mobile=$this->input->get_post("mobile");
+            $city=$this->input->get_post("city");
+            $address=$this->input->get_post("address");
+            $pan=$this->input->get_post("pan");
+            $dob=$this->input->get_post("dob");
+            $istax=$this->input->get_post("istax");
+            if($this->order_model->create($name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser,$mobile,$city,$address,$pan,$dob,$istax)==0)
                 $data["alerterror"]="New order could not be created.";
             else
                 $data["alertsuccess"]="order created Successfully.";
@@ -1840,6 +1862,7 @@ class Site extends CI_Controller
         $data['status']=$this->order_model->getstatusdropdown();
         $data['advertiser']=$this->advertiser_model->getadvertiserdropdown();
         $data['typeofdonation']=$this->order_model->getdonationtypedropdown();
+        $data['istax']=$this->order_model->getistaxdropdown();
         $data["before"]=$this->order_model->beforeedit($this->input->get("id"));
         $this->load->view("templatewith2",$data);
     }
@@ -1860,6 +1883,7 @@ class Site extends CI_Controller
             $data["alerterror"]=validation_errors();
             $data["page"]="editorder";
             $data["title"]="Edit order";
+            $data['istax']=$this->order_model->getistaxdropdown();
             $data['user']=$this->user_model->getuserdropdown();
             $data['ngo']=$this->ngo_model->getngodropdown();
             $data['advertiser']=$this->advertiser_model->getadvertiserdropdown();
