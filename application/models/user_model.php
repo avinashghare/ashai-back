@@ -525,7 +525,7 @@ class User_model extends CI_Model
                 "status" => $projectdata->status,
                 "transactionid" => $id,
                 "typeofdonation" => "1",
-                "advertiser" => $advertiser,
+                "advertiser" => $projectdata->advertiser,
                 "project" => $project
             );
             $query=$this->db->insert( "powerforone_order", $data );
@@ -561,7 +561,7 @@ class User_model extends CI_Model
                 "status" => $projectdata->status,
                 "transactionid" => $id,
                 "typeofdonation" => "2",
-                "advertiser" => $advertiser,
+                "advertiser" => $projectdata->advertiser,
                 "project" => $project
             );
             $query=$this->db->insert( "powerforone_order", $data );
