@@ -2066,7 +2066,7 @@ class Site extends CI_Controller
         
         $data["fieldjson"]=$json;
         
-        
+        $data['status']=$this->coupon_model->getstatusdropdown();
         $data["page"]="createcoupon";
         $data["title"]="Create coupon";
         $this->load->view("template",$data);
@@ -2082,6 +2082,7 @@ class Site extends CI_Controller
         $this->form_validation->set_rules("description","Description","trim");
         $this->form_validation->set_rules("expirydate","expirydate","trim");
         $this->form_validation->set_rules("couponcode","couponcode","trim");
+        $this->form_validation->set_rules("status","status","trim");
         if($this->form_validation->run()==FALSE)
         {
             $data["alerterror"]=validation_errors();
@@ -2099,6 +2100,7 @@ class Site extends CI_Controller
             $expirydate=$this->input->get_post("expirydate");
             $couponcode=$this->input->get_post("couponcode");
             $companyname=$this->input->get_post("companyname");
+            $status=$this->input->get_post("status");
             
             
             $config['upload_path'] = './uploads/';
@@ -2136,7 +2138,7 @@ class Site extends CI_Controller
                 
 			}
             
-            if($this->coupon_model->create($name,$order,$json,$text,$description,$image,$expirydate,$couponcode,$companyname)==0)
+            if($this->coupon_model->create($name,$order,$json,$text,$description,$image,$expirydate,$couponcode,$companyname,$status)==0)
                 $data["alerterror"]="New coupon could not be created.";
             else
                 $data["alertsuccess"]="coupon created Successfully.";
@@ -2150,6 +2152,7 @@ class Site extends CI_Controller
         $this->checkaccess($access);
         $data["page"]="editcoupon";
         $data["title"]="Edit coupon";
+        $data['status']=$this->coupon_model->getstatusdropdown();
         $data["before"]=$this->coupon_model->beforeedit($this->input->get("id"));
         $this->load->view("template",$data);
     }
@@ -2165,11 +2168,13 @@ class Site extends CI_Controller
         $this->form_validation->set_rules("description","Description","trim");
         $this->form_validation->set_rules("expirydate","expirydate","trim");
         $this->form_validation->set_rules("couponcode","couponcode","trim");
+        $this->form_validation->set_rules("status","status","trim");
         if($this->form_validation->run()==FALSE)
         {
             $data["alerterror"]=validation_errors();
             $data["page"]="editcoupon";
             $data["title"]="Edit coupon";
+            $data['status']=$this->coupon_model->getstatusdropdown();
             $data["before"]=$this->coupon_model->beforeedit($this->input->get("id"));
             $this->load->view("template",$data);
         }
@@ -2184,6 +2189,7 @@ class Site extends CI_Controller
             $expirydate=$this->input->get_post("expirydate");
             $couponcode=$this->input->get_post("couponcode");
             $companyname=$this->input->get_post("companyname");
+            $status=$this->input->get_post("status");
             
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -2228,7 +2234,7 @@ class Site extends CI_Controller
             }
             
             
-            if($this->coupon_model->edit($id,$name,$order,$json,$text,$description,$image,$expirydate,$couponcode,$companyname)==0)
+            if($this->coupon_model->edit($id,$name,$order,$json,$text,$description,$image,$expirydate,$couponcode,$companyname,$status)==0)
                 $data["alerterror"]="New coupon could not be Updated.";
             else
                 $data["alertsuccess"]="coupon Updated Successfully.";

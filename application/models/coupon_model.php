@@ -3,7 +3,7 @@ if ( !defined( "BASEPATH" ) )
 exit( "No direct script access allowed" );
 class coupon_model extends CI_Model
 {
-    public function create($name,$order,$json,$text,$description,$image,$expirydate,$couponcode,$companyname)
+    public function create($name,$order,$json,$text,$description,$image,$expirydate,$couponcode,$companyname,$status)
     {
         $data=array(
             "name" => $name,
@@ -14,6 +14,7 @@ class coupon_model extends CI_Model
             "expirydate" => $expirydate,
             "couponcode" => $couponcode,
             "companyname" => $companyname,
+            "status" => $status,
             "image" => $image
         );
         $query=$this->db->insert( "powerforone_coupon", $data );
@@ -35,7 +36,7 @@ class coupon_model extends CI_Model
         $query=$this->db->get("powerforone_coupon")->row();
         return $query;
     }
-    public function edit($id,$name,$order,$json,$text,$description,$image,$expirydate,$couponcode,$companyname)
+    public function edit($id,$name,$order,$json,$text,$description,$image,$expirydate,$couponcode,$companyname,$status)
     {
         $data=array(
             "name" => $name,
@@ -46,6 +47,7 @@ class coupon_model extends CI_Model
             "expirydate" => $expirydate,
             "couponcode" => $couponcode,
             "companyname" => $companyname,
+            "status" => $status,
             "image" => $image
         );
         $this->db->where( "id", $id );
@@ -63,5 +65,13 @@ class coupon_model extends CI_Model
 		$query=$this->db->query("SELECT `image` FROM `powerforone_coupon` WHERE `id`='$id'")->row();
 		return $query;
 	}
+    
+    public function getstatusdropdown() {
+        $status = array(
+            "0" => "Inactive",
+            "1" => "Active"
+        );
+        return $status;
+    }
 }
 ?>

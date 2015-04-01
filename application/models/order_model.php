@@ -103,5 +103,13 @@ class order_model extends CI_Model
 			);
 		return $istax;
 	}
+	public function getanonymousdropdown()
+	{
+		$anonymous= array(
+			 "0" => "False",
+			 "1" => "True"
+			);
+		return $anonymous;
+	}
 }
 ?>

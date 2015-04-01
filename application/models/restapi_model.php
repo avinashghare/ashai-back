@@ -46,7 +46,7 @@ WHERE  `similercauses`.`projectid`='$id' AND `powerforone_project`.`status`=1 LI
     }
     public function getallcoupon()
     {
-        $query=$this->db->query("SELECT `id`, `name`, `order`, `json`, `text`, `description`, `image`, `expirydate`, `couponcode`, `companyname` FROM `powerforone_coupon` ORDER BY `order` LIMIT 0,4")->result();
+        $query=$this->db->query("SELECT `id`, `name`, `order`, `json`, `text`, `description`, `image`, `expirydate`, `couponcode`, `companyname`,`status` FROM `powerforone_coupon` WHERE `status`=1 ORDER BY `order` LIMIT 0,4")->result();
         return $query;
     }
     public function getsinglecoupon($id)
