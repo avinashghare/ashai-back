@@ -1793,6 +1793,7 @@ class Site extends CI_Controller
         $data['typeofdonation']=$this->order_model->getdonationtypedropdown();
         $data['typeofdonation']=$this->order_model->getdonationtypedropdown();
         $data['istax']=$this->order_model->getistaxdropdown();
+        $data['anonymous']=$this->order_model->getanonymousdropdown();
         $data["page"]="createorder";
         $data["title"]="Create order";
         $this->load->view("template",$data);
@@ -1814,6 +1815,7 @@ class Site extends CI_Controller
         $this->form_validation->set_rules("pan","pan","trim");
         $this->form_validation->set_rules("dob","dob","trim");
         $this->form_validation->set_rules("istax","istax","trim");
+        $this->form_validation->set_rules("anonymous","anonymous","trim");
         if($this->form_validation->run()==FALSE)
         {
             $data["alerterror"]=validation_errors();
@@ -1825,6 +1827,7 @@ class Site extends CI_Controller
             $data['project']=$this->project_model->getprojectdropdown();
             $data['status']=$this->order_model->getstatusdropdown();
             $data['istax']=$this->order_model->getistaxdropdown();
+            $data['anonymous']=$this->order_model->getanonymousdropdown();
             $this->load->view("template",$data);
         }
         else
@@ -1845,7 +1848,8 @@ class Site extends CI_Controller
             $pan=$this->input->get_post("pan");
             $dob=$this->input->get_post("dob");
             $istax=$this->input->get_post("istax");
-            if($this->order_model->create($name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser,$mobile,$city,$address,$pan,$dob,$istax)==0)
+            $anonymous=$this->input->get_post("anonymous");
+            if($this->order_model->create($name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser,$mobile,$city,$address,$pan,$dob,$istax,$anonymous)==0)
                 $data["alerterror"]="New order could not be created.";
             else
                 $data["alertsuccess"]="order created Successfully.";
@@ -1867,6 +1871,7 @@ class Site extends CI_Controller
         $data['advertiser']=$this->advertiser_model->getadvertiserdropdown();
         $data['typeofdonation']=$this->order_model->getdonationtypedropdown();
         $data['istax']=$this->order_model->getistaxdropdown();
+        $data['anonymous']=$this->order_model->getanonymousdropdown();
         $data["before"]=$this->order_model->beforeedit($this->input->get("id"));
         $this->load->view("templatewith2",$data);
     }
@@ -1882,12 +1887,20 @@ class Site extends CI_Controller
         $this->form_validation->set_rules("ngo","NGO","trim");
         $this->form_validation->set_rules("project","Project","trim");
         $this->form_validation->set_rules("status","status","trim");
+        $this->form_validation->set_rules("mobile","mobile","trim");
+        $this->form_validation->set_rules("city","city","trim");
+        $this->form_validation->set_rules("address","address","trim");
+        $this->form_validation->set_rules("pan","pan","trim");
+        $this->form_validation->set_rules("dob","dob","trim");
+        $this->form_validation->set_rules("istax","istax","trim");
+        $this->form_validation->set_rules("anonymous","anonymous","trim");
         if($this->form_validation->run()==FALSE)
         {
             $data["alerterror"]=validation_errors();
             $data["page"]="editorder";
             $data["title"]="Edit order";
             $data['istax']=$this->order_model->getistaxdropdown();
+            $data['anonymous']=$this->order_model->getanonymousdropdown();
             $data['user']=$this->user_model->getuserdropdown();
             $data['ngo']=$this->ngo_model->getngodropdown();
             $data['advertiser']=$this->advertiser_model->getadvertiserdropdown();
@@ -1910,7 +1923,15 @@ class Site extends CI_Controller
             $transactionid=$this->input->get_post("transactionid");
             $typeofdonation=$this->input->get_post("typeofdonation");
             $advertiser=$this->input->get_post("advertiser");
-            if($this->order_model->edit($id,$name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser)==0)
+            $mobile=$this->input->get_post("mobile");
+            $city=$this->input->get_post("city");
+            $address=$this->input->get_post("address");
+            $pan=$this->input->get_post("pan");
+            $dob=$this->input->get_post("dob");
+            $istax=$this->input->get_post("istax");
+            $anonymous=$this->input->get_post("anonymous");
+            
+            if($this->order_model->edit($id,$name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser,$mobile,$city,$address,$pan,$dob,$istax,$anonymous)==0)
                 $data["alerterror"]="New order could not be Updated.";
             else
                 $data["alertsuccess"]="order Updated Successfully.";

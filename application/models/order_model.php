@@ -3,7 +3,7 @@ if ( !defined( "BASEPATH" ) )
 exit( "No direct script access allowed" );
 class order_model extends CI_Model
 {
-    public function create($name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser,$mobile,$city,$address,$pan,$dob,$istax)
+    public function create($name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser,$mobile,$city,$address,$pan,$dob,$istax,$anonymous)
     {
         $data=array(
             "name" => $name,
@@ -21,6 +21,7 @@ class order_model extends CI_Model
             "pan" => $pan,
             "dob" => $dob,
             "istax" => $istax,
+            "anonymous" => $anonymous,
             "project" => $project
         );
         $query=$this->db->insert( "powerforone_order", $data );
@@ -42,7 +43,7 @@ class order_model extends CI_Model
         $query=$this->db->get("powerforone_order")->row();
         return $query;
     }
-    public function edit($id,$name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser,$mobile,$city,$address,$pan,$dob,$istax)
+    public function edit($id,$name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser,$mobile,$city,$address,$pan,$dob,$istax,$anonymous)
     {
         $data=array(
             "name" => $name,
@@ -54,6 +55,13 @@ class order_model extends CI_Model
             "transactionid" => $transactionid,
             "typeofdonation" => $typeofdonation,
             "advertiser" => $advertiser,
+            "mobile" => $mobile,
+            "city" => $city,
+            "address" => $address,
+            "pan" => $pan,
+            "dob" => $dob,
+            "istax" => $istax,
+            "anonymous" => $anonymous,
             "project" => $project
         );
         $this->db->where( "id", $id );
@@ -86,6 +94,14 @@ class order_model extends CI_Model
 			 "0" => "Post",
 			);
 		return $typeofdonation;
+	}
+	public function getistaxdropdown()
+	{
+		$istax= array(
+			 "0" => "False",
+			 "1" => "True"
+			);
+		return $istax;
 	}
 }
 ?>

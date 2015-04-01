@@ -44,6 +44,16 @@ WHERE  `similercauses`.`projectid`='$id' AND `powerforone_project`.`status`=1 LI
         $query=$this->db->query("SELECT `id`, `name`, `content`, `order`, `image`, `bannerimage` FROM `staticpage`")->result();
         return $query;
     }
+    public function getallcoupon()
+    {
+        $query=$this->db->query("SELECT `id`, `name`, `order`, `json`, `text`, `description`, `image`, `expirydate`, `couponcode`, `companyname` FROM `powerforone_coupon` ORDER BY `order` LIMIT 0,4")->result();
+        return $query;
+    }
+    public function getsinglecoupon($id)
+    {
+        $query=$this->db->query("SELECT `id`, `name`, `order`, `json`, `text`, `description`, `image`, `expirydate`, `couponcode`, `companyname` FROM `powerforone_coupon` WHERE `id`='$id'")->row();
+        return $query;
+    }
     public function getsinglestaticpage($id)
     {
         

@@ -39,7 +39,7 @@
             <div class=" form-group">
                 <label class="col-sm-2 control-label" for="normal-field">Address</label>
                 <div class="col-sm-8">
-                    <textarea name="address" id="" cols="20" rows="10" class="form-control tinymce"><?php echo set_value( 'address',$before->address);?></textarea>
+                    <textarea name="address" id="" cols="20" rows="10" class="form-control "><?php echo set_value( 'address',$before->address);?></textarea>
                 </div>
             </div>
             
@@ -103,6 +103,19 @@
                             <label class="col-sm-2 control-label" for="normal-field">Transaction Id</label>
                             <div class="col-sm-4">
                                 <input type="text" id="normal-field" class="form-control" name="transactionid" value='<?php echo set_value(' transactionid ',$before->transactionid);?>'>
+                            </div>
+                        </div>
+                        
+                        <div class=" form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Is Tax</label>
+                            <div class="col-sm-4">
+                                <?php echo form_dropdown( "istax",$istax,set_value( 'istax',$before->istax), "class='chzn-select form-control'");?>
+                            </div>
+                        </div>
+                        <div class=" form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Anonymous</label>
+                            <div class="col-sm-4">
+                                <?php echo form_dropdown( "anonymous",$anonymous,set_value( 'anonymous',$before->anonymous), "class='chzn-select form-control'");?>
                             </div>
                         </div>
             <div class="form-group">

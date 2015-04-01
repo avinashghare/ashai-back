@@ -1186,7 +1186,7 @@ $this->load->view("json",$data);
         $data["message"]=$this->order_model->getsingleorder($id);
         $this->load->view("json",$data);
     }
-    function getallcoupon()
+    function getallcouponold()
     {
         $elements=array();
         $elements[0]=new stdClass();
@@ -1249,9 +1249,15 @@ $this->load->view("json",$data);
     public function getsinglecoupon()
     {
         $id=$this->input->get_post("id");
-        $data["message"]=$this->coupon_model->getsinglecoupon($id);
+        $data["message"]=$this->restapi_model->getsinglecoupon($id);
         $this->load->view("json",$data);
     }
+    
+     public function getallcoupon()
+  {
+    $data["message"]=$this->restapi_model->getallcoupon($id);
+    $this->load->view("json",$data);
+  }
     
     
     
