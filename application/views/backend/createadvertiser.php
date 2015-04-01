@@ -42,6 +42,14 @@
                             <input type="file" id="normal-field" class="form-control" name="image" value="<?php echo set_value('image');?>">
                           </div>
                         </div>
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Website</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="normal-field" class="form-control" name="website" value='<?php echo set_value(' website ');?>'>
+                            </div>
+                        </div>
+                        
                         <div class="form-group hidden" >
                             <label class="col-sm-2 control-label" for="normal-field">json</label>
                             <div class="col-sm-4">

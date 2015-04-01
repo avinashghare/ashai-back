@@ -108,7 +108,7 @@
                             </div>
                         </div>
                         <div class=" form-group">
-                            <label class="col-sm-2 control-label" for="normal-field">share</label>
+                            <label class="col-sm-2 control-label" for="normal-field">Raise Awareness</label>
                             <div class="col-sm-4">
                                 <?php echo form_dropdown( "share",$share,set_value( 'share'), "class='chzn-select form-control'");?>
                             </div>

@@ -3,9 +3,15 @@ if ( !defined( "BASEPATH" ) )
 exit( "No direct script access allowed" );
 class advertiser_model extends CI_Model
 {
-    public function create($name,$json,$views,$image)
+    public function create($name,$json,$views,$image,$website)
     {
-        $data=array("name" => $name,"json" => $json,"views" => $views,"image" => $image);
+        $data=array(
+            "name" => $name,
+            "json" => $json,
+            "views" => $views,
+            "website" => $website,
+            "image" => $image
+        );
         $query=$this->db->insert( "powerforone_advertiser", $data );
         $id=$this->db->insert_id();
         if(!$query)
@@ -25,9 +31,15 @@ class advertiser_model extends CI_Model
         $query=$this->db->get("powerforone_advertiser")->row();
         return $query;
     }
-    public function edit($id,$name,$json,$views,$image)
+    public function edit($id,$name,$json,$views,$image,$website)
     {
-        $data=array("name" => $name,"json" => $json,"views" => $views,"image"=>$image);
+        $data=array(
+            "name" => $name,
+            "json" => $json,
+            "views" => $views,
+            "website" => $website,
+            "image"=>$image
+        );
         $this->db->where( "id", $id );
         $query=$this->db->update( "powerforone_advertiser", $data );
         return 1;

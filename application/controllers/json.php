@@ -2,50 +2,7 @@
 class Json extends CI_Controller 
 {
     //home page json
-  function viewcategoryjson()
-    {
-//        SELECT `category`.`id`,`category`.`name`,`category`.`image`,`tab2`.`name` as `parent` FROM `category` 
-//		LEFT JOIN `category` as `tab2` ON `tab2`.`id`=`category`.`parent`
-//		ORDER BY `category`.`id` ASC
-            
-        $elements=array();
-        
-        $elements[0]=new stdClass();
-        $elements[0]->field="`powerforone_category`.`id`";
-        $elements[0]->sort="1";
-        $elements[0]->header="ID";
-        $elements[0]->alias="id";
-        
-        $elements[1]=new stdClass();
-        $elements[1]->field="`powerforone_category`.`name`";
-        $elements[1]->sort="1";
-        $elements[1]->header="Name";
-        $elements[1]->alias="name";
-        
-        $elements[2]=new stdClass();
-        $elements[2]->field="`powerforone_category`.`image`";
-        $elements[2]->sort="1";
-        $elements[2]->header="image";
-        $elements[2]->alias="image";
-        
-     $search=$this->input->get_post("search");
-        $pageno=$this->input->get_post("pageno");
-        $orderby=$this->input->get_post("orderby");
-        $orderorder=$this->input->get_post("orderorder");
-        $maxrow=$this->input->get_post("maxrow");
-        
-        if($maxrow=="")
-        {
-            $maxrow=20;
-        }
-        if($orderby=="")
-        {
-            $orderby="id";
-            $orderorder="ASC";
-        }
-        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `powerforone_category`");
-        $this->load->view("json",$data);
-    }
+  
       function viewtestimonialjson()
     {
         $elements=array();
@@ -451,7 +408,7 @@ $this->load->view("json",$data);
      function getprojectbycategory()
   {
         
-     $where="WHERE `powerforone_project`.`status`==1";
+     $where="WHERE `powerforone_project`.`status`=1";
      $category=$this->input->get_post('category');
      if($category==0)
      {
@@ -623,12 +580,6 @@ $this->load->view("json",$data);
     $elements[23]->header="ngowebsite";
     $elements[23]->alias="ngowebsite";
 
-//    $elements[24]=new stdClass();
-//    $elements[24]->field="`powerforone_advertiser`.`website`";
-//    $elements[24]->sort="1";
-//    $elements[24]->header="advertiserwebsite";
-//    $elements[24]->alias="advertiserwebsite";
-
     $elements[24]=new stdClass();
     $elements[24]->field="`powerforone_advertiser`.`image`";
     $elements[24]->sort="1";
@@ -640,6 +591,12 @@ $this->load->view("json",$data);
     $elements[25]->sort="1";
     $elements[25]->header="location";
     $elements[25]->alias="location";
+
+    $elements[26]=new stdClass();
+    $elements[26]->field="`powerforone_advertiser`.`website`";
+    $elements[26]->sort="1";
+    $elements[26]->header="advertiserwebsite";
+    $elements[26]->alias="advertiserwebsite";
 
     $search=$this->input->get_post("search");
     $pageno=$this->input->get_post("pageno");
@@ -662,7 +619,7 @@ $this->load->view("json",$data);
      function getprojectbycategoryarray()
   {
         
-     $where="WHERE `powerforone_project`.`status`==1";
+     $where="WHERE `powerforone_project`.`status`=1";
      $category=$this->input->get_post('category');
      if(empty($category))
      {
@@ -834,12 +791,6 @@ $this->load->view("json",$data);
     $elements[23]->header="ngowebsite";
     $elements[23]->alias="ngowebsite";
 
-//    $elements[24]=new stdClass();
-//    $elements[24]->field="`powerforone_advertiser`.`website`";
-//    $elements[24]->sort="1";
-//    $elements[24]->header="advertiserwebsite";
-//    $elements[24]->alias="advertiserwebsite";
-
     $elements[24]=new stdClass();
     $elements[24]->field="`powerforone_advertiser`.`image`";
     $elements[24]->sort="1";
@@ -851,6 +802,12 @@ $this->load->view("json",$data);
     $elements[25]->sort="1";
     $elements[25]->header="location";
     $elements[25]->alias="location";
+
+    $elements[26]=new stdClass();
+    $elements[26]->field="`powerforone_advertiser`.`website`";
+    $elements[26]->sort="1";
+    $elements[26]->header="advertiserwebsite";
+    $elements[26]->alias="advertiserwebsite";
 
     $search=$this->input->get_post("search");
     $pageno=$this->input->get_post("pageno");

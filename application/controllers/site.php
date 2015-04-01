@@ -1527,6 +1527,7 @@ class Site extends CI_Controller
         $this->form_validation->set_rules("name","Name","trim");
         $this->form_validation->set_rules("json","Json","trim");
         $this->form_validation->set_rules("views","Views","trim");
+        $this->form_validation->set_rules("website","website","trim");
         if($this->form_validation->run()==FALSE)
         {
             $data["alerterror"]=validation_errors();
@@ -1539,6 +1540,7 @@ class Site extends CI_Controller
             $name=$this->input->get_post("name");
             $json=$this->input->get_post("json");
             $views=$this->input->get_post("views");
+            $website=$this->input->get_post("website");
             
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -1575,7 +1577,7 @@ class Site extends CI_Controller
                 
 			}
             
-            if($this->advertiser_model->create($name,$json,$views,$image)==0)
+            if($this->advertiser_model->create($name,$json,$views,$image,$website)==0)
                 $data["alerterror"]="New advertiser could not be created.";
             else
                 $data["alertsuccess"]="advertiser created Successfully.";
@@ -1600,6 +1602,7 @@ class Site extends CI_Controller
         $this->form_validation->set_rules("name","Name","trim");
         $this->form_validation->set_rules("json","Json","trim");
         $this->form_validation->set_rules("views","Views","trim");
+        $this->form_validation->set_rules("website","website","trim");
         if($this->form_validation->run()==FALSE)
         {
             $data["alerterror"]=validation_errors();
@@ -1614,6 +1617,7 @@ class Site extends CI_Controller
             $name=$this->input->get_post("name");
             $json=$this->input->get_post("json");
             $views=$this->input->get_post("views");
+            $website=$this->input->get_post("website");
             
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -1658,7 +1662,7 @@ class Site extends CI_Controller
             }
             
             
-            if($this->advertiser_model->edit($id,$name,$json,$views,$image)==0)
+            if($this->advertiser_model->edit($id,$name,$json,$views,$image,$website)==0)
                 $data["alerterror"]="New advertiser could not be Updated.";
             else
                 $data["alertsuccess"]="advertiser Updated Successfully.";
