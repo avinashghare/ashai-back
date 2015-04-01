@@ -125,7 +125,6 @@ class HAuth extends CI_Controller {
     }
     public function postfb()
     {
-        $post=$this->input->get('id');
         $facebook = $this->hybridauthlib->authenticate("Facebook");
         $message=$this->input->get_post("message");
         $image=$this->input->get_post("image");
