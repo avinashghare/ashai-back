@@ -6,6 +6,7 @@
         <form class='form-horizontal tasi-form' method='post' action='<?php echo site_url("site/editprojectsubmit");?>' enctype='multipart/form-data'>
             <input type="hidden" id="normal-field" class="form-control" name="id" value="<?php echo set_value('id',$before->id);?>" style="display:none;">
             <div class="form-group">
+               <span>45 Characters Only</span>
                 <label class="col-sm-2 control-label" for="normal-field">Name</label>
                 <div class="col-sm-4">
                     <input type="text" id="normal-field" class="form-control projectnamelimit" name="name" value='<?php echo set_value(' name ',$before->name);?>'>
@@ -19,6 +20,7 @@
                             </div>
                         </div>
                         <div class="form-group">
+                           <span>80 Characters Only</span>
                             <label class="col-sm-2 control-label" for="normal-field">Card Tagline</label>
                             <div class="col-sm-4">
                                 <input type="text" id="normal-field" class="form-control cardtagline" name="cardtagline" value='<?php echo set_value(' cardtagline ',$before->cardtagline);?>'>
@@ -237,7 +239,7 @@
                         <div class=" form-group">
                             <label class="col-sm-2 control-label" for="normal-field">Similar Causes</label>
                             <div class="col-sm-4">
-                                <?php echo form_dropdown( "project[]",$project,$selectedproject, "id='select2'class='chzn-select form-control' multiple");?>
+                                <?php echo form_dropdown( "project[]",$project,$selectedproject, "id='select2'class='chzn-select form-control similarcauseclass' multiple");?>
                             </div>
                         </div>
 				<div class=" form-group hidden">
@@ -260,7 +262,18 @@
 
 
 <script type="text/javascript">
-    
+     
+    $(function () {
+    $("#select2").select2({
+        maximumSelectionSize: 3,
+        formatSelectionTooBig: function (limit) {
+
+            // Callback
+
+            return 'You Already Selected Three Similar Causes';
+        }
+    });
+});
     $('.projectnamelimit').on('keyup', function() {
                             limitText(this, 45)
                         });

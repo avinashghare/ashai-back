@@ -19,6 +19,7 @@ WHERE `powerforone_project`.`id`='$id' AND `powerforone_project`.`status`==1")->
 //        echo $percentage;
         $percentage=round ($percentage);
         $query['percent']=$percentage;
+        $query['totalprojectamount']=$totalprojectamount;
         $query['datapoint']=$this->db->query("SELECT `projectdatapoint`.`id`, `projectdatapoint`.`name`, `projectdatapoint`.`project`, `projectdatapoint`.`image`
 FROM `projectdatapoint`
 WHERE `projectdatapoint`.`project`='$id'")->result();

@@ -13,7 +13,9 @@
             <div class="panel-body">
                 <form class='form-horizontal tasi-form' method='post' action='<?php echo site_url("site/createprojectsubmit");?>' enctype='multipart/form-data'>
                     <div class="panel-body">
+                       
                         <div class="form-group">
+                           <span>45 Characters Only</span>
                             <label class="col-sm-2 control-label" for="normal-field">Name</label>
                             <div class="col-sm-4">
                                 <input type="text" id="normal-field" class="form-control projectnamelimit" name="name" value='<?php echo set_value(' name ');?>'>
@@ -35,6 +37,7 @@
                         </div>
                         
                         <div class="form-group">
+                           <span>80 Characters Only</span>
                             <label class="col-sm-2 control-label" for="normal-field">Card Tagline</label>
                             <div class="col-sm-4">
                                 <input type="text" id="normal-field" class="form-control cardtagline" name="cardtagline" value='<?php echo set_value(' cardtagline ');?>'>
