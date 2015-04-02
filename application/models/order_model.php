@@ -52,7 +52,6 @@ class order_model extends CI_Model
             "amount" => $amount,
             "ngo" => $ngo,
             "status" => $status,
-            "transactionid" => $transactionid,
             "typeofdonation" => $typeofdonation,
             "advertiser" => $advertiser,
             "mobile" => $mobile,
@@ -99,16 +98,16 @@ class order_model extends CI_Model
 	public function getistaxdropdown()
 	{
 		$istax= array(
-			 "0" => "False",
-			 "1" => "True"
+			 "0" => "No",
+			 "1" => "Yes"
 			);
 		return $istax;
 	}
 	public function getanonymousdropdown()
 	{
 		$anonymous= array(
-			 "0" => "False",
-			 "1" => "True"
+			 "0" => "No",
+			 "1" => "Yes"
 			);
 		return $anonymous;
 	}

@@ -8,7 +8,7 @@
     <div class="col-lg-12">
         <section class="panel">
             <header class="panel-heading">
-                project Details
+                Campaign Details
             </header>
             <div class="panel-body">
                 <form class='form-horizontal tasi-form' method='post' action='<?php echo site_url("site/createprojectsubmit");?>' enctype='multipart/form-data'>
@@ -19,6 +19,14 @@
                             <label class="col-sm-2 control-label" for="normal-field">Name</label>
                             <div class="col-sm-4">
                                 <input type="text" id="normal-field" class="form-control projectnamelimit" name="name" value='<?php echo set_value(' name ');?>'>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                           <span>80 Characters Only</span>
+                            <label class="col-sm-2 control-label" for="normal-field">Card Tagline</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="normal-field" class="form-control cardtagline" name="cardtagline" value='<?php echo set_value(' cardtagline ');?>'>
                             </div>
                         </div>
                         
@@ -38,14 +46,6 @@
                         </div>
                         
                         <div class="form-group">
-                           <span>80 Characters Only</span>
-                            <label class="col-sm-2 control-label" for="normal-field">Card Tagline</label>
-                            <div class="col-sm-4">
-                                <input type="text" id="normal-field" class="form-control cardtagline" name="cardtagline" value='<?php echo set_value(' cardtagline ');?>'>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
                             <label class="col-sm-2 control-label" for="normal-field">Location</label>
                             <div class="col-sm-4">
                                 <input type="text" id="normal-field" class="form-control" name="location" value='<?php echo set_value(' location ');?>'>
@@ -58,7 +58,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label" for="normal-field">Contribution</label>
+                            <label class="col-sm-2 control-label" for="normal-field">Project Target</label>
                             <div class="col-sm-4">
                                 <input type="text" id="normal-field" class="form-control" name="contribution" value='<?php echo set_value(' contribution ');?>'>
                             </div>
@@ -75,6 +75,20 @@
                             <label class="col-sm-2 control-label" for="normal-field">Times(In Words)</label>
                             <div class="col-sm-4">
                                 <input type="text" id="normal-field" class="form-control" name="timesinword" value='<?php echo set_value(' timesinword ');?>'>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Times(In Words) For Share</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="normal-field" class="form-control" name="timesinwordforshare" value='<?php echo set_value(' timesinwordforshare ');?>'>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Remember Share Value Text</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="normal-field" class="form-control" name="remembersharevalue" value='<?php echo set_value(' remembersharevalue ');?>'>
                             </div>
                         </div>
                         
@@ -214,13 +228,13 @@
                         </div>
                         
             <div class=" form-group">
-                <label class="col-sm-2 control-label" for="normal-field">Indian Doner</label>
+                <label class="col-sm-2 control-label" for="normal-field">Indian Donor</label>
                 <div class="col-sm-4">
                     <?php echo form_dropdown( "indiandoner",$indiandoner,set_value( 'indiandoner'),"class='chzn-select form-control'");?>
                 </div>
             </div>
             <div class=" form-group">
-                <label class="col-sm-2 control-label" for="normal-field">Foreign Doner</label>
+                <label class="col-sm-2 control-label" for="normal-field">Foreign Donor</label>
                 <div class="col-sm-4">
                     <?php echo form_dropdown( "foreigndoner",$foreigndoner,set_value( 'foreigndoner'),"class='chzn-select form-control'");?>
                 </div>

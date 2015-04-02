@@ -273,6 +273,7 @@ class User_model extends CI_Model
                 'email'     => $email,
                 'password' => $password,
                 'logged_in' => true,
+                'image' => '',
                 'id'=> $user
             );
 
@@ -291,7 +292,7 @@ class User_model extends CI_Model
     function login($email,$password)
     {
         $password=md5($password);
-        $query=$this->db->query("SELECT `id`,`name` FROM `user` WHERE `email`='$email' AND `password`= '$password'");
+        $query=$this->db->query("SELECT `id`,`name`,`image` FROM `user` WHERE `email`='$email' AND `password`= '$password'");
         if($query->num_rows > 0)
         {
             $user=$query->row();
@@ -303,6 +304,7 @@ class User_model extends CI_Model
                 'password' => $password,
                 'logged_in' => true,
                 'id'=> $user->id,
+                'image'=> $user->image,
                 'name'=> $user->name
             );
 
@@ -613,6 +615,7 @@ class User_model extends CI_Model
                 'logged_in' => true,
                 'id'=> $id,
                 'name'=> $user_profile->displayName,
+                'image'=> $user_profile->photoURL,
                 'logintype'=>$provider
             );
 
@@ -630,6 +633,7 @@ class User_model extends CI_Model
                 'logged_in' => true,
                 'id'=> $query->id,
                 'name'=> $user_profile->displayName,
+                'image'=> $user_profile->photoURL,
                 'logintype'=>$provider
             );
 

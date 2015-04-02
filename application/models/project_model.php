@@ -3,7 +3,7 @@ if ( !defined( "BASEPATH" ) )
 exit( "No direct script access allowed" );
 class project_model extends CI_Model
 {
-    public function create($name,$category,$ngo,$advertiser,$json,$like,$share,$follow,$facebook,$twitter,$google,$status,$order,$views,$video,$content,$contribution,$times,$donate,$tagline,$image,$video2,$cardtagline,$indiandoner,$foreigndoner,$project,$timesinword,$facebooktext,$twittertext,$sharevalue,$cardimage,$sharevalue,$location)
+    public function create($name,$category,$ngo,$advertiser,$json,$like,$share,$follow,$facebook,$twitter,$google,$status,$order,$views,$video,$content,$contribution,$times,$donate,$tagline,$image,$video2,$cardtagline,$indiandoner,$foreigndoner,$project,$timesinword,$facebooktext,$twittertext,$sharevalue,$cardimage,$sharevalue,$location,$timesinwordforshare,$remembersharevalue)
     {
         $data=array(
             "name" => $name,
@@ -37,6 +37,8 @@ class project_model extends CI_Model
             "cardimage" => $cardimage,
             "sharevalue" => $sharevalue,
             "location" => $location,
+            "timesinwordforshare" => $timesinwordforshare,
+            "remembersharevalue" => $remembersharevalue,
             "video2" => $video2
         );
         $query=$this->db->insert( "powerforone_project", $data );
@@ -73,7 +75,7 @@ class project_model extends CI_Model
         $query=$this->db->get("powerforone_project")->row();
         return $query;
     }
-    public function edit($id,$name,$category,$ngo,$advertiser,$json,$like,$share,$follow,$facebook,$twitter,$google,$status,$order,$views,$video,$content,$contribution,$times,$donate,$tagline,$image,$video2,$cardtagline,$indiandoner,$foreigndoner,$project,$timesinword,$facebooktext,$twittertext,$sharevalue,$cardimage,$sharevalue,$location)
+    public function edit($id,$name,$category,$ngo,$advertiser,$json,$like,$share,$follow,$facebook,$twitter,$google,$status,$order,$views,$video,$content,$contribution,$times,$donate,$tagline,$image,$video2,$cardtagline,$indiandoner,$foreigndoner,$project,$timesinword,$facebooktext,$twittertext,$sharevalue,$cardimage,$sharevalue,$location,$timesinwordforshare,$remembersharevalue)
     {
         $data=array(
             "name" => $name,
@@ -105,8 +107,9 @@ class project_model extends CI_Model
             "twittertext" => $twittertext,
             "sharevalue" => $sharevalue,
             "cardimage" => $cardimage,
-            "sharevalue" => $sharevalue,
             "location" => $location,
+            "timesinwordforshare" => $timesinwordforshare,
+            "remembersharevalue" => $remembersharevalue,
             "video2" => $video2
         );
         $this->db->where( "id", $id );

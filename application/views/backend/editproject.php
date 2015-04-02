@@ -1,6 +1,6 @@
 <section class="panel">
     <header class="panel-heading">
-        project Details
+        Campaign Details
     </header>
     <div class="panel-body">
         <form class='form-horizontal tasi-form' method='post' action='<?php echo site_url("site/editprojectsubmit");?>' enctype='multipart/form-data'>
@@ -14,13 +14,6 @@
             </div>
             
                         <div class="form-group">
-                           <span>180 Characters Only</span>
-                            <label class="col-sm-2 control-label" for="normal-field">Project Tagline</label>
-                            <div class="col-sm-4">
-                                <input type="text" id="normal-field" class="form-control projecttagline" name="tagline" value='<?php echo set_value(' tagline ',$before->tagline);?>'>
-                            </div>
-                        </div>
-                        <div class="form-group">
                            <span>80 Characters Only</span>
                             <label class="col-sm-2 control-label" for="normal-field">Card Tagline</label>
                             <div class="col-sm-4">
@@ -28,6 +21,13 @@
                             </div>
                         </div>
                         
+                        <div class="form-group">
+                           <span>180 Characters Only</span>
+                            <label class="col-sm-2 control-label" for="normal-field">Project Tagline</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="normal-field" class="form-control projecttagline" name="tagline" value='<?php echo set_value(' tagline ',$before->tagline);?>'>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="normal-field">Location</label>
                             <div class="col-sm-4">
@@ -42,7 +42,7 @@
             </div>
             
                         <div class="form-group">
-                            <label class="col-sm-2 control-label" for="normal-field">Contribution</label>
+                            <label class="col-sm-2 control-label" for="normal-field">Project Target</label>
                             <div class="col-sm-4">
                                 <input type="text" id="normal-field" class="form-control" name="contribution" value='<?php echo set_value(' contribution ',$before->contribution);?>'>
                             </div>
@@ -52,6 +52,20 @@
                             <label class="col-sm-2 control-label" for="normal-field">Times</label>
                             <div class="col-sm-4">
                                 <input type="text" id="normal-field" class="form-control" name="times" value='<?php echo set_value(' times ',$before->times);?>'>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Times(In Words) For Share</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="normal-field" class="form-control" name="timesinwordforshare" value='<?php echo set_value(' timesinwordforshare ',$before->timesinwordforshare);?>'>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Remember Share Value Text</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="normal-field" class="form-control" name="remembersharevalue" value='<?php echo set_value(' remembersharevalue ',$before->remembersharevalue);?>'>
                             </div>
                         </div>
                         
@@ -96,7 +110,7 @@
                         <div class=" form-group">
                             <label class="col-sm-2 control-label" for="normal-field">Raise Awareness</label>
                             <div class="col-sm-4">
-                                <?php echo form_dropdown( "share",$share,set_value( 'share',$before->share), "class='chzn-select form-control'");?>
+                                <?php echo form_dropdown( "share",$share,set_value( 'share',$before->raiseawareness), "class='chzn-select form-control'");?>
                             </div>
                         </div>
 <!--
@@ -196,13 +210,13 @@
             </div>
             
             <div class=" form-group">
-                <label class="col-sm-2 control-label" for="normal-field">Indian Doner</label>
+                <label class="col-sm-2 control-label" for="normal-field">Indian Donor</label>
                 <div class="col-sm-4">
                     <?php echo form_dropdown( "indiandoner",$indiandoner,set_value( 'indiandoner',$before->indiandoner),"class='chzn-select form-control'");?>
                 </div>
             </div>
             <div class=" form-group">
-                <label class="col-sm-2 control-label" for="normal-field">Foreign Doner</label>
+                <label class="col-sm-2 control-label" for="normal-field">Foreign Donor</label>
                 <div class="col-sm-4">
                     <?php echo form_dropdown( "foreigndoner",$foreigndoner,set_value( 'foreigndoner',$before->foreigndoner),"class='chzn-select form-control'");?>
                 </div>
@@ -264,6 +278,7 @@
 
 <script type="text/javascript">
      
+    $(document).ready(function () {
     $(function () {
     $("#select2").select2({
         maximumSelectionSize: 3,
@@ -298,7 +313,6 @@
                             }
                         }
     
-    $(document).ready(function () {
 //        console.log($(".fieldjsoninput").val());
         filljsoninput(".fieldjsoninput",".fieldjson");
         $(".jsonsubmit").click(function() {

@@ -598,6 +598,18 @@ $this->load->view("json",$data);
     $elements[26]->header="advertiserwebsite";
     $elements[26]->alias="advertiserwebsite";
 
+    $elements[27]=new stdClass();
+    $elements[27]->field="`powerforone_project`.`timesinwordforshare`";
+    $elements[27]->sort="1";
+    $elements[27]->header="timesinwordforshare";
+    $elements[27]->alias="timesinwordforshare";
+
+    $elements[28]=new stdClass();
+    $elements[28]->field="`powerforone_project`.`remembersharevalue`";
+    $elements[28]->sort="1";
+    $elements[28]->header="remembersharevalue";
+    $elements[28]->alias="remembersharevalue";
+
     $search=$this->input->get_post("search");
     $pageno=$this->input->get_post("pageno");
     $orderby=$this->input->get_post("orderby");
@@ -610,7 +622,7 @@ $this->load->view("json",$data);
     
     if($orderby=="")
     {
-        $orderby="id";
+        $orderby="order";
         $orderorder="ASC";
     }
     $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `powerforone_project` LEFT OUTER JOIN `powerforone_category` ON `powerforone_project`.`category`=`powerforone_category`.`id` LEFT OUTER JOIN `powerforone_ngo` ON `powerforone_project`.`ngo`=`powerforone_ngo`.`id` LEFT OUTER JOIN `powerforone_advertiser` ON `powerforone_project`.`advertiser`=`powerforone_advertiser`.`id`",$where);
@@ -809,6 +821,18 @@ $this->load->view("json",$data);
     $elements[26]->header="advertiserwebsite";
     $elements[26]->alias="advertiserwebsite";
 
+    $elements[27]=new stdClass();
+    $elements[27]->field="`powerforone_project`.`timesinwordforshare`";
+    $elements[27]->sort="1";
+    $elements[27]->header="timesinwordforshare";
+    $elements[27]->alias="timesinwordforshare";
+
+    $elements[28]=new stdClass();
+    $elements[28]->field="`powerforone_project`.`remembersharevalue`";
+    $elements[28]->sort="1";
+    $elements[28]->header="remembersharevalue";
+    $elements[28]->alias="remembersharevalue";
+
     $search=$this->input->get_post("search");
     $pageno=$this->input->get_post("pageno");
     $orderby=$this->input->get_post("orderby");
@@ -821,7 +845,7 @@ $this->load->view("json",$data);
     
     if($orderby=="")
     {
-        $orderby="id";
+        $orderby="order";
         $orderorder="ASC";
     }
     $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `powerforone_project` LEFT OUTER JOIN `powerforone_category` ON `powerforone_project`.`category`=`powerforone_category`.`id` LEFT OUTER JOIN `powerforone_ngo` ON `powerforone_project`.`ngo`=`powerforone_ngo`.`id`  LEFT OUTER JOIN `powerforone_advertiser` ON `powerforone_project`.`advertiser`=`powerforone_advertiser`.`id`",$where, "GROUP BY `powerforone_project`.`id` ");
@@ -1338,12 +1362,13 @@ $this->load->view("json",$data);
     
      public function addpaymentdetails()
     {
+         
+         
 //        $id=$this->input->get_post("id");
         $postvalue=$_POST;
 	   $postvalue["custom_fields"]=json_decode($postvalue["custom_fields"]);
         //$ourjson=json_encode($postvalue);
-        
-        
+
       $transactionid=$postvalue["payment_id"];
         $orderid=$postvalue["custom_fields"]->Field_99652->value;
          $status=$postvalue["status"];

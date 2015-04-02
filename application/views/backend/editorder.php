@@ -57,12 +57,6 @@
             </div>
             
             <div class=" form-group">
-                <label class="col-sm-2 control-label" for="normal-field">Tax</label>
-                <div class="col-sm-4">
-                    <?php echo form_dropdown( "istax",$istax,set_value( 'istax',$before->istax),"class='chzn-select form-control'");?>
-                </div>
-            </div>
-            <div class=" form-group">
                 <label class="col-sm-2 control-label" for="normal-field">Type Of Donation</label>
                 <div class="col-sm-4">
                     <?php echo form_dropdown( "typeofdonation",$typeofdonation,set_value( 'typeofdonation',$before->typeofdonation),"class='chzn-select form-control'");?>
@@ -102,12 +96,13 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="normal-field">Transaction Id</label>
                             <div class="col-sm-4">
-                                <input type="text" id="normal-field" class="form-control" name="transactionid" value='<?php echo set_value(' transactionid ',$before->transactionid);?>'>
+                            <?php echo $before->transactionid;?>
+<!--                                <input type="text" id="normal-field" class="form-control" name="transactionid" value='<?php echo set_value(' transactionid ',$before->transactionid);?>'>-->
                             </div>
                         </div>
                         
                         <div class=" form-group">
-                            <label class="col-sm-2 control-label" for="normal-field">Is Tax</label>
+                            <label class="col-sm-2 control-label" for="normal-field">Tax Certificate</label>
                             <div class="col-sm-4">
                                 <?php echo form_dropdown( "istax",$istax,set_value( 'istax',$before->istax), "class='chzn-select form-control'");?>
                             </div>

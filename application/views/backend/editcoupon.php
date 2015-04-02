@@ -46,16 +46,11 @@
                 </div>
             </div>
 -->
-            <div class=" form-group">
-                <label class="col-sm-2 control-label" for="normal-field">Text</label>
-                <div class="col-sm-8">
-                    <textarea name="text" id="" cols="20" rows="10" class="form-control tinymce"><?php echo set_value( 'text',$before->text);?></textarea>
-                </div>
-            </div>
+            
             <div class=" form-group">
                 <label class="col-sm-2 control-label" for="normal-field">Description</label>
                 <div class="col-sm-8">
-                    <textarea name="description" id="" cols="20" rows="10" class="form-control"><?php echo set_value( 'description',$before->description);?></textarea>
+                    <textarea name="description" id="" cols="20" rows="10" class="form-control tinymce"><?php echo set_value( 'description',$before->description);?></textarea>
                 </div>
             </div>
             <div class=" form-group">
@@ -89,22 +84,19 @@
                 <label class="col-sm-2 control-label" for="normal-field">&nbsp;</label>
                 <div class="col-sm-4">
                     <button type="submit" class="btn btn-primary jsonsubmit">Save</button>
-                    <a href='<?php echo site_url("site/viewpage"); ?>' class='btn btn-secondary'>Cancel</a>
+                    <a href='<?php echo site_url("site/viewcoupon"); ?>' class='btn btn-secondary'>Cancel</a>
                 </div>
             </div>
         </form>
     </div>
+    
 </section>
 
-<script type="text/javascript">
-     
-    $(document).ready(function () {
-//        console.log($(".fieldjsoninput").val());
+<script>
+    $(window).load(function () {
         filljsoninput(".fieldjsoninput",".fieldjson");
         $(".jsonsubmit").click(function() {
             jsonsubmit(".fieldjsoninput",".fieldjson");
-            //return false;
         });
-        
     });
 </script>

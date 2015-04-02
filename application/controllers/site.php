@@ -911,6 +911,8 @@ class Site extends CI_Controller
         $this->form_validation->set_rules("cardtagline","cardtagline","trim");
         $this->form_validation->set_rules("sharevalue","sharevalue","trim");
         $this->form_validation->set_rules("location","location","trim");
+        $this->form_validation->set_rules("timesinwordforshare","timesinwordforshare","trim");
+        $this->form_validation->set_rules("remembersharevalue","remembersharevalue","trim");
         
         if($this->form_validation->run()==FALSE)
         {
@@ -962,6 +964,8 @@ class Site extends CI_Controller
             $cardimage=$this->input->get_post("cardimage");
             $sharevalue=$this->input->get_post("sharevalue");
             $location=$this->input->get_post("location");
+            $timesinwordforshare=$this->input->get_post("timesinwordforshare");
+            $remembersharevalue=$this->input->get_post("remembersharevalue");
             
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -987,7 +991,7 @@ class Site extends CI_Controller
                 
 			}
             
-            if($this->project_model->create($name,$category,$ngo,$advertiser,$json,$like,$share,$follow,$facebook,$twitter,$google,$status,$order,$views,$video,$content,$contribution,$times,$donate,$tagline,$image,$video2,$cardtagline,$indiandoner,$foreigndoner,$project,$timesinword,$facebooktext,$twittertext,$sharevalue,$cardimage,$sharevalue,$location)==0)
+            if($this->project_model->create($name,$category,$ngo,$advertiser,$json,$like,$share,$follow,$facebook,$twitter,$google,$status,$order,$views,$video,$content,$contribution,$times,$donate,$tagline,$image,$video2,$cardtagline,$indiandoner,$foreigndoner,$project,$timesinword,$facebooktext,$twittertext,$sharevalue,$cardimage,$sharevalue,$location,$timesinwordforshare,$remembersharevalue)==0)
                 $data["alerterror"]="New project could not be created.";
             else
                 $data["alertsuccess"]="project created Successfully.";
@@ -1043,6 +1047,8 @@ class Site extends CI_Controller
         $this->form_validation->set_rules("cardtagline","cardtagline","trim");
         $this->form_validation->set_rules("sharevalue","sharevalue","trim");
         $this->form_validation->set_rules("location","location","trim");
+        $this->form_validation->set_rules("timesinwordforshare","timesinwordforshare","trim");
+        $this->form_validation->set_rules("remembersharevalue","remembersharevalue","trim");
         if($this->form_validation->run()==FALSE)
         {
             $data["alerterror"]=validation_errors();
@@ -1095,6 +1101,8 @@ class Site extends CI_Controller
             $cardimage=$this->input->get_post("cardimage");
             $sharevalue=$this->input->get_post("sharevalue");
             $location=$this->input->get_post("location");
+            $timesinwordforshare=$this->input->get_post("timesinwordforshare");
+            $remembersharevalue=$this->input->get_post("remembersharevalue");
             
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -1136,7 +1144,7 @@ class Site extends CI_Controller
             }
             
 //            print_r($project);
-            if($this->project_model->edit($id,$name,$category,$ngo,$advertiser,$json,$like,$share,$follow,$facebook,$twitter,$google,$status,$order,$views,$video,$content,$contribution,$times,$donate,$tagline,$image,$video2,$cardtagline,$indiandoner,$foreigndoner,$project,$timesinword,$facebooktext,$twittertext,$sharevalue,$cardimage,$sharevalue,$location)==0)
+            if($this->project_model->edit($id,$name,$category,$ngo,$advertiser,$json,$like,$share,$follow,$facebook,$twitter,$google,$status,$order,$views,$video,$content,$contribution,$times,$donate,$tagline,$image,$video2,$cardtagline,$indiandoner,$foreigndoner,$project,$timesinword,$facebooktext,$twittertext,$sharevalue,$cardimage,$sharevalue,$location,$timesinwordforshare,$remembersharevalue)==0)
                 $data["alerterror"]="New project could not be Updated.";
             else
                 $data["alertsuccess"]="project Updated Successfully.";

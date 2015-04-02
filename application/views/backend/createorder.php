@@ -108,7 +108,7 @@
                         </div>
                         
                         <div class=" form-group">
-                            <label class="col-sm-2 control-label" for="normal-field">Is Tax</label>
+                            <label class="col-sm-2 control-label" for="normal-field">Tax Certificate</label>
                             <div class="col-sm-4">
                                 <?php echo form_dropdown( "istax",$istax,set_value( 'istax'), "class='chzn-select form-control'");?>
                             </div>
