@@ -3,7 +3,7 @@ if ( !defined( "BASEPATH" ) )
 exit( "No direct script access allowed" );
 class category_model extends CI_Model
 {
-    public function create($name,$parent,$json,$order,$views,$image,$description)
+    public function create($name,$parent,$json,$order,$views,$image,$description,$status)
     {
         $data=array(
             "name" => $name,
@@ -12,6 +12,7 @@ class category_model extends CI_Model
             "order" => $order,
             "views" => $views,
             "description" => $description,
+            "status" => $status,
             "image" => $image
         );
         $query=$this->db->insert( "powerforone_category", $data );
@@ -33,7 +34,7 @@ class category_model extends CI_Model
         $query=$this->db->get("powerforone_category")->row();
         return $query;
     }
-    public function edit($id,$name,$parent,$json,$order,$views,$image,$description)
+    public function edit($id,$name,$parent,$json,$order,$views,$image,$description,$status)
     {
         $data=array(
             "name" => $name,
@@ -42,6 +43,7 @@ class category_model extends CI_Model
             "order" => $order,
             "views" => $views,
             "description" => $description,
+            "status" => $status,
             "image" => $image
         );
         $this->db->where( "id", $id );

@@ -14,6 +14,7 @@
             </div>
             
                         <div class="form-group">
+                           <span>180 Characters Only</span>
                             <label class="col-sm-2 control-label" for="normal-field">Project Tagline</label>
                             <div class="col-sm-4">
                                 <input type="text" id="normal-field" class="form-control projecttagline" name="tagline" value='<?php echo set_value(' tagline ',$before->tagline);?>'>
@@ -278,9 +279,9 @@
                             limitText(this, 45)
                         });
 
-//     $('.projecttagline').on('keyup', function() {
-//                            limitText(this, 30)
-//                        });
+     $('.projecttagline').on('keyup', function() {
+                            limitText(this, 180)
+                        });
 
                         $('.cardtagline').on('keyup', function() {
                             limitText(this, 81)

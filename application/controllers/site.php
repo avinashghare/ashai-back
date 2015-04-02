@@ -517,6 +517,7 @@ class Site extends CI_Controller
         
         
         $data["fieldjson"]=$json;
+        $data['status']=$this->user_model->getstatusdropdown();
         $data["page"]="createcategory";
         $data["title"]="Create category";
         $this->load->view("template",$data);
@@ -531,10 +532,12 @@ class Site extends CI_Controller
         $this->form_validation->set_rules("order","Order","trim");
         $this->form_validation->set_rules("views","Views","trim");
         $this->form_validation->set_rules("description","description","trim");
+        $this->form_validation->set_rules("status","status","trim");
         if($this->form_validation->run()==FALSE)
         {
             $data["alerterror"]=validation_errors();
             $data["page"]="createcategory";
+            $data['status']=$this->user_model->getstatusdropdown();
             $data['parent']=$this->category_model->getcategorydropdown();
             $data["title"]="Create category";
             $this->load->view("template",$data);
@@ -547,6 +550,7 @@ class Site extends CI_Controller
             $order=$this->input->get_post("order");
             $views=$this->input->get_post("views");
             $description=$this->input->get_post("description");
+            $status=$this->input->get_post("status");
             
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -583,7 +587,7 @@ class Site extends CI_Controller
                 
 			}
             
-            if($this->category_model->create($name,$parent,$json,$order,$views,$image,$description)==0)
+            if($this->category_model->create($name,$parent,$json,$order,$views,$image,$description,$status)==0)
                 $data["alerterror"]="New category could not be created.";
             else
                 $data["alertsuccess"]="category created Successfully.";
@@ -597,6 +601,7 @@ class Site extends CI_Controller
         $this->checkaccess($access);
         $data["page"]="editcategory";
         $data["title"]="Edit category";
+        $data['status']=$this->user_model->getstatusdropdown();
         $data['parent']=$this->category_model->getcategorydropdown();
         $data["before"]=$this->category_model->beforeedit($this->input->get("id"));
         $this->load->view("template",$data);
@@ -612,11 +617,13 @@ class Site extends CI_Controller
         $this->form_validation->set_rules("order","Order","trim");
         $this->form_validation->set_rules("views","Views","trim");
         $this->form_validation->set_rules("description","description","trim");
+        $this->form_validation->set_rules("status","status","trim");
         if($this->form_validation->run()==FALSE)
         {
             $data["alerterror"]=validation_errors();
             $data["page"]="editcategory";
             $data["title"]="Edit category";
+            $data['status']=$this->user_model->getstatusdropdown();
             $data['parent']=$this->category_model->getcategorydropdown();
             $data["before"]=$this->category_model->beforeedit($this->input->get("id"));
             $this->load->view("template",$data);
@@ -630,6 +637,7 @@ class Site extends CI_Controller
             $order=$this->input->get_post("order");
             $views=$this->input->get_post("views");
             $description=$this->input->get_post("description");
+            $status=$this->input->get_post("status");
             
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -673,7 +681,7 @@ class Site extends CI_Controller
                 $image=$image->image;
             }
             
-            if($this->category_model->edit($id,$name,$parent,$json,$order,$views,$image,$description)==0)
+            if($this->category_model->edit($id,$name,$parent,$json,$order,$views,$image,$description,$status)==0)
             $data["alerterror"]="New category could not be Updated.";
             else
             $data["alertsuccess"]="category Updated Successfully.";
@@ -1790,7 +1798,7 @@ class Site extends CI_Controller
         $data['project']=$this->project_model->getprojectdropdown();
         $data['status']=$this->order_model->getstatusdropdown();
         $data['advertiser']=$this->advertiser_model->getadvertiserdropdown();
-        $data['typeofdonation']=$this->order_model->getdonationtypedropdown();
+//        $data['typeofdonation']=$this->order_model->getdonationtypedropdown();
         $data['typeofdonation']=$this->order_model->getdonationtypedropdown();
         $data['istax']=$this->order_model->getistaxdropdown();
         $data['anonymous']=$this->order_model->getanonymousdropdown();

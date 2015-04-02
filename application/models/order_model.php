@@ -90,8 +90,9 @@ class order_model extends CI_Model
 	public function getdonationtypedropdown()
 	{
 		$typeofdonation= array(
-			 "1" => "Amount",
-			 "0" => "Post",
+			 "0" => "Amount",
+			 "1" => "Facebook Post",
+			 "2" => "Tweet"
 			);
 		return $typeofdonation;
 	}

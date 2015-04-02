@@ -34,13 +34,17 @@
         </section>
         <script>
             function drawtable(resultrow) {
-                if(resultrow.typeofdonation==1)
+                if(resultrow.typeofdonation==0)
                 {
                 resultrow.typeofdonation="By Amount";
                 }
-                else
+                else if(resultrow.typeofdonation==1)
                 {
-                resultrow.typeofdonation="By Post";
+                resultrow.typeofdonation="Facebook Post";
+                }
+                else if(resultrow.typeofdonation==2)
+                {
+                resultrow.typeofdonation="Tweet";
                 }
                 return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.username + "</td><td>" + resultrow.email + "</td><td>" + resultrow.typeofdonation + "</td><td>" + resultrow.amount + "</td><td>" + resultrow.projectname + "</td><td>" + resultrow.ngoname + "</td><td>" + resultrow.advertisername + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editorder?id=');?>" + resultrow.id + "'><i class='icon-pencil'></i></a><a class='btn btn-danger btn-xs' href='<?php echo site_url('site/deleteorder?id='); ?>" + resultrow.id + "'><i class='icon-trash '></i></a></td></tr>";
             }

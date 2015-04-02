@@ -22,7 +22,7 @@
                             </div>
                         </div>
                         
-                        <div class="form-group">
+                        <div class="form-group" style="display:none;">
                             <label class="col-sm-2 control-label" for="normal-field">Company Name</label>
                             <div class="col-sm-4">
                                 <input type="text" id="normal-field" class="form-control companyname" name="companyname" value='<?php echo set_value(' companyname ');?>'>
@@ -30,6 +30,7 @@
                         </div>
                         
                         <div class="form-group">
+                           <span>180 Characters Only</span>
                             <label class="col-sm-2 control-label" for="normal-field">Project Tagline</label>
                             <div class="col-sm-4">
                                 <input type="text" id="normal-field" class="form-control projecttagline" name="tagline" value='<?php echo set_value(' tagline ');?>'>
@@ -281,9 +282,9 @@
         }
     });
 });
-//                        $('.projecttagline').on('keyup', function() {
-//                            limitText(this, 30)
-//                        });
+                        $('.projecttagline').on('keyup', function() {
+                            limitText(this, 180)
+                        });
 
                         $('.projectnamelimit').on('keyup', function() {
                             limitText(this, 45)
