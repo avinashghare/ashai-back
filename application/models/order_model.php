@@ -3,7 +3,7 @@ if ( !defined( "BASEPATH" ) )
 exit( "No direct script access allowed" );
 class order_model extends CI_Model
 {
-    public function create($name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser,$mobile,$city,$address,$pan,$dob,$istax,$anonymous)
+    public function create($name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser,$mobile,$city,$address,$pan,$dob,$istax,$anonymous,$give)
     {
         $data=array(
             "name" => $name,
@@ -22,6 +22,7 @@ class order_model extends CI_Model
             "dob" => $dob,
             "istax" => $istax,
             "anonymous" => $anonymous,
+            "give" => $give,
             "project" => $project
         );
         $query=$this->db->insert( "powerforone_order", $data );
@@ -43,7 +44,7 @@ class order_model extends CI_Model
         $query=$this->db->get("powerforone_order")->row();
         return $query;
     }
-    public function edit($id,$name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser,$mobile,$city,$address,$pan,$dob,$istax,$anonymous)
+    public function edit($id,$name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser,$mobile,$city,$address,$pan,$dob,$istax,$anonymous,$give)
     {
         $data=array(
             "name" => $name,
@@ -61,6 +62,7 @@ class order_model extends CI_Model
             "dob" => $dob,
             "istax" => $istax,
             "anonymous" => $anonymous,
+            "give" => $give,
             "project" => $project
         );
         $this->db->where( "id", $id );
@@ -72,7 +74,7 @@ class order_model extends CI_Model
         $query=$this->db->query("DELETE FROM `powerforone_order` WHERE `id`='$id'");
         return $query;
     }
-    
+
     public function getstatusdropdown()
 	{
 		$query=$this->db->query("SELECT * FROM `orderstatus`  ORDER BY `id` ASC")->result();
@@ -82,10 +84,10 @@ class order_model extends CI_Model
 		{
 			$return[$row->id]=$row->name;
 		}
-		
+
 		return $return;
 	}
-    
+
 	public function getdonationtypedropdown()
 	{
 		$typeofdonation= array(
@@ -110,6 +112,17 @@ class order_model extends CI_Model
 			 "1" => "Yes"
 			);
 		return $anonymous;
+	}
+
+	public function getgivedropdown()
+	{
+		$give= array(
+			 "0" => "One Time",
+			 "1" => "Monthly",
+			 "2" => "Quarterly",
+			 "3" => "Yearly"
+			);
+		return $give;
 	}
 }
 ?>

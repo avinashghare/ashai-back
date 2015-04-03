@@ -1,10 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class Site extends CI_Controller 
+class Site extends CI_Controller
 {
 	public function __construct( )
 	{
 		parent::__construct();
-		
+
 		$this->is_logged_in();
 	}
 	function is_logged_in( )
@@ -27,7 +27,7 @@ class Site extends CI_Controller
 		$this->checkaccess($access);
 		$data[ 'page' ] = 'dashboard';
 		$data[ 'title' ] = 'Welcome';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
 	public function createuser()
 	{
@@ -36,9 +36,9 @@ class Site extends CI_Controller
 		$data['accesslevel']=$this->user_model->getaccesslevels();
 		$data[ 'status' ] =$this->user_model->getstatusdropdown();
 		$data[ 'logintype' ] =$this->user_model->getlogintypedropdown();
-        
+
         $json=array();
-        
+
         $json[0]=new stdClass();
         $json[0]->placeholder="";
         $json[0]->value="";
@@ -46,7 +46,7 @@ class Site extends CI_Controller
         $json[0]->type="text";
         $json[0]->options="";
         $json[0]->classes="";
-        
+
         $json[1]=new stdClass();
         $json[1]->placeholder="";
         $json[1]->value="";
@@ -54,7 +54,7 @@ class Site extends CI_Controller
         $json[1]->type="textarea";
         $json[1]->options="";
         $json[1]->classes="";
-        
+
         $json[2]=new stdClass();
         $json[2]->placeholder="";
         $json[2]->value="";
@@ -62,13 +62,13 @@ class Site extends CI_Controller
         $json[2]->type="textarea";
         $json[2]->options="";
         $json[2]->classes="";
-        
-        
+
+
         $data["fieldjson"]=$json;
 //        $data['category']=$this->category_model->getcategorydropdown();
 		$data[ 'page' ] = 'createuser';
 		$data[ 'title' ] = 'Create User';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
 	function createusersubmit()
 	{
@@ -93,7 +93,7 @@ class Site extends CI_Controller
 		$this->form_validation->set_rules('facebook','facebook','trim');
 		$this->form_validation->set_rules('google','google','trim');
 		$this->form_validation->set_rules('twitter','twitter','trim');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data['accesslevel']=$this->user_model->getaccesslevels();
@@ -102,7 +102,7 @@ class Site extends CI_Controller
             $data['category']=$this->category_model->getcategorydropdown();
             $data[ 'page' ] = 'createuser';
             $data[ 'title' ] = 'Create User';
-            $this->load->view( 'template', $data );	
+            $this->load->view( 'template', $data );
 		}
 		else
 		{
@@ -125,7 +125,7 @@ class Site extends CI_Controller
             $google=$this->input->post('google');
             $twitter=$this->input->post('twitter');
 //            $category=$this->input->post('category');
-            
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -135,7 +135,7 @@ class Site extends CI_Controller
 			{
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
-                
+
                 $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
                 $config_r['maintain_ratio'] = TRUE;
                 $config_t['create_thumb'] = FALSE;///add this
@@ -144,13 +144,13 @@ class Site extends CI_Controller
                 $config_r['quality']    = 100;
                 //end of configs
 
-                $this->load->library('image_lib', $config_r); 
+                $this->load->library('image_lib', $config_r);
                 $this->image_lib->initialize($config_r);
                 if(!$this->image_lib->resize())
                 {
                     echo "Failed." . $this->image_lib->display_errors();
                     //return false;
-                }  
+                }
                 else
                 {
                     //print_r($this->image_lib->dest_image);
@@ -158,9 +158,9 @@ class Site extends CI_Controller
                     $image=$this->image_lib->dest_image;
                     //return false;
                 }
-                
+
 			}
-            
+
 			if($this->user_model->create($name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$json,$dob,$street,$address,$city,$state,$country,$pincode,$facebook,$google,$twitter)==0)
 			$data['alerterror']="New user could not be created.";
 			else
@@ -175,67 +175,67 @@ class Site extends CI_Controller
 		$this->checkaccess($access);
 		$data['page']='viewusers';
         $data['base_url'] = site_url("site/viewusersjson");
-        
+
 		$data['title']='View Users';
 		$this->load->view('template',$data);
-	} 
+	}
     function viewusersjson()
 	{
 		$access = array("1");
 		$this->checkaccess($access);
-        
-        
+
+
         $elements=array();
         $elements[0]=new stdClass();
         $elements[0]->field="`user`.`id`";
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
-        
+
+
         $elements[1]=new stdClass();
         $elements[1]->field="`user`.`name`";
         $elements[1]->sort="1";
         $elements[1]->header="Name";
         $elements[1]->alias="name";
-        
+
         $elements[2]=new stdClass();
         $elements[2]->field="`user`.`email`";
         $elements[2]->sort="1";
         $elements[2]->header="Email";
         $elements[2]->alias="email";
-        
+
         $elements[3]=new stdClass();
         $elements[3]->field="`user`.`socialid`";
         $elements[3]->sort="1";
         $elements[3]->header="SocialId";
         $elements[3]->alias="socialid";
-        
+
         $elements[4]=new stdClass();
         $elements[4]->field="`logintype`.`name`";
         $elements[4]->sort="1";
         $elements[4]->header="Logintype";
         $elements[4]->alias="logintype";
-        
+
         $elements[5]=new stdClass();
         $elements[5]->field="`user`.`json`";
         $elements[5]->sort="1";
         $elements[5]->header="Json";
         $elements[5]->alias="json";
-       
+
         $elements[6]=new stdClass();
         $elements[6]->field="`accesslevel`.`name`";
         $elements[6]->sort="1";
         $elements[6]->header="Accesslevel";
         $elements[6]->alias="accesslevelname";
-       
+
         $elements[7]=new stdClass();
         $elements[7]->field="`statuses`.`name`";
         $elements[7]->sort="1";
         $elements[7]->header="Status";
         $elements[7]->alias="status";
-       
-        
+
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -245,19 +245,19 @@ class Site extends CI_Controller
         {
             $maxrow=20;
         }
-        
+
         if($orderby=="")
         {
             $orderby="id";
             $orderorder="ASC";
         }
-       
+
         $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `user` LEFT OUTER JOIN `logintype` ON `logintype`.`id`=`user`.`logintype` LEFT OUTER JOIN `accesslevel` ON `accesslevel`.`id`=`user`.`accesslevel` LEFT OUTER JOIN `statuses` ON `statuses`.`id`=`user`.`status`");
-        
+
 		$this->load->view("json",$data);
-	} 
-    
-    
+	}
+
+
 	function edituser()
 	{
 		$access = array("1");
@@ -275,7 +275,7 @@ class Site extends CI_Controller
 	{
 		$access = array("1");
 		$this->checkaccess($access);
-		
+
 		$this->form_validation->set_rules('name','Name','trim|required|max_length[30]');
 		$this->form_validation->set_rules('email','Email','trim|required|valid_email');
 		$this->form_validation->set_rules('password','Password','trim|min_length[6]|max_length[30]');
@@ -295,7 +295,7 @@ class Site extends CI_Controller
 		$this->form_validation->set_rules('facebook','facebook','trim');
 		$this->form_validation->set_rules('google','google','trim');
 		$this->form_validation->set_rules('twitter','twitter','trim');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->user_model->getstatusdropdown();
@@ -309,7 +309,7 @@ class Site extends CI_Controller
 		}
 		else
 		{
-            
+
             $id=$this->input->get_post('id');
             $name=$this->input->get_post('name');
             $email=$this->input->get_post('email');
@@ -330,7 +330,7 @@ class Site extends CI_Controller
             $google=$this->input->post('google');
             $twitter=$this->input->post('twitter');
 //            $category=$this->input->get_post('category');
-            
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -340,7 +340,7 @@ class Site extends CI_Controller
 			{
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
-                
+
                 $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
                 $config_r['maintain_ratio'] = TRUE;
                 $config_t['create_thumb'] = FALSE;///add this
@@ -349,13 +349,13 @@ class Site extends CI_Controller
                 $config_r['quality']    = 100;
                 //end of configs
 
-                $this->load->library('image_lib', $config_r); 
+                $this->load->library('image_lib', $config_r);
                 $this->image_lib->initialize($config_r);
                 if(!$this->image_lib->resize())
                 {
                     echo "Failed." . $this->image_lib->display_errors();
                     //return false;
-                }  
+                }
                 else
                 {
                     //print_r($this->image_lib->dest_image);
@@ -363,28 +363,28 @@ class Site extends CI_Controller
                     $image=$this->image_lib->dest_image;
                     //return false;
                 }
-                
+
 			}
-            
+
             if($image=="")
             {
             $image=$this->user_model->getuserimagebyid($id);
                // print_r($image);
                 $image=$image->image;
             }
-            
+
 			if($this->user_model->edit($id,$name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$json,$dob,$street,$address,$city,$state,$country,$pincode,$facebook,$google,$twitter)==0)
 			$data['alerterror']="User Editing was unsuccesful";
 			else
 			$data['alertsuccess']="User edited Successfully.";
-			
+
 			$data['redirect']="site/viewusers";
 			//$data['other']="template=$template";
 			$this->load->view("redirect",$data);
-			
+
 		}
 	}
-	
+
 	function deleteuser()
 	{
 		$access = array("1");
@@ -407,9 +407,9 @@ class Site extends CI_Controller
         $data['other']="template=$template";
         $this->load->view("redirect",$data);
 	}
-    
-    
-    
+
+
+
     public function viewcategory()
     {
         $access=array("1");
@@ -419,57 +419,57 @@ class Site extends CI_Controller
         $data["title"]="View category";
         $this->load->view("template",$data);
     }
-    
+
     function viewcategoryjson()
     {
-//        SELECT `category`.`id`,`category`.`name`,`category`.`image`,`tab2`.`name` as `parent` FROM `category` 
+//        SELECT `category`.`id`,`category`.`name`,`category`.`image`,`tab2`.`name` as `parent` FROM `category`
 //		LEFT JOIN `category` as `tab2` ON `tab2`.`id`=`category`.`parent`
 //		ORDER BY `category`.`id` ASC
-            
+
         $elements=array();
-        
+
         $elements[0]=new stdClass();
         $elements[0]->field="`powerforone_category`.`id`";
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`powerforone_category`.`name`";
         $elements[1]->sort="1";
         $elements[1]->header="Name";
         $elements[1]->alias="name";
-        
+
         $elements[2]=new stdClass();
         $elements[2]->field="`tab2`.`name`";
         $elements[2]->sort="1";
         $elements[2]->header="Parent";
         $elements[2]->alias="parent";
-        
+
         $elements[3]=new stdClass();
         $elements[3]->field="`powerforone_category`.`json`";
         $elements[3]->sort="1";
         $elements[3]->header="Json";
         $elements[3]->alias="json";
-        
+
         $elements[4]=new stdClass();
         $elements[4]->field="`powerforone_category`.`order`";
         $elements[4]->sort="1";
         $elements[4]->header="Order";
         $elements[4]->alias="order";
-        
+
         $elements[5]=new stdClass();
         $elements[5]->field="`powerforone_category`.`views`";
         $elements[5]->sort="1";
         $elements[5]->header="Views";
         $elements[5]->alias="views";
-        
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
         $orderorder=$this->input->get_post("orderorder");
         $maxrow=$this->input->get_post("maxrow");
-        
+
         if($maxrow=="")
         {
             $maxrow=20;
@@ -488,9 +488,9 @@ class Site extends CI_Controller
         $access=array("1");
         $this->checkaccess($access);
         $data['parent']=$this->category_model->getcategorydropdown();
-         
+
         $json=array();
-        
+
         $json[0]=new stdClass();
         $json[0]->placeholder="";
         $json[0]->value="";
@@ -498,7 +498,7 @@ class Site extends CI_Controller
         $json[0]->type="text";
         $json[0]->options="";
         $json[0]->classes="";
-        
+
         $json[1]=new stdClass();
         $json[1]->placeholder="";
         $json[1]->value="";
@@ -506,7 +506,7 @@ class Site extends CI_Controller
         $json[1]->type="textarea";
         $json[1]->options="";
         $json[1]->classes="";
-        
+
         $json[2]=new stdClass();
         $json[2]->placeholder="";
         $json[2]->value="";
@@ -514,15 +514,15 @@ class Site extends CI_Controller
         $json[2]->type="textarea";
         $json[2]->options="";
         $json[2]->classes="";
-        
-        
+
+
         $data["fieldjson"]=$json;
         $data['status']=$this->user_model->getstatusdropdown();
         $data["page"]="createcategory";
         $data["title"]="Create category";
         $this->load->view("template",$data);
     }
-    public function createcategorysubmit() 
+    public function createcategorysubmit()
     {
         $access=array("1");
         $this->checkaccess($access);
@@ -551,7 +551,7 @@ class Site extends CI_Controller
             $views=$this->input->get_post("views");
             $description=$this->input->get_post("description");
             $status=$this->input->get_post("status");
-            
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -561,7 +561,7 @@ class Site extends CI_Controller
 			{
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
-                
+
                 $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
                 $config_r['maintain_ratio'] = TRUE;
                 $config_t['create_thumb'] = FALSE;///add this
@@ -570,13 +570,13 @@ class Site extends CI_Controller
                 $config_r['quality']    = 100;
                 //end of configs
 
-                $this->load->library('image_lib', $config_r); 
+                $this->load->library('image_lib', $config_r);
                 $this->image_lib->initialize($config_r);
                 if(!$this->image_lib->resize())
                 {
                     echo "Failed." . $this->image_lib->display_errors();
                     //return false;
-                }  
+                }
                 else
                 {
                     //print_r($this->image_lib->dest_image);
@@ -584,9 +584,9 @@ class Site extends CI_Controller
                     $image=$this->image_lib->dest_image;
                     //return false;
                 }
-                
+
 			}
-            
+
             if($this->category_model->create($name,$parent,$json,$order,$views,$image,$description,$status)==0)
                 $data["alerterror"]="New category could not be created.";
             else
@@ -638,7 +638,7 @@ class Site extends CI_Controller
             $views=$this->input->get_post("views");
             $description=$this->input->get_post("description");
             $status=$this->input->get_post("status");
-            
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -648,7 +648,7 @@ class Site extends CI_Controller
 			{
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
-                
+
                 $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
                 $config_r['maintain_ratio'] = TRUE;
                 $config_t['create_thumb'] = FALSE;///add this
@@ -657,13 +657,13 @@ class Site extends CI_Controller
                 $config_r['quality']    = 100;
                 //end of configs
 
-                $this->load->library('image_lib', $config_r); 
+                $this->load->library('image_lib', $config_r);
                 $this->image_lib->initialize($config_r);
                 if(!$this->image_lib->resize())
                 {
                     echo "Failed." . $this->image_lib->display_errors();
                     //return false;
-                }  
+                }
                 else
                 {
                     //print_r($this->image_lib->dest_image);
@@ -671,16 +671,16 @@ class Site extends CI_Controller
                     $image=$this->image_lib->dest_image;
                     //return false;
                 }
-                
+
 			}
-            
+
             if($image=="")
             {
             $image=$this->category_model->getcategoryimagebyid($id);
                // print_r($image);
                 $image=$image->image;
             }
-            
+
             if($this->category_model->edit($id,$name,$parent,$json,$order,$views,$image,$description,$status)==0)
             $data["alerterror"]="New category could not be Updated.";
             else
@@ -709,115 +709,115 @@ class Site extends CI_Controller
     function viewprojectjson()
     {
         $elements=array();
-        
+
         $elements[0]=new stdClass();
         $elements[0]->field="`powerforone_project`.`id`";
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`powerforone_project`.`name`";
         $elements[1]->sort="1";
         $elements[1]->header="Name";
         $elements[1]->alias="name";
-        
+
         $elements[2]=new stdClass();
         $elements[2]->field="`powerforone_project`.`category`";
         $elements[2]->sort="1";
         $elements[2]->header="Category";
         $elements[2]->alias="category";
-        
+
         $elements[3]=new stdClass();
         $elements[3]->field="`powerforone_project`.`ngo`";
         $elements[3]->sort="1";
         $elements[3]->header="NGO";
         $elements[3]->alias="ngo";
-        
+
         $elements[4]=new stdClass();
         $elements[4]->field="`powerforone_project`.`advertiser`";
         $elements[4]->sort="1";
         $elements[4]->header="Advertiser";
         $elements[4]->alias="advertiser";
-        
+
         $elements[5]=new stdClass();
         $elements[5]->field="`powerforone_project`.`json`";
         $elements[5]->sort="1";
         $elements[5]->header="Json";
         $elements[5]->alias="json";
-        
+
         $elements[6]=new stdClass();
         $elements[6]->field="`powerforone_project`.`like`";
         $elements[6]->sort="1";
         $elements[6]->header="Likes";
         $elements[6]->alias="like";
-        
+
         $elements[7]=new stdClass();
         $elements[7]->field="`powerforone_project`.`share`";
         $elements[7]->sort="1";
         $elements[7]->header="Share";
         $elements[7]->alias="share";
-        
+
         $elements[8]=new stdClass();
         $elements[8]->field="`powerforone_project`.`follow`";
         $elements[8]->sort="1";
         $elements[8]->header="Follow";
         $elements[8]->alias="follow";
-        
+
         $elements[9]=new stdClass();
         $elements[9]->field="`powerforone_project`.`facebook`";
         $elements[9]->sort="1";
         $elements[9]->header="Facebook";
         $elements[9]->alias="facebook";
-        
+
         $elements[10]=new stdClass();
         $elements[10]->field="`powerforone_project`.`twitter`";
         $elements[10]->sort="1";
         $elements[10]->header="Twitter";
         $elements[10]->alias="twitter";
-        
+
         $elements[11]=new stdClass();
         $elements[11]->field="`powerforone_project`.`google`";
         $elements[11]->sort="1";
         $elements[11]->header="Google";
         $elements[11]->alias="google";
-        
+
         $elements[12]=new stdClass();
         $elements[12]->field="`powerforone_project`.`status`";
         $elements[12]->sort="1";
         $elements[12]->header="Status";
         $elements[12]->alias="status";
-        
+
         $elements[13]=new stdClass();
         $elements[13]->field="`powerforone_project`.`order`";
         $elements[13]->sort="1";
         $elements[13]->header="Order";
         $elements[13]->alias="order";
-        
+
         $elements[14]=new stdClass();
         $elements[14]->field="`powerforone_project`.`views`";
         $elements[14]->sort="1";
         $elements[14]->header="Views";
         $elements[14]->alias="views";
-        
+
         $elements[15]=new stdClass();
         $elements[15]->field="`powerforone_project`.`video`";
         $elements[15]->sort="1";
         $elements[15]->header="Video";
         $elements[15]->alias="video";
-        
+
         $elements[16]=new stdClass();
         $elements[16]->field="`powerforone_ngo`.`name`";
         $elements[16]->sort="1";
         $elements[16]->header="ngoname";
         $elements[16]->alias="ngoname";
-        
+
         $elements[17]=new stdClass();
         $elements[17]->field="`powerforone_advertiser`.`name`";
         $elements[17]->sort="1";
         $elements[17]->header="Cooperator";
         $elements[17]->alias="cooperator";
-        
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -840,9 +840,9 @@ class Site extends CI_Controller
     {
         $access=array("1");
         $this->checkaccess($access);
-        
+
         $json=array();
-        
+
         $json[0]=new stdClass();
         $json[0]->placeholder="";
         $json[0]->value="";
@@ -850,7 +850,7 @@ class Site extends CI_Controller
         $json[0]->type="text";
         $json[0]->options="";
         $json[0]->classes="";
-        
+
         $json[1]=new stdClass();
         $json[1]->placeholder="";
         $json[1]->value="";
@@ -858,7 +858,7 @@ class Site extends CI_Controller
         $json[1]->type="textarea";
         $json[1]->options="";
         $json[1]->classes="";
-        
+
         $json[2]=new stdClass();
         $json[2]->placeholder="";
         $json[2]->value="";
@@ -866,10 +866,10 @@ class Site extends CI_Controller
         $json[2]->type="textarea";
         $json[2]->options="";
         $json[2]->classes="";
-        
-        
+
+
         $data["fieldjson"]=$json;
-        
+
         $data["page"]="createproject";
         $data["title"]="Create project";
         $data['ngo']=$this->ngo_model->getngodropdown();
@@ -883,7 +883,7 @@ class Site extends CI_Controller
         $data['share']=$this->user_model->getsharedropdown();
         $this->load->view("template",$data);
     }
-    public function createprojectsubmit() 
+    public function createprojectsubmit()
     {
         $access=array("1");
         $this->checkaccess($access);
@@ -913,7 +913,7 @@ class Site extends CI_Controller
         $this->form_validation->set_rules("location","location","trim");
         $this->form_validation->set_rules("timesinwordforshare","timesinwordforshare","trim");
         $this->form_validation->set_rules("remembersharevalue","remembersharevalue","trim");
-        
+
         if($this->form_validation->run()==FALSE)
         {
             $data["alerterror"]=validation_errors();
@@ -966,7 +966,7 @@ class Site extends CI_Controller
             $location=$this->input->get_post("location");
             $timesinwordforshare=$this->input->get_post("timesinwordforshare");
             $remembersharevalue=$this->input->get_post("remembersharevalue");
-            
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -976,9 +976,9 @@ class Site extends CI_Controller
 			{
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
-                
+
 			}
-            
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -988,9 +988,9 @@ class Site extends CI_Controller
 			{
 				$uploaddata = $this->upload->data();
 				$cardimage=$uploaddata['file_name'];
-                
+
 			}
-            
+
             if($this->project_model->create($name,$category,$ngo,$advertiser,$json,$like,$share,$follow,$facebook,$twitter,$google,$status,$order,$views,$video,$content,$contribution,$times,$donate,$tagline,$image,$video2,$cardtagline,$indiandoner,$foreigndoner,$project,$timesinword,$facebooktext,$twittertext,$sharevalue,$cardimage,$sharevalue,$location,$timesinwordforshare,$remembersharevalue)==0)
                 $data["alerterror"]="New project could not be created.";
             else
@@ -1093,7 +1093,7 @@ class Site extends CI_Controller
             $indiandoner=$this->input->get_post("indiandoner");
             $foreigndoner=$this->input->get_post("foreigndoner");
             $project=$this->input->get_post("project");
-            
+
             $timesinword=$this->input->get_post("timesinword");
             $facebooktext=$this->input->get_post("facebooktext");
             $twittertext=$this->input->get_post("twittertext");
@@ -1103,7 +1103,7 @@ class Site extends CI_Controller
             $location=$this->input->get_post("location");
             $timesinwordforshare=$this->input->get_post("timesinwordforshare");
             $remembersharevalue=$this->input->get_post("remembersharevalue");
-            
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -1113,16 +1113,16 @@ class Site extends CI_Controller
 			{
 				$uploaddata = $this->upload->data();
 				$cardimage=$uploaddata['file_name'];
-                
+
 			}
-            
+
             if($cardimage=="")
             {
             $cardimage=$this->project_model->getprojectcardimagebyid($id);
                // print_r($cardimage);
                 $cardimage=$cardimage->cardimage;
             }
-            
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -1132,17 +1132,17 @@ class Site extends CI_Controller
 			{
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
-                
-                
+
+
 			}
-            
+
             if($image=="")
             {
             $image=$this->project_model->getprojectimagebyid($id);
                // print_r($image);
                 $image=$image->image;
             }
-            
+
 //            print_r($project);
             if($this->project_model->edit($id,$name,$category,$ngo,$advertiser,$json,$like,$share,$follow,$facebook,$twitter,$google,$status,$order,$views,$video,$content,$contribution,$times,$donate,$tagline,$image,$video2,$cardtagline,$indiandoner,$foreigndoner,$project,$timesinword,$facebooktext,$twittertext,$sharevalue,$cardimage,$sharevalue,$location,$timesinwordforshare,$remembersharevalue)==0)
                 $data["alerterror"]="New project could not be Updated.";
@@ -1172,49 +1172,49 @@ class Site extends CI_Controller
     function viewngojson()
     {
         $elements=array();
-        
+
         $elements[0]=new stdClass();
         $elements[0]->field="`powerforone_ngo`.`id`";
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`powerforone_ngo`.`name`";
         $elements[1]->sort="1";
         $elements[1]->header="Name";
         $elements[1]->alias="name";
-        
+
         $elements[2]=new stdClass();
         $elements[2]->field="`powerforone_ngo`.`address`";
         $elements[2]->sort="1";
         $elements[2]->header="Address";
         $elements[2]->alias="address";
-        
+
         $elements[3]=new stdClass();
         $elements[3]->field="`powerforone_ngo`.`email`";
         $elements[3]->sort="1";
         $elements[3]->header="Email";
         $elements[3]->alias="email";
-        
+
         $elements[4]=new stdClass();
         $elements[4]->field="`powerforone_ngo`.`json`";
         $elements[4]->sort="1";
         $elements[4]->header="Json";
         $elements[4]->alias="json";
-        
+
         $elements[5]=new stdClass();
         $elements[5]->field="`powerforone_ngo`.`status`";
         $elements[5]->sort="1";
         $elements[5]->header="Status";
         $elements[5]->alias="status";
-        
+
         $elements[6]=new stdClass();
         $elements[6]->field="`powerforone_ngo`.`website`";
         $elements[6]->sort="1";
         $elements[6]->header="Website";
         $elements[6]->alias="website";
-        
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -1237,9 +1237,9 @@ class Site extends CI_Controller
     {
         $access=array("1");
         $this->checkaccess($access);
-         
+
         $json=array();
-        
+
         $json[0]=new stdClass();
         $json[0]->placeholder="";
         $json[0]->value="";
@@ -1247,7 +1247,7 @@ class Site extends CI_Controller
         $json[0]->type="text";
         $json[0]->options="";
         $json[0]->classes="";
-        
+
         $json[1]=new stdClass();
         $json[1]->placeholder="";
         $json[1]->value="";
@@ -1255,7 +1255,7 @@ class Site extends CI_Controller
         $json[1]->type="textarea";
         $json[1]->options="";
         $json[1]->classes="";
-        
+
         $json[2]=new stdClass();
         $json[2]->placeholder="";
         $json[2]->value="";
@@ -1263,16 +1263,16 @@ class Site extends CI_Controller
         $json[2]->type="textarea";
         $json[2]->options="";
         $json[2]->classes="";
-        
-        
+
+
         $data["fieldjson"]=$json;
-        
+
         $data["page"]="createngo";
         $data["title"]="Create ngo";
         $data['status']=$this->user_model->getstatusdropdown();
         $this->load->view("template",$data);
     }
-    public function createngosubmit() 
+    public function createngosubmit()
     {
         $access=array("1");
         $this->checkaccess($access);
@@ -1298,7 +1298,7 @@ class Site extends CI_Controller
             $json=$this->input->get_post("json");
             $status=$this->input->get_post("status");
             $website=$this->input->get_post("website");
-            
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -1308,7 +1308,7 @@ class Site extends CI_Controller
 			{
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
-                
+
                 $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
                 $config_r['maintain_ratio'] = TRUE;
                 $config_t['create_thumb'] = FALSE;///add this
@@ -1317,13 +1317,13 @@ class Site extends CI_Controller
                 $config_r['quality']    = 100;
                 //end of configs
 
-                $this->load->library('image_lib', $config_r); 
+                $this->load->library('image_lib', $config_r);
                 $this->image_lib->initialize($config_r);
                 if(!$this->image_lib->resize())
                 {
                     echo "Failed." . $this->image_lib->display_errors();
                     //return false;
-                }  
+                }
                 else
                 {
                     //print_r($this->image_lib->dest_image);
@@ -1331,10 +1331,10 @@ class Site extends CI_Controller
                     $image=$this->image_lib->dest_image;
                     //return false;
                 }
-                
+
 			}
-            
-            
+
+
             if($this->ngo_model->create($name,$address,$email,$json,$status,$website,$image)==0)
                 $data["alerterror"]="New ngo could not be created.";
             else
@@ -1382,7 +1382,7 @@ class Site extends CI_Controller
             $json=$this->input->get_post("json");
             $status=$this->input->get_post("status");
             $website=$this->input->get_post("website");
-            
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -1392,7 +1392,7 @@ class Site extends CI_Controller
 			{
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
-                
+
                 $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
                 $config_r['maintain_ratio'] = TRUE;
                 $config_t['create_thumb'] = FALSE;///add this
@@ -1401,13 +1401,13 @@ class Site extends CI_Controller
                 $config_r['quality']    = 100;
                 //end of configs
 
-                $this->load->library('image_lib', $config_r); 
+                $this->load->library('image_lib', $config_r);
                 $this->image_lib->initialize($config_r);
                 if(!$this->image_lib->resize())
                 {
                     echo "Failed." . $this->image_lib->display_errors();
                     //return false;
-                }  
+                }
                 else
                 {
                     //print_r($this->image_lib->dest_image);
@@ -1415,16 +1415,16 @@ class Site extends CI_Controller
                     $image=$this->image_lib->dest_image;
                     //return false;
                 }
-                
+
 			}
-            
+
             if($image=="")
             {
             $image=$this->ngo_model->getngoimagebyid($id);
                // print_r($image);
                 $image=$image->image;
             }
-            
+
             if($this->ngo_model->edit($id,$name,$address,$email,$json,$status,$website,$image)==0)
                 $data["alerterror"]="New ngo could not be Updated.";
             else
@@ -1453,37 +1453,37 @@ class Site extends CI_Controller
     function viewadvertiserjson()
     {
         $elements=array();
-        
+
         $elements[0]=new stdClass();
         $elements[0]->field="`powerforone_advertiser`.`id`";
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`powerforone_advertiser`.`name`";
         $elements[1]->sort="1";
         $elements[1]->header="Name";
         $elements[1]->alias="name";
-        
+
         $elements[2]=new stdClass();
         $elements[2]->field="`powerforone_advertiser`.`json`";
         $elements[2]->sort="1";
         $elements[2]->header="Json";
         $elements[2]->alias="json";
-        
+
         $elements[3]=new stdClass();
         $elements[3]->field="`powerforone_advertiser`.`views`";
         $elements[3]->sort="1";
         $elements[3]->header="Views";
         $elements[3]->alias="views";
-        
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
         $orderorder=$this->input->get_post("orderorder");
         $maxrow=$this->input->get_post("maxrow");
-        
+
         if($maxrow=="")
         {
             $maxrow=20;
@@ -1501,9 +1501,9 @@ class Site extends CI_Controller
     {
         $access=array("1");
         $this->checkaccess($access);
-        
+
         $json=array();
-        
+
         $json[0]=new stdClass();
         $json[0]->placeholder="";
         $json[0]->value="";
@@ -1511,7 +1511,7 @@ class Site extends CI_Controller
         $json[0]->type="text";
         $json[0]->options="";
         $json[0]->classes="";
-        
+
         $json[1]=new stdClass();
         $json[1]->placeholder="";
         $json[1]->value="";
@@ -1519,7 +1519,7 @@ class Site extends CI_Controller
         $json[1]->type="textarea";
         $json[1]->options="";
         $json[1]->classes="";
-        
+
         $json[2]=new stdClass();
         $json[2]->placeholder="";
         $json[2]->value="";
@@ -1527,16 +1527,16 @@ class Site extends CI_Controller
         $json[2]->type="textarea";
         $json[2]->options="";
         $json[2]->classes="";
-        
-        
+
+
         $data["fieldjson"]=$json;
-        
-        
+
+
         $data["page"]="createadvertiser";
         $data["title"]="Create advertiser";
         $this->load->view("template",$data);
     }
-    public function createadvertisersubmit() 
+    public function createadvertisersubmit()
     {
         $access=array("1");
         $this->checkaccess($access);
@@ -1557,7 +1557,7 @@ class Site extends CI_Controller
             $json=$this->input->get_post("json");
             $views=$this->input->get_post("views");
             $website=$this->input->get_post("website");
-            
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -1567,7 +1567,7 @@ class Site extends CI_Controller
 			{
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
-                
+
                 $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
                 $config_r['maintain_ratio'] = TRUE;
                 $config_t['create_thumb'] = FALSE;///add this
@@ -1576,13 +1576,13 @@ class Site extends CI_Controller
                 $config_r['quality']    = 100;
                 //end of configs
 
-                $this->load->library('image_lib', $config_r); 
+                $this->load->library('image_lib', $config_r);
                 $this->image_lib->initialize($config_r);
                 if(!$this->image_lib->resize())
                 {
                     echo "Failed." . $this->image_lib->display_errors();
                     //return false;
-                }  
+                }
                 else
                 {
                     //print_r($this->image_lib->dest_image);
@@ -1590,9 +1590,9 @@ class Site extends CI_Controller
                     $image=$this->image_lib->dest_image;
                     //return false;
                 }
-                
+
 			}
-            
+
             if($this->advertiser_model->create($name,$json,$views,$image,$website)==0)
                 $data["alerterror"]="New advertiser could not be created.";
             else
@@ -1634,7 +1634,7 @@ class Site extends CI_Controller
             $json=$this->input->get_post("json");
             $views=$this->input->get_post("views");
             $website=$this->input->get_post("website");
-            
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -1644,7 +1644,7 @@ class Site extends CI_Controller
 			{
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
-                
+
                 $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
                 $config_r['maintain_ratio'] = TRUE;
                 $config_t['create_thumb'] = FALSE;///add this
@@ -1653,13 +1653,13 @@ class Site extends CI_Controller
                 $config_r['quality']    = 100;
                 //end of configs
 
-                $this->load->library('image_lib', $config_r); 
+                $this->load->library('image_lib', $config_r);
                 $this->image_lib->initialize($config_r);
                 if(!$this->image_lib->resize())
                 {
                     echo "Failed." . $this->image_lib->display_errors();
                     //return false;
-                }  
+                }
                 else
                 {
                     //print_r($this->image_lib->dest_image);
@@ -1667,17 +1667,17 @@ class Site extends CI_Controller
                     $image=$this->image_lib->dest_image;
                     //return false;
                 }
-                
+
 			}
-            
+
             if($image=="")
             {
             $image=$this->advertiser_model->getadvertiserimagebyid($id);
                // print_r($image);
                 $image=$image->image;
             }
-            
-            
+
+
             if($this->advertiser_model->edit($id,$name,$json,$views,$image,$website)==0)
                 $data["alerterror"]="New advertiser could not be Updated.";
             else
@@ -1706,79 +1706,79 @@ class Site extends CI_Controller
     function vieworderjson()
     {
         $elements=array();
-        
+
         $elements[0]=new stdClass();
         $elements[0]->field="`powerforone_order`.`id`";
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`powerforone_order`.`name`";
         $elements[1]->sort="1";
         $elements[1]->header="Name";
         $elements[1]->alias="name";
-        
+
         $elements[2]=new stdClass();
         $elements[2]->field="`powerforone_order`.`email`";
         $elements[2]->sort="1";
         $elements[2]->header="Email";
         $elements[2]->alias="email";
-        
+
         $elements[3]=new stdClass();
         $elements[3]->field="`powerforone_order`.`user`";
         $elements[3]->sort="1";
         $elements[3]->header="User";
         $elements[3]->alias="user";
-        
+
         $elements[4]=new stdClass();
         $elements[4]->field="`powerforone_order`.`amount`";
         $elements[4]->sort="1";
         $elements[4]->header="Amount";
         $elements[4]->alias="amount";
-        
+
         $elements[5]=new stdClass();
         $elements[5]->field="`powerforone_order`.`ngo`";
         $elements[5]->sort="1";
         $elements[5]->header="NGO";
         $elements[5]->alias="ngo";
-        
+
         $elements[6]=new stdClass();
         $elements[6]->field="`powerforone_order`.`project`";
         $elements[6]->sort="1";
         $elements[6]->header="Project";
         $elements[6]->alias="project";
-        
+
         $elements[7]=new stdClass();
         $elements[7]->field="`user`.`name`";
         $elements[7]->sort="1";
         $elements[7]->header="User";
         $elements[7]->alias="username";
-        
+
         $elements[8]=new stdClass();
         $elements[8]->field="`powerforone_ngo`.`name`";
         $elements[8]->sort="1";
         $elements[8]->header="ngoname";
         $elements[8]->alias="ngoname";
-        
+
         $elements[9]=new stdClass();
         $elements[9]->field="`powerforone_advertiser`.`name`";
         $elements[9]->sort="1";
         $elements[9]->header="Cooperator";
         $elements[9]->alias="advertisername";
-        
+
         $elements[10]=new stdClass();
         $elements[10]->field="`powerforone_order`.`typeofdonation`";
         $elements[10]->sort="1";
         $elements[10]->header="typeofdonation";
         $elements[10]->alias="typeofdonation";
-        
+
         $elements[11]=new stdClass();
         $elements[11]->field="`powerforone_project`.`name`";
         $elements[11]->sort="1";
         $elements[11]->header="Project";
         $elements[11]->alias="projectname";
-        
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -1810,11 +1810,12 @@ class Site extends CI_Controller
         $data['typeofdonation']=$this->order_model->getdonationtypedropdown();
         $data['istax']=$this->order_model->getistaxdropdown();
         $data['anonymous']=$this->order_model->getanonymousdropdown();
+        $data['give']=$this->order_model->getgivedropdown();
         $data["page"]="createorder";
         $data["title"]="Create order";
         $this->load->view("template",$data);
     }
-    public function createordersubmit() 
+    public function createordersubmit()
     {
         $access=array("1");
         $this->checkaccess($access);
@@ -1832,6 +1833,7 @@ class Site extends CI_Controller
         $this->form_validation->set_rules("dob","dob","trim");
         $this->form_validation->set_rules("istax","istax","trim");
         $this->form_validation->set_rules("anonymous","anonymous","trim");
+        $this->form_validation->set_rules("give","give","trim");
         if($this->form_validation->run()==FALSE)
         {
             $data["alerterror"]=validation_errors();
@@ -1839,6 +1841,7 @@ class Site extends CI_Controller
             $data["title"]="Create order";
             $data['user']=$this->user_model->getuserdropdown();
             $data['ngo']=$this->ngo_model->getngodropdown();
+				        $data['give']=$this->order_model->getgivedropdown();
             $data['advertiser']=$this->advertiser_model->getadvertiserdropdown();
             $data['project']=$this->project_model->getprojectdropdown();
             $data['status']=$this->order_model->getstatusdropdown();
@@ -1865,7 +1868,8 @@ class Site extends CI_Controller
             $dob=$this->input->get_post("dob");
             $istax=$this->input->get_post("istax");
             $anonymous=$this->input->get_post("anonymous");
-            if($this->order_model->create($name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser,$mobile,$city,$address,$pan,$dob,$istax,$anonymous)==0)
+            $give=$this->input->get_post("give");
+            if($this->order_model->create($name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser,$mobile,$city,$address,$pan,$dob,$istax,$anonymous,$give)==0)
                 $data["alerterror"]="New order could not be created.";
             else
                 $data["alertsuccess"]="order created Successfully.";
@@ -1880,6 +1884,7 @@ class Site extends CI_Controller
         $data["page"]="editorder";
         $data["page2"]="block/orderblock";
         $data["title"]="Edit order";
+        $data['give']=$this->order_model->getgivedropdown();
         $data['user']=$this->user_model->getuserdropdown();
         $data['ngo']=$this->ngo_model->getngodropdown();
         $data['project']=$this->project_model->getprojectdropdown();
@@ -1910,12 +1915,14 @@ class Site extends CI_Controller
         $this->form_validation->set_rules("dob","dob","trim");
         $this->form_validation->set_rules("istax","istax","trim");
         $this->form_validation->set_rules("anonymous","anonymous","trim");
+        $this->form_validation->set_rules("give","give","trim");
         if($this->form_validation->run()==FALSE)
         {
             $data["alerterror"]=validation_errors();
             $data["page"]="editorder";
             $data["title"]="Edit order";
             $data['istax']=$this->order_model->getistaxdropdown();
+				        $data['give']=$this->order_model->getgivedropdown();
             $data['anonymous']=$this->order_model->getanonymousdropdown();
             $data['user']=$this->user_model->getuserdropdown();
             $data['ngo']=$this->ngo_model->getngodropdown();
@@ -1946,8 +1953,9 @@ class Site extends CI_Controller
             $dob=$this->input->get_post("dob");
             $istax=$this->input->get_post("istax");
             $anonymous=$this->input->get_post("anonymous");
-            
-            if($this->order_model->edit($id,$name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser,$mobile,$city,$address,$pan,$dob,$istax,$anonymous)==0)
+            $give=$this->input->get_post("give");
+
+            if($this->order_model->edit($id,$name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser,$mobile,$city,$address,$pan,$dob,$istax,$anonymous,$give)==0)
                 $data["alerterror"]="New order could not be Updated.";
             else
                 $data["alertsuccess"]="order Updated Successfully.";
@@ -1975,61 +1983,61 @@ class Site extends CI_Controller
     function viewcouponjson()
     {
         $elements=array();
-        
+
         $elements[0]=new stdClass();
         $elements[0]->field="`powerforone_coupon`.`id`";
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`powerforone_coupon`.`name`";
         $elements[1]->sort="1";
         $elements[1]->header="Offer";
         $elements[1]->alias="name";
-        
+
         $elements[2]=new stdClass();
         $elements[2]->field="`powerforone_coupon`.`order`";
         $elements[2]->sort="1";
         $elements[2]->header="Order";
         $elements[2]->alias="order";
-        
+
         $elements[3]=new stdClass();
         $elements[3]->field="`powerforone_coupon`.`json`";
         $elements[3]->sort="1";
         $elements[3]->header="Json";
         $elements[3]->alias="json";
-        
+
         $elements[4]=new stdClass();
         $elements[4]->field="`powerforone_coupon`.`text`";
         $elements[4]->sort="1";
         $elements[4]->header="Text";
         $elements[4]->alias="text";
-        
+
         $elements[5]=new stdClass();
         $elements[5]->field="`powerforone_coupon`.`description`";
         $elements[5]->sort="1";
         $elements[5]->header="Description";
         $elements[5]->alias="description";
-        
+
         $elements[6]=new stdClass();
         $elements[6]->field="`powerforone_coupon`.`couponcode`";
         $elements[6]->sort="1";
         $elements[6]->header="Coupon Code";
         $elements[6]->alias="couponcode";
-        
+
         $elements[7]=new stdClass();
         $elements[7]->field="`powerforone_coupon`.`expirydate`";
         $elements[7]->sort="1";
         $elements[7]->header="Expiry Date";
         $elements[7]->alias="expirydate";
-        
+
         $elements[8]=new stdClass();
         $elements[8]->field="`powerforone_coupon`.`companyname`";
         $elements[8]->sort="1";
         $elements[8]->header="Company Name";
         $elements[8]->alias="companyname";
-        
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -2052,9 +2060,9 @@ class Site extends CI_Controller
     {
         $access=array("1");
         $this->checkaccess($access);
-        
+
         $json=array();
-        
+
         $json[0]=new stdClass();
         $json[0]->placeholder="";
         $json[0]->value="";
@@ -2062,7 +2070,7 @@ class Site extends CI_Controller
         $json[0]->type="text";
         $json[0]->options="";
         $json[0]->classes="";
-        
+
         $json[1]=new stdClass();
         $json[1]->placeholder="";
         $json[1]->value="";
@@ -2070,7 +2078,7 @@ class Site extends CI_Controller
         $json[1]->type="textarea";
         $json[1]->options="";
         $json[1]->classes="";
-        
+
         $json[2]=new stdClass();
         $json[2]->placeholder="";
         $json[2]->value="";
@@ -2078,16 +2086,16 @@ class Site extends CI_Controller
         $json[2]->type="textarea";
         $json[2]->options="";
         $json[2]->classes="";
-        
-        
+
+
         $data["fieldjson"]=$json;
-        
+
         $data['status']=$this->coupon_model->getstatusdropdown();
         $data["page"]="createcoupon";
         $data["title"]="Create coupon";
         $this->load->view("template",$data);
     }
-    public function createcouponsubmit() 
+    public function createcouponsubmit()
     {
         $access=array("1");
         $this->checkaccess($access);
@@ -2117,8 +2125,8 @@ class Site extends CI_Controller
             $couponcode=$this->input->get_post("couponcode");
             $companyname=$this->input->get_post("companyname");
             $status=$this->input->get_post("status");
-            
-            
+
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -2128,7 +2136,7 @@ class Site extends CI_Controller
 			{
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
-                
+
                 $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
                 $config_r['maintain_ratio'] = TRUE;
                 $config_t['create_thumb'] = FALSE;///add this
@@ -2137,13 +2145,13 @@ class Site extends CI_Controller
                 $config_r['quality']    = 100;
                 //end of configs
 
-                $this->load->library('image_lib', $config_r); 
+                $this->load->library('image_lib', $config_r);
                 $this->image_lib->initialize($config_r);
                 if(!$this->image_lib->resize())
                 {
                     echo "Failed." . $this->image_lib->display_errors();
                     //return false;
-                }  
+                }
                 else
                 {
                     //print_r($this->image_lib->dest_image);
@@ -2151,9 +2159,9 @@ class Site extends CI_Controller
                     $image=$this->image_lib->dest_image;
                     //return false;
                 }
-                
+
 			}
-            
+
             if($this->coupon_model->create($name,$order,$json,$text,$description,$image,$expirydate,$couponcode,$companyname,$status)==0)
                 $data["alerterror"]="New coupon could not be created.";
             else
@@ -2206,7 +2214,7 @@ class Site extends CI_Controller
             $couponcode=$this->input->get_post("couponcode");
             $companyname=$this->input->get_post("companyname");
             $status=$this->input->get_post("status");
-            
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -2216,7 +2224,7 @@ class Site extends CI_Controller
 			{
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
-                
+
                 $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
                 $config_r['maintain_ratio'] = TRUE;
                 $config_t['create_thumb'] = FALSE;///add this
@@ -2225,13 +2233,13 @@ class Site extends CI_Controller
                 $config_r['quality']    = 100;
                 //end of configs
 
-                $this->load->library('image_lib', $config_r); 
+                $this->load->library('image_lib', $config_r);
                 $this->image_lib->initialize($config_r);
                 if(!$this->image_lib->resize())
                 {
                     echo "Failed." . $this->image_lib->display_errors();
                     //return false;
-                }  
+                }
                 else
                 {
                     //print_r($this->image_lib->dest_image);
@@ -2239,17 +2247,17 @@ class Site extends CI_Controller
                     $image=$this->image_lib->dest_image;
                     //return false;
                 }
-                
+
 			}
-            
+
             if($image=="")
             {
             $image=$this->coupon_model->getcouponimagebyid($id);
                // print_r($image);
                 $image=$image->image;
             }
-            
-            
+
+
             if($this->coupon_model->edit($id,$name,$order,$json,$text,$description,$image,$expirydate,$couponcode,$companyname,$status)==0)
                 $data["alerterror"]="New coupon could not be Updated.";
             else
@@ -2267,10 +2275,10 @@ class Site extends CI_Controller
         $this->load->view("redirect",$data);
     }
 
-    
-    
+
+
     //projectimage
-    
+
     function viewprojectimage()
 	{
 		$access = array("1");
@@ -2283,9 +2291,9 @@ class Site extends CI_Controller
         $data['title']='View project Image';
 		$this->load->view('templatewith2',$data);
 	}
-    
-    
-    
+
+
+
     public function createprojectimage()
 	{
 		$access = array("1");
@@ -2294,7 +2302,7 @@ class Site extends CI_Controller
 		$data[ 'title' ] = 'Create projectimage';
 		$data[ 'projectid' ] = $this->input->get('id');
 //        $data['project']=$this->projectimage_model->getprojectdropdown();
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
     function createprojectimagesubmit()
 	{
@@ -2302,21 +2310,21 @@ class Site extends CI_Controller
 		$this->checkaccess($access);
 		$this->form_validation->set_rules('project','project','trim|required');
 
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
-            
+
 			$data['alerterror'] = validation_errors();
 			$data[ 'page' ] = 'createprojectimage';
             $data[ 'title' ] = 'Create projectimage';
             $data[ 'projectid' ] = $this->input->get_post('id');
 //            $data['project']=$this->projectimage_model->getprojectdropdown();
-            $this->load->view( 'template', $data );	
+            $this->load->view( 'template', $data );
 		}
 		else
 		{
 			$project=$this->input->post('project');
 			$order=$this->input->post('order');
-           
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -2326,7 +2334,7 @@ class Site extends CI_Controller
 			{
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
-                
+
                 $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
                 $config_r['maintain_ratio'] = TRUE;
                 $config_t['create_thumb'] = FALSE;///add this
@@ -2335,30 +2343,30 @@ class Site extends CI_Controller
                 $config_r['quality']    = 100;
                 //end of configs
 
-                $this->load->library('image_lib', $config_r); 
+                $this->load->library('image_lib', $config_r);
                 $this->image_lib->initialize($config_r);
                 if(!$this->image_lib->resize())
                 {
                     echo "Failed." . $this->image_lib->display_errors();
-                }  
+                }
                 else
                 {
                     $image=$this->image_lib->dest_image;
                 }
-                
+
 			}
-            
-            
+
+
             if($this->projectimage_model->create($project,$image,$order)==0)
                $data['alerterror']="New projectimage could not be created.";
             else
                $data['alertsuccess']="projectimage created Successfully.";
-			
+
 			$data['redirect']="site/viewprojectimage?id=".$project;
 			$this->load->view("redirect2",$data);
 		}
 	}
-    
+
     function editprojectimage()
 	{
 		$access = array("1");
@@ -2376,10 +2384,10 @@ class Site extends CI_Controller
 	{
 		$access = array("1");
 		$this->checkaccess($access);
-        
+
 		$this->form_validation->set_rules('project','project','trim|required');
-        
-		if($this->form_validation->run() == FALSE)	
+
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
             $projectid=$this->input->post('project');
@@ -2394,11 +2402,11 @@ class Site extends CI_Controller
 		}
 		else
 		{
-            
+
 			$id=$this->input->post('projectimageid');
             $project=$this->input->post('project');
             $order=$this->input->post('order');
-            
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -2408,7 +2416,7 @@ class Site extends CI_Controller
 			{
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
-                
+
                 $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
                 $config_r['maintain_ratio'] = TRUE;
                 $config_t['create_thumb'] = FALSE;///add this
@@ -2417,35 +2425,35 @@ class Site extends CI_Controller
                 $config_r['quality']    = 100;
                 //end of configs
 
-                $this->load->library('image_lib', $config_r); 
+                $this->load->library('image_lib', $config_r);
                 $this->image_lib->initialize($config_r);
                 if(!$this->image_lib->resize())
                 {
                     echo "Failed." . $this->image_lib->display_errors();
-                }  
+                }
                 else
                 {
                     $image=$this->image_lib->dest_image;
                 }
-                
+
 			}
             if($image=="")
             {
                 $image=$this->projectimage_model->getprojectimagebyid($id);
                 $image=$image->image;
             }
-            
+
 			if($this->projectimage_model->edit($id,$project,$image,$order)==0)
 			$data['alerterror']="projectimage Editing was unsuccesful";
 			else
 			$data['alertsuccess']="projectimage edited Successfully.";
-			
+
 			$data['redirect']="site/viewprojectimage?id=".$project;
 			$this->load->view("redirect2",$data);
-			
+
 		}
 	}
-    
+
 	function deleteprojectimage()
 	{
 		$access = array("1");
@@ -2457,10 +2465,10 @@ class Site extends CI_Controller
 		$data['redirect']="site/viewprojectimage?id=".$projectid;
 		$this->load->view("redirect2",$data);
 	}
-    
-    
+
+
     //projectenquiry
-    
+
     function viewprojectenquiry()
 	{
 		$access = array("1");
@@ -2473,9 +2481,9 @@ class Site extends CI_Controller
         $data['title']='View project Image';
 		$this->load->view('templatewith2',$data);
 	}
-    
-    
-    
+
+
+
     public function createprojectenquiry()
 	{
 		$access = array("1");
@@ -2484,7 +2492,7 @@ class Site extends CI_Controller
 		$data[ 'title' ] = 'Create projectenquiry';
 		$data['user']=$this->user_model->getuserdropdown();
 		$data[ 'projectid' ] = $this->input->get('id');
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
     function createprojectenquirysubmit()
 	{
@@ -2496,15 +2504,15 @@ class Site extends CI_Controller
 		$this->form_validation->set_rules('user','user','trim');
 		$this->form_validation->set_rules('email','email','trim');
 
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
-            
+
 			$data['alerterror'] = validation_errors();
 			$data[ 'page' ] = 'createprojectenquiry';
             $data[ 'title' ] = 'Create projectenquiry';
             $data['user']=$this->user_model->getuserdropdown();
             $data[ 'projectid' ] = $this->input->get_post('id');
-            $this->load->view( 'template', $data );	
+            $this->load->view( 'template', $data );
 		}
 		else
 		{
@@ -2513,18 +2521,18 @@ class Site extends CI_Controller
 			$comment=$this->input->post('comment');
 			$user=$this->input->post('user');
 			$email=$this->input->post('email');
-           
-            
+
+
             if($this->projectenquiry_model->create($project,$name,$comment,$user,$email)==0)
                $data['alerterror']="New projectenquiry could not be created.";
             else
                $data['alertsuccess']="projectenquiry created Successfully.";
-			
+
 			$data['redirect']="site/viewprojectenquiry?id=".$project;
 			$this->load->view("redirect2",$data);
 		}
 	}
-    
+
     function editprojectenquiry()
 	{
 		$access = array("1");
@@ -2543,14 +2551,14 @@ class Site extends CI_Controller
 	{
 		$access = array("1");
 		$this->checkaccess($access);
-        
+
 		$this->form_validation->set_rules('project','project','trim|required');
 		$this->form_validation->set_rules('name','name','trim');
 		$this->form_validation->set_rules('comment','comment','trim');
 		$this->form_validation->set_rules('user','user','trim');
 		$this->form_validation->set_rules('email','email','trim');
-        
-		if($this->form_validation->run() == FALSE)	
+
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
             $projectid=$this->input->post('project');
@@ -2565,25 +2573,25 @@ class Site extends CI_Controller
 		}
 		else
 		{
-            
+
 			$id=$this->input->post('projectenquiryid');
             $project=$this->input->post('project');
 			$name=$this->input->post('name');
 			$comment=$this->input->post('comment');
 			$user=$this->input->post('user');
 			$email=$this->input->post('email');
-            
+
 			if($this->projectenquiry_model->edit($id,$project,$name,$comment,$user,$email)==0)
 			$data['alerterror']="projectenquiry Editing was unsuccesful";
 			else
 			$data['alertsuccess']="projectenquiry edited Successfully.";
-			
+
 			$data['redirect']="site/viewprojectenquiry?id=".$project;
 			$this->load->view("redirect2",$data);
-			
+
 		}
 	}
-    
+
 	function deleteprojectenquiry()
 	{
 		$access = array("1");
@@ -2595,9 +2603,9 @@ class Site extends CI_Controller
 		$data['redirect']="site/viewprojectenquiry?id=".$projectid;
 		$this->load->view("redirect2",$data);
 	}
-    
+
     //ordercoupon
-    
+
     function viewordercoupon()
 	{
 		$access = array("1");
@@ -2611,9 +2619,9 @@ class Site extends CI_Controller
         $data['title']='View order Image';
 		$this->load->view('templatewith2',$data);
 	}
-    
-    
-    
+
+
+
     public function createordercoupon()
 	{
 		$access = array("1");
@@ -2622,7 +2630,7 @@ class Site extends CI_Controller
 		$data[ 'title' ] = 'Create ordercoupon';
 		$data['coupon']=$this->ordercoupon_model->getcoupondropdown();
 		$data[ 'orderid' ] = $this->input->get('id');
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
     function createordercouponsubmit()
 	{
@@ -2631,32 +2639,32 @@ class Site extends CI_Controller
 		$this->form_validation->set_rules('order','order','trim');
 		$this->form_validation->set_rules('coupon','coupon','trim|required');
 
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
-            
+
 			$data['alerterror'] = validation_errors();
 			$data[ 'page' ] = 'createordercoupon';
             $data[ 'title' ] = 'Create ordercoupon';
 		  $data['coupon']=$this->ordercoupon_model->getcoupondropdown();
             $data[ 'orderid' ] = $this->input->get_post('id');
-            $this->load->view( 'template', $data );	
+            $this->load->view( 'template', $data );
 		}
 		else
 		{
 			$order=$this->input->post('order');
 			$coupon=$this->input->post('coupon');
-           
-            
+
+
             if($this->ordercoupon_model->create($order,$coupon)==0)
                $data['alerterror']="New ordercoupon could not be created.";
             else
                $data['alertsuccess']="ordercoupon created Successfully.";
-			
+
 			$data['redirect']="site/viewordercoupon?id=".$order;
 			$this->load->view("redirect",$data);
 		}
 	}
-    
+
     function editordercoupon()
 	{
 		$access = array("1");
@@ -2674,11 +2682,11 @@ class Site extends CI_Controller
 	{
 		$access = array("1");
 		$this->checkaccess($access);
-        
+
 		$this->form_validation->set_rules('order','order','trim|required');
 		$this->form_validation->set_rules('coupon','coupon','trim|required');
-        
-		if($this->form_validation->run() == FALSE)	
+
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
             $orderid=$this->input->post('order');
@@ -2693,22 +2701,22 @@ class Site extends CI_Controller
 		}
 		else
 		{
-            
+
 			$id=$this->input->post('ordercouponid');
             $order=$this->input->post('order');
             $coupon=$this->input->post('coupon');
-            
+
 			if($this->ordercoupon_model->edit($id,$order,$coupon)==0)
 			$data['alerterror']="ordercoupon Editing was unsuccesful";
 			else
 			$data['alertsuccess']="ordercoupon edited Successfully.";
-			
+
 			$data['redirect']="site/viewordercoupon?id=".$order;
 			$this->load->view("redirect",$data);
-			
+
 		}
 	}
-    
+
 	function deleteordercoupon()
 	{
 		$access = array("1");
@@ -2720,9 +2728,9 @@ class Site extends CI_Controller
 		$data['redirect']="site/viewordercoupon?id=".$orderid;
 		$this->load->view("redirect",$data);
 	}
-    
+
     //blogcategory
-    
+
     public function viewblogcategory()
     {
         $access=array("1");
@@ -2735,25 +2743,25 @@ class Site extends CI_Controller
     function viewblogcategoryjson()
     {
         $elements=array();
-        
+
         $elements[0]=new stdClass();
         $elements[0]->field="`blogcategory`.`id`";
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`blogcategory`.`name`";
         $elements[1]->sort="1";
         $elements[1]->header="Name";
         $elements[1]->alias="name";
-        
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
         $orderorder=$this->input->get_post("orderorder");
         $maxrow=$this->input->get_post("maxrow");
-        
+
         if($maxrow=="")
         {
             $maxrow=20;
@@ -2775,7 +2783,7 @@ class Site extends CI_Controller
         $data["title"]="Create blogcategory";
         $this->load->view("template",$data);
     }
-    public function createblogcategorysubmit() 
+    public function createblogcategorysubmit()
     {
         $access=array("1");
         $this->checkaccess($access);
@@ -2825,7 +2833,7 @@ class Site extends CI_Controller
         {
             $id=$this->input->get_post("id");
             $name=$this->input->get_post("name");
-            
+
             if($this->blogcategory_model->edit($id,$name)==0)
                 $data["alerterror"]="New blogcategory could not be Updated.";
             else
@@ -2842,9 +2850,9 @@ class Site extends CI_Controller
         $data["redirect"]="site/viewblogcategory";
         $this->load->view("redirect",$data);
     }
-    
+
     //blog
-    
+
     public function viewblog()
     {
         $access=array("1");
@@ -2857,43 +2865,43 @@ class Site extends CI_Controller
     function viewblogjson()
     {
         $elements=array();
-        
+
         $elements[0]=new stdClass();
         $elements[0]->field="`blog`.`id`";
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`blog`.`title`";
         $elements[1]->sort="1";
         $elements[1]->header="Title";
         $elements[1]->alias="title";
-        
+
         $elements[2]=new stdClass();
         $elements[2]->field="`blog`.`image`";
         $elements[2]->sort="1";
         $elements[2]->header="image";
         $elements[2]->alias="image";
-        
+
         $elements[3]=new stdClass();
         $elements[3]->field="`blog`.`description`";
         $elements[3]->sort="1";
         $elements[3]->header="Description";
         $elements[3]->alias="description";
-        
+
         $elements[4]=new stdClass();
         $elements[4]->field="`blog`.`blogcategory`";
         $elements[4]->sort="1";
         $elements[4]->header="blogcategoryid";
         $elements[4]->alias="blogcategoryid";
-        
+
         $elements[5]=new stdClass();
         $elements[5]->field="`blogcategory`.`name`";
         $elements[5]->sort="1";
         $elements[5]->header="blogcategoryname";
         $elements[5]->alias="blogcategoryname";
-        
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -2921,7 +2929,7 @@ class Site extends CI_Controller
         $data["title"]="Create blog";
         $this->load->view("template",$data);
     }
-    public function createblogsubmit() 
+    public function createblogsubmit()
     {
         $access=array("1");
         $this->checkaccess($access);
@@ -2941,7 +2949,7 @@ class Site extends CI_Controller
             $title=$this->input->get_post("title");
             $blogcategory=$this->input->get_post("blogcategory");
             $description=$this->input->get_post("description");
-            
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -2951,7 +2959,7 @@ class Site extends CI_Controller
 			{
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
-                
+
                 $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
                 $config_r['maintain_ratio'] = TRUE;
                 $config_t['create_thumb'] = FALSE;///add this
@@ -2960,13 +2968,13 @@ class Site extends CI_Controller
                 $config_r['quality']    = 100;
                 //end of configs
 
-                $this->load->library('image_lib', $config_r); 
+                $this->load->library('image_lib', $config_r);
                 $this->image_lib->initialize($config_r);
                 if(!$this->image_lib->resize())
                 {
                     echo "Failed." . $this->image_lib->display_errors();
                     //return false;
-                }  
+                }
                 else
                 {
                     //print_r($this->image_lib->dest_image);
@@ -2974,9 +2982,9 @@ class Site extends CI_Controller
                     $image=$this->image_lib->dest_image;
                     //return false;
                 }
-                
+
 			}
-            
+
             if($this->blog_model->create($title,$blogcategory,$description,$image)==0)
                 $data["alerterror"]="New blog could not be created.";
             else
@@ -3018,7 +3026,7 @@ class Site extends CI_Controller
             $title=$this->input->get_post("title");
             $blogcategory=$this->input->get_post("blogcategory");
             $description=$this->input->get_post("description");
-            
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -3028,7 +3036,7 @@ class Site extends CI_Controller
 			{
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
-                
+
                 $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
                 $config_r['maintain_ratio'] = TRUE;
                 $config_t['create_thumb'] = FALSE;///add this
@@ -3037,13 +3045,13 @@ class Site extends CI_Controller
                 $config_r['quality']    = 100;
                 //end of configs
 
-                $this->load->library('image_lib', $config_r); 
+                $this->load->library('image_lib', $config_r);
                 $this->image_lib->initialize($config_r);
                 if(!$this->image_lib->resize())
                 {
                     echo "Failed." . $this->image_lib->display_errors();
                     //return false;
-                }  
+                }
                 else
                 {
                     //print_r($this->image_lib->dest_image);
@@ -3051,17 +3059,17 @@ class Site extends CI_Controller
                     $image=$this->image_lib->dest_image;
                     //return false;
                 }
-                
+
 			}
-            
+
             if($image=="")
             {
             $image=$this->blog_model->getblogimagebyid($id);
                // print_r($image);
                 $image=$image->image;
             }
-            
-            
+
+
             if($this->blog_model->edit($id,$title,$blogcategory,$description,$image)==0)
                 $data["alerterror"]="New blog could not be Updated.";
             else
@@ -3079,9 +3087,9 @@ class Site extends CI_Controller
         $this->load->view("redirect",$data);
     }
 
-    
+
     //projectdatapoint
-    
+
     function viewprojectdatapoint()
 	{
 		$access = array("1");
@@ -3094,9 +3102,9 @@ class Site extends CI_Controller
         $data['title']='View project Image';
 		$this->load->view('templatewith2',$data);
 	}
-    
-    
-    
+
+
+
     public function createprojectdatapoint()
 	{
 		$access = array("1");
@@ -3105,7 +3113,7 @@ class Site extends CI_Controller
 		$data[ 'title' ] = 'Create projectdatapoint';
 		$data[ 'projectid' ] = $this->input->get('id');
 //        $data['project']=$this->projectdatapoint_model->getprojectdropdown();
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
     function createprojectdatapointsubmit()
 	{
@@ -3114,21 +3122,21 @@ class Site extends CI_Controller
 		$this->form_validation->set_rules('project','project','trim|required');
 		$this->form_validation->set_rules('name','name','trim|required');
 
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
-            
+
 			$data['alerterror'] = validation_errors();
 			$data[ 'page' ] = 'createprojectdatapoint';
             $data[ 'title' ] = 'Create projectdatapoint';
             $data[ 'projectid' ] = $this->input->get_post('id');
 //            $data['project']=$this->projectdatapoint_model->getprojectdropdown();
-            $this->load->view( 'template', $data );	
+            $this->load->view( 'template', $data );
 		}
 		else
 		{
 			$project=$this->input->post('project');
 			$name=$this->input->post('name');
-           
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -3138,7 +3146,7 @@ class Site extends CI_Controller
 			{
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
-                
+
                 $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
                 $config_r['maintain_ratio'] = TRUE;
                 $config_t['create_thumb'] = FALSE;///add this
@@ -3147,30 +3155,30 @@ class Site extends CI_Controller
                 $config_r['quality']    = 100;
                 //end of configs
 
-                $this->load->library('image_lib', $config_r); 
+                $this->load->library('image_lib', $config_r);
                 $this->image_lib->initialize($config_r);
                 if(!$this->image_lib->resize())
                 {
                     echo "Failed." . $this->image_lib->display_errors();
-                }  
+                }
                 else
                 {
                     $image=$this->image_lib->dest_image;
                 }
-                
+
 			}
-            
-            
+
+
             if($this->projectdatapoint_model->create($project,$image,$name)==0)
                $data['alerterror']="New projectdatapoint could not be created.";
             else
                $data['alertsuccess']="projectdatapoint created Successfully.";
-			
+
 			$data['redirect']="site/viewprojectdatapoint?id=".$project;
 			$this->load->view("redirect2",$data);
 		}
 	}
-    
+
     function editprojectdatapoint()
 	{
 		$access = array("1");
@@ -3188,11 +3196,11 @@ class Site extends CI_Controller
 	{
 		$access = array("1");
 		$this->checkaccess($access);
-        
+
 		$this->form_validation->set_rules('project','project','trim|required');
 		$this->form_validation->set_rules('name','name','trim|required');
-        
-		if($this->form_validation->run() == FALSE)	
+
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
             $projectid=$this->input->post('project');
@@ -3207,11 +3215,11 @@ class Site extends CI_Controller
 		}
 		else
 		{
-            
+
 			$id=$this->input->post('projectdatapointid');
             $project=$this->input->post('project');
             $name=$this->input->post('name');
-            
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -3221,7 +3229,7 @@ class Site extends CI_Controller
 			{
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
-                
+
                 $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
                 $config_r['maintain_ratio'] = TRUE;
                 $config_t['create_thumb'] = FALSE;///add this
@@ -3230,35 +3238,35 @@ class Site extends CI_Controller
                 $config_r['quality']    = 100;
                 //end of configs
 
-                $this->load->library('image_lib', $config_r); 
+                $this->load->library('image_lib', $config_r);
                 $this->image_lib->initialize($config_r);
                 if(!$this->image_lib->resize())
                 {
                     echo "Failed." . $this->image_lib->display_errors();
-                }  
+                }
                 else
                 {
                     $image=$this->image_lib->dest_image;
                 }
-                
+
 			}
             if($image=="")
             {
                 $image=$this->projectdatapoint_model->getprojectdatapointbyid($id);
                 $image=$image->image;
             }
-            
+
 			if($this->projectdatapoint_model->edit($id,$project,$image,$name)==0)
 			$data['alerterror']="projectdatapoint Editing was unsuccesful";
 			else
 			$data['alertsuccess']="projectdatapoint edited Successfully.";
-			
+
 			$data['redirect']="site/viewprojectdatapoint?id=".$project;
 			$this->load->view("redirect2",$data);
-			
+
 		}
 	}
-    
+
 	function deleteprojectdatapoint()
 	{
 		$access = array("1");
@@ -3270,9 +3278,9 @@ class Site extends CI_Controller
 		$data['redirect']="site/viewprojectdatapoint?id=".$projectid;
 		$this->load->view("redirect2",$data);
 	}
-    
-    
-    
+
+
+
     public function viewtestimonial()
     {
         $access=array("1");
@@ -3285,37 +3293,37 @@ class Site extends CI_Controller
     function viewtestimonialjson()
     {
         $elements=array();
-        
+
         $elements[0]=new stdClass();
         $elements[0]->field="`testimonial`.`id`";
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`testimonial`.`name`";
         $elements[1]->sort="1";
         $elements[1]->header="Name";
         $elements[1]->alias="name";
-        
+
         $elements[2]=new stdClass();
         $elements[2]->field="`testimonial`.`content`";
         $elements[2]->sort="1";
         $elements[2]->header="Content";
         $elements[2]->alias="content";
-        
+
         $elements[3]=new stdClass();
         $elements[3]->field="`testimonial`.`order`";
         $elements[3]->sort="1";
         $elements[3]->header="Order";
         $elements[3]->alias="order";
-        
+
         $elements[4]=new stdClass();
         $elements[4]->field="`testimonial`.`image`";
         $elements[4]->sort="1";
         $elements[4]->header="image";
         $elements[4]->alias="image";
-        
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -3342,7 +3350,7 @@ class Site extends CI_Controller
         $data["title"]="Create testimonial";
         $this->load->view("template",$data);
     }
-    public function createtestimonialsubmit() 
+    public function createtestimonialsubmit()
     {
         $access=array("1");
         $this->checkaccess($access);
@@ -3362,7 +3370,7 @@ class Site extends CI_Controller
             $name=$this->input->get_post("name");
             $content=$this->input->get_post("content");
             $order=$this->input->get_post("order");
-            
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -3372,7 +3380,7 @@ class Site extends CI_Controller
 			{
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
-                
+
                 $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
                 $config_r['maintain_ratio'] = TRUE;
                 $config_t['create_thumb'] = FALSE;///add this
@@ -3381,13 +3389,13 @@ class Site extends CI_Controller
                 $config_r['quality']    = 100;
                 //end of configs
 
-                $this->load->library('image_lib', $config_r); 
+                $this->load->library('image_lib', $config_r);
                 $this->image_lib->initialize($config_r);
                 if(!$this->image_lib->resize())
                 {
                     echo "Failed." . $this->image_lib->display_errors();
                     //return false;
-                }  
+                }
                 else
                 {
                     //print_r($this->image_lib->dest_image);
@@ -3395,10 +3403,10 @@ class Site extends CI_Controller
                     $image=$this->image_lib->dest_image;
                     //return false;
                 }
-                
+
 			}
-            
-            
+
+
             if($this->testimonial_model->create($name,$content,$order,$image)==0)
                 $data["alerterror"]="New testimonial could not be created.";
             else
@@ -3439,7 +3447,7 @@ class Site extends CI_Controller
             $name=$this->input->get_post("name");
             $content=$this->input->get_post("content");
             $order=$this->input->get_post("order");
-            
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -3449,7 +3457,7 @@ class Site extends CI_Controller
 			{
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
-                
+
                 $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
                 $config_r['maintain_ratio'] = TRUE;
                 $config_t['create_thumb'] = FALSE;///add this
@@ -3458,13 +3466,13 @@ class Site extends CI_Controller
                 $config_r['quality']    = 100;
                 //end of configs
 
-                $this->load->library('image_lib', $config_r); 
+                $this->load->library('image_lib', $config_r);
                 $this->image_lib->initialize($config_r);
                 if(!$this->image_lib->resize())
                 {
                     echo "Failed." . $this->image_lib->display_errors();
                     //return false;
-                }  
+                }
                 else
                 {
                     //print_r($this->image_lib->dest_image);
@@ -3472,16 +3480,16 @@ class Site extends CI_Controller
                     $image=$this->image_lib->dest_image;
                     //return false;
                 }
-                
+
 			}
-            
+
             if($image=="")
             {
             $image=$this->testimonial_model->gettestimonialimagebyid($id);
                // print_r($image);
                 $image=$image->image;
             }
-            
+
             if($this->testimonial_model->edit($id,$name,$content,$order,$image)==0)
                 $data["alerterror"]="New testimonial could not be Updated.";
             else
@@ -3499,7 +3507,7 @@ class Site extends CI_Controller
         $this->load->view("redirect",$data);
     }
     //end of testimonial
-    
+
     public function viewnewsletter()
     {
         $access=array("1");
@@ -3512,25 +3520,25 @@ class Site extends CI_Controller
     function viewnewsletterjson()
     {
         $elements=array();
-        
+
         $elements[0]=new stdClass();
         $elements[0]->field="`newsletter`.`id`";
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`newsletter`.`email`";
         $elements[1]->sort="1";
         $elements[1]->header="Email";
         $elements[1]->alias="email";
-        
+
         $elements[2]=new stdClass();
         $elements[2]->field="`newsletter`.`timestamp`";
         $elements[2]->sort="1";
         $elements[2]->header="Timestamp";
         $elements[2]->alias="timestamp";
-        
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -3557,7 +3565,7 @@ class Site extends CI_Controller
         $data["title"]="Create newsletter";
         $this->load->view("template",$data);
     }
-    public function createnewslettersubmit() 
+    public function createnewslettersubmit()
     {
         $access=array("1");
         $this->checkaccess($access);
@@ -3573,7 +3581,7 @@ class Site extends CI_Controller
         else
         {
             $email=$this->input->get_post("email");
-            
+
             if($this->newsletter_model->create($email)==0)
                 $data["alerterror"]="New newsletter could not be created.";
             else
@@ -3610,7 +3618,7 @@ class Site extends CI_Controller
         {
             $id=$this->input->get_post("id");
             $email=$this->input->get_post("email");
-            
+
             if($this->newsletter_model->edit($id,$email)==0)
                 $data["alerterror"]="New newsletter could not be Updated.";
             else
@@ -3627,7 +3635,7 @@ class Site extends CI_Controller
         $data["redirect"]="site/viewnewsletter";
         $this->load->view("redirect",$data);
     }
-    
+
     	public function exportnewsletter()
 	{
 		$access = array("1");
@@ -3635,10 +3643,10 @@ class Site extends CI_Controller
 		$this->newsletter_model->exportnewsletter();
         $data["redirect"]="site/viewnewsletter";
         $this->load->view("redirect",$data);
-            
+
 	}
     //end of newsletter
-    
+
     public function viewcontactus()
     {
         $access=array("1");
@@ -3651,55 +3659,55 @@ class Site extends CI_Controller
     function viewcontactusjson()
     {
         $elements=array();
-        
+
         $elements[0]=new stdClass();
         $elements[0]->field="`contactus`.`id`";
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`contactus`.`email`";
         $elements[1]->sort="1";
         $elements[1]->header="Email";
         $elements[1]->alias="email";
-        
+
         $elements[2]=new stdClass();
         $elements[2]->field="`contactus`.`timestamp`";
         $elements[2]->sort="1";
         $elements[2]->header="Timestamp";
         $elements[2]->alias="timestamp";
-        
+
         $elements[3]=new stdClass();
         $elements[3]->field="`contactus`.`name`";
         $elements[3]->sort="1";
         $elements[3]->header="Name";
         $elements[3]->alias="name";
-        
+
         $elements[4]=new stdClass();
         $elements[4]->field="`contactus`.`contact`";
         $elements[4]->sort="1";
         $elements[4]->header="Contact";
         $elements[4]->alias="contact";
-        
+
         $elements[5]=new stdClass();
         $elements[5]->field="`contactus`.`country`";
         $elements[5]->sort="1";
         $elements[5]->header="Country";
         $elements[5]->alias="country";
-        
+
         $elements[6]=new stdClass();
         $elements[6]->field="`contactus`.`city`";
         $elements[6]->sort="1";
         $elements[6]->header="City";
         $elements[6]->alias="city";
-        
+
         $elements[7]=new stdClass();
         $elements[7]->field="`contactus`.`message`";
         $elements[7]->sort="1";
         $elements[7]->header="Message";
         $elements[7]->alias="message";
-        
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -3726,7 +3734,7 @@ class Site extends CI_Controller
         $data["title"]="Create contactus";
         $this->load->view("template",$data);
     }
-    public function createcontactussubmit() 
+    public function createcontactussubmit()
     {
         $access=array("1");
         $this->checkaccess($access);
@@ -3752,7 +3760,7 @@ class Site extends CI_Controller
             $country=$this->input->get_post("country");
             $city=$this->input->get_post("city");
             $message=$this->input->get_post("message");
-            
+
             if($this->contactus_model->create($name,$contact,$email,$country,$city,$message)==0)
                 $data["alerterror"]="New contactus could not be created.";
             else
@@ -3799,7 +3807,7 @@ class Site extends CI_Controller
             $country=$this->input->get_post("country");
             $city=$this->input->get_post("city");
             $message=$this->input->get_post("message");
-            
+
             if($this->contactus_model->edit($id,$name,$contact,$email,$country,$city,$message)==0)
                 $data["alerterror"]="New contactus could not be Updated.";
             else
@@ -3816,9 +3824,9 @@ class Site extends CI_Controller
         $data["redirect"]="site/viewcontactus";
         $this->load->view("redirect",$data);
     }
-    
+
     //end of contactus
-    
+
     public function viewstaticpage()
     {
         $access=array("1");
@@ -3831,31 +3839,31 @@ class Site extends CI_Controller
     function viewstaticpagejson()
     {
         $elements=array();
-        
+
         $elements[0]=new stdClass();
         $elements[0]->field="`staticpage`.`id`";
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`staticpage`.`name`";
         $elements[1]->sort="1";
         $elements[1]->header="Name";
         $elements[1]->alias="name";
-        
+
         $elements[2]=new stdClass();
         $elements[2]->field="`staticpage`.`content`";
         $elements[2]->sort="1";
         $elements[2]->header="Content";
         $elements[2]->alias="content";
-        
+
         $elements[3]=new stdClass();
         $elements[3]->field="`staticpage`.`order`";
         $elements[3]->sort="1";
         $elements[3]->header="Order";
         $elements[3]->alias="order";
-        
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -3882,7 +3890,7 @@ class Site extends CI_Controller
         $data["title"]="Create staticpage";
         $this->load->view("template",$data);
     }
-    public function createstaticpagesubmit() 
+    public function createstaticpagesubmit()
     {
         $access=array("1");
         $this->checkaccess($access);
@@ -3902,7 +3910,7 @@ class Site extends CI_Controller
             $name=$this->input->get_post("name");
             $content=$this->input->get_post("content");
             $order=$this->input->get_post("order");
-            
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -3912,7 +3920,7 @@ class Site extends CI_Controller
 			{
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
-                
+
 //                $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
 //                $config_r['maintain_ratio'] = TRUE;
 //                $config_t['create_thumb'] = FALSE;///add this
@@ -3921,21 +3929,21 @@ class Site extends CI_Controller
 //                $config_r['quality']    = 100;
 //                //end of configs
 //
-//                $this->load->library('image_lib', $config_r); 
+//                $this->load->library('image_lib', $config_r);
 //                $this->image_lib->initialize($config_r);
 //                if(!$this->image_lib->resize())
 //                {
 //                    echo "Failed." . $this->image_lib->display_errors();
 //                    //return false;
-//                }  
+//                }
 //                else
 //                {
 //                    $image=$this->image_lib->dest_image;
 //                    //return false;
 //                }
-                
+
 			}
-            
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -3945,7 +3953,7 @@ class Site extends CI_Controller
 			{
 				$uploaddata = $this->upload->data();
 				$bannerimage=$uploaddata['file_name'];
-                
+
 //                $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
 //                $config_r['maintain_ratio'] = TRUE;
 //                $config_t['create_thumb'] = FALSE;///add this
@@ -3954,22 +3962,22 @@ class Site extends CI_Controller
 //                $config_r['quality']    = 100;
 //                //end of configs
 //
-//                $this->load->library('image_lib', $config_r); 
+//                $this->load->library('image_lib', $config_r);
 //                $this->image_lib->initialize($config_r);
 //                if(!$this->image_lib->resize())
 //                {
 //                    echo "Failed." . $this->image_lib->display_errors();
 //                    //return false;
-//                }  
+//                }
 //                else
 //                {
 //                    $image=$this->image_lib->dest_image;
 //                    //return false;
 //                }
-                
+
 			}
-            
-            
+
+
             if($this->staticpage_model->create($name,$content,$order,$bannerimage,$image)==0)
                 $data["alerterror"]="New staticpage could not be created.";
             else
@@ -3995,7 +4003,7 @@ class Site extends CI_Controller
         $this->form_validation->set_rules("name","name","trim|required");
         $this->form_validation->set_rules("content","content","trim");
         $this->form_validation->set_rules("order","order","trim");
-        
+
         if($this->form_validation->run()==FALSE)
         {
             $data["alerterror"]=validation_errors();
@@ -4011,7 +4019,7 @@ class Site extends CI_Controller
             $name=$this->input->get_post("name");
             $content=$this->input->get_post("content");
             $order=$this->input->get_post("order");
-            
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -4021,7 +4029,7 @@ class Site extends CI_Controller
 			{
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
-                
+
 //                $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
 //                $config_r['maintain_ratio'] = TRUE;
 //                $config_t['create_thumb'] = FALSE;///add this
@@ -4030,13 +4038,13 @@ class Site extends CI_Controller
 //                $config_r['quality']    = 100;
 //                //end of configs
 //
-//                $this->load->library('image_lib', $config_r); 
+//                $this->load->library('image_lib', $config_r);
 //                $this->image_lib->initialize($config_r);
 //                if(!$this->image_lib->resize())
 //                {
 //                    echo "Failed." . $this->image_lib->display_errors();
 //                    //return false;
-//                }  
+//                }
 //                else
 //                {
 //                    //print_r($this->image_lib->dest_image);
@@ -4044,16 +4052,16 @@ class Site extends CI_Controller
 //                    $image=$this->image_lib->dest_image;
 //                    //return false;
 //                }
-                
+
 			}
-            
+
             if($image=="")
             {
             $image=$this->staticpage_model->getstaticpageimagebyid($id);
                // print_r($image);
                 $image=$image->image;
             }
-            
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -4063,7 +4071,7 @@ class Site extends CI_Controller
 			{
 				$uploaddata = $this->upload->data();
 				$bannerimage=$uploaddata['file_name'];
-                
+
 //                $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
 //                $config_r['maintain_ratio'] = TRUE;
 //                $config_t['create_thumb'] = FALSE;///add this
@@ -4072,13 +4080,13 @@ class Site extends CI_Controller
 //                $config_r['quality']    = 100;
 //                //end of configs
 //
-//                $this->load->library('image_lib', $config_r); 
+//                $this->load->library('image_lib', $config_r);
 //                $this->image_lib->initialize($config_r);
 //                if(!$this->image_lib->resize())
 //                {
 //                    echo "Failed." . $this->image_lib->display_errors();
 //                    //return false;
-//                }  
+//                }
 //                else
 //                {
 //                    //print_r($this->image_lib->dest_image);
@@ -4086,16 +4094,16 @@ class Site extends CI_Controller
 //                    $image=$this->image_lib->dest_image;
 //                    //return false;
 //                }
-                
+
 			}
-            
+
             if($bannerimage=="")
             {
             $bannerimage=$this->staticpage_model->getstaticpagebannerimagebyid($id);
                // print_r($bannerimage);
                 $bannerimage=$bannerimage->bannerimage;
             }
-            
+
             if($this->staticpage_model->edit($id,$name,$content,$order,$bannerimage,$image,$bannerimage,$image)==0)
                 $data["alerterror"]="New staticpage could not be Updated.";
             else
@@ -4112,11 +4120,11 @@ class Site extends CI_Controller
         $data["redirect"]="site/viewstaticpage";
         $this->load->view("redirect",$data);
     }
-    
+
     //end of staticpage
-    
-    
-    
+
+
+
     public function viewpfo()
     {
         $access=array("1");
@@ -4129,55 +4137,55 @@ class Site extends CI_Controller
     function viewpfojson()
     {
         $elements=array();
-        
+
         $elements[0]=new stdClass();
         $elements[0]->field="`pfo`.`id`";
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`pfo`.`email`";
         $elements[1]->sort="1";
         $elements[1]->header="Email";
         $elements[1]->alias="email";
-        
+
         $elements[2]=new stdClass();
         $elements[2]->field="`pfo`.`timestamp`";
         $elements[2]->sort="1";
         $elements[2]->header="Timestamp";
         $elements[2]->alias="timestamp";
-        
+
         $elements[3]=new stdClass();
         $elements[3]->field="`pfo`.`name`";
         $elements[3]->sort="1";
         $elements[3]->header="Name";
         $elements[3]->alias="name";
-        
+
         $elements[4]=new stdClass();
         $elements[4]->field="`pfo`.`contact`";
         $elements[4]->sort="1";
         $elements[4]->header="Contact";
         $elements[4]->alias="contact";
-        
+
         $elements[5]=new stdClass();
         $elements[5]->field="`pfo`.`country`";
         $elements[5]->sort="1";
         $elements[5]->header="Country";
         $elements[5]->alias="country";
-        
+
         $elements[6]=new stdClass();
         $elements[6]->field="`pfo`.`city`";
         $elements[6]->sort="1";
         $elements[6]->header="City";
         $elements[6]->alias="city";
-        
+
         $elements[7]=new stdClass();
         $elements[7]->field="`pfo`.`message`";
         $elements[7]->sort="1";
         $elements[7]->header="Message";
         $elements[7]->alias="message";
-        
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -4204,7 +4212,7 @@ class Site extends CI_Controller
         $data["title"]="Create pfo";
         $this->load->view("template",$data);
     }
-    public function createpfosubmit() 
+    public function createpfosubmit()
     {
         $access=array("1");
         $this->checkaccess($access);
@@ -4230,7 +4238,7 @@ class Site extends CI_Controller
             $country=$this->input->get_post("country");
             $city=$this->input->get_post("city");
             $message=$this->input->get_post("message");
-            
+
             if($this->pfo_model->create($name,$contact,$email,$country,$city,$message)==0)
                 $data["alerterror"]="New pfo could not be created.";
             else
@@ -4277,7 +4285,7 @@ class Site extends CI_Controller
             $country=$this->input->get_post("country");
             $city=$this->input->get_post("city");
             $message=$this->input->get_post("message");
-            
+
             if($this->pfo_model->edit($id,$name,$contact,$email,$country,$city,$message)==0)
                 $data["alerterror"]="New pfo could not be Updated.";
             else
@@ -4294,9 +4302,9 @@ class Site extends CI_Controller
         $data["redirect"]="site/viewpfo";
         $this->load->view("redirect",$data);
     }
-    
+
     //end of pfo
-    
+
     public function viewworkwithus()
     {
         $access=array("1");
@@ -4309,55 +4317,55 @@ class Site extends CI_Controller
     function viewworkwithusjson()
     {
         $elements=array();
-        
+
         $elements[0]=new stdClass();
         $elements[0]->field="`workwithus`.`id`";
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`workwithus`.`email`";
         $elements[1]->sort="1";
         $elements[1]->header="Email";
         $elements[1]->alias="email";
-        
+
         $elements[2]=new stdClass();
         $elements[2]->field="`workwithus`.`timestamp`";
         $elements[2]->sort="1";
         $elements[2]->header="Timestamp";
         $elements[2]->alias="timestamp";
-        
+
         $elements[3]=new stdClass();
         $elements[3]->field="`workwithus`.`name`";
         $elements[3]->sort="1";
         $elements[3]->header="Name";
         $elements[3]->alias="name";
-        
+
         $elements[4]=new stdClass();
         $elements[4]->field="`workwithus`.`contact`";
         $elements[4]->sort="1";
         $elements[4]->header="Contact";
         $elements[4]->alias="contact";
-        
+
         $elements[5]=new stdClass();
         $elements[5]->field="`workwithus`.`country`";
         $elements[5]->sort="1";
         $elements[5]->header="Country";
         $elements[5]->alias="country";
-        
+
         $elements[6]=new stdClass();
         $elements[6]->field="`workwithus`.`city`";
         $elements[6]->sort="1";
         $elements[6]->header="City";
         $elements[6]->alias="city";
-        
+
         $elements[7]=new stdClass();
         $elements[7]->field="`workwithus`.`message`";
         $elements[7]->sort="1";
         $elements[7]->header="Message";
         $elements[7]->alias="message";
-        
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -4384,7 +4392,7 @@ class Site extends CI_Controller
         $data["title"]="Create workwithus";
         $this->load->view("template",$data);
     }
-    public function createworkwithussubmit() 
+    public function createworkwithussubmit()
     {
         $access=array("1");
         $this->checkaccess($access);
@@ -4410,7 +4418,7 @@ class Site extends CI_Controller
             $country=$this->input->get_post("country");
             $city=$this->input->get_post("city");
             $message=$this->input->get_post("message");
-            
+
             if($this->workwithus_model->create($name,$contact,$email,$country,$city,$message)==0)
                 $data["alerterror"]="New workwithus could not be created.";
             else
@@ -4457,7 +4465,7 @@ class Site extends CI_Controller
             $country=$this->input->get_post("country");
             $city=$this->input->get_post("city");
             $message=$this->input->get_post("message");
-            
+
             if($this->workwithus_model->edit($id,$name,$contact,$email,$country,$city,$message)==0)
                 $data["alerterror"]="New workwithus could not be Updated.";
             else
@@ -4474,8 +4482,8 @@ class Site extends CI_Controller
         $data["redirect"]="site/viewworkwithus";
         $this->load->view("redirect",$data);
     }
-    
+
     //end of workwithus
-    
+
 }
 ?>
