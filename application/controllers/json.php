@@ -622,7 +622,7 @@ $this->load->view("json",$data);
     
     if($orderby=="")
     {
-        $orderby="order";
+        $orderby="id";
         $orderorder="ASC";
     }
     $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `powerforone_project` LEFT OUTER JOIN `powerforone_category` ON `powerforone_project`.`category`=`powerforone_category`.`id` LEFT OUTER JOIN `powerforone_ngo` ON `powerforone_project`.`ngo`=`powerforone_ngo`.`id` LEFT OUTER JOIN `powerforone_advertiser` ON `powerforone_project`.`advertiser`=`powerforone_advertiser`.`id`",$where);
@@ -845,7 +845,7 @@ $this->load->view("json",$data);
     
     if($orderby=="")
     {
-        $orderby="order";
+        $orderby="id";
         $orderorder="ASC";
     }
     $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `powerforone_project` LEFT OUTER JOIN `powerforone_category` ON `powerforone_project`.`category`=`powerforone_category`.`id` LEFT OUTER JOIN `powerforone_ngo` ON `powerforone_project`.`ngo`=`powerforone_ngo`.`id`  LEFT OUTER JOIN `powerforone_advertiser` ON `powerforone_project`.`advertiser`=`powerforone_advertiser`.`id`",$where, "GROUP BY `powerforone_project`.`id` ");
@@ -1010,8 +1010,8 @@ $this->load->view("json",$data);
     
     public function getsingleuser()
     {
-        $id=$this->input->get_post("id");
-//        $id=$this->session->userdata('id');
+//        $id=$this->input->get_post("id");
+        $id=$this->session->userdata('id');
         $data['message']=$this->restapi_model->getsingleuser($id);
         $this->load->view("json",$data);
     }

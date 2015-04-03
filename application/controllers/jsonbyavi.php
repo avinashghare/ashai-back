@@ -61,10 +61,10 @@ class Jsonbyavi extends CI_Controller
     }
     if($orderby=="")
     {
-      $orderby="id";
+      $orderby="order";
       $orderorder="ASC";
     }
-    $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `powerforone_category`");
+    $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `powerforone_category`","WHERE `powerforone_category`.`status`=1");
     $this->load->view("json",$data);
   }
   public function getsinglecategory()
