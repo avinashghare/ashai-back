@@ -514,14 +514,15 @@ class User_model extends CI_Model
     
     function updatepost($id,$project,$facebookid)
     {
-        $query=$this->db->query("SELECT * FROM `powerforone_order` WHERE `user`='$facebookid' AND `typeofdonation`='1' AND `project`='$project'");
+        $user = $this->session->userdata("id");
+        $query=$this->db->query("SELECT * FROM `powerforone_order` WHERE `user`='$user' AND `typeofdonation`='1' AND `project`='$project'");
         if($query->num_rows == 0)
         {
             $projectdata=$this->db->query("SELECT * FROM `powerforone_project` WHERE `id`='$project'")->row();
             $data=array(
                 "name" => $projectdata->name,
                 "email" => "",
-                "user" => $facebookid,
+                "user" => $user,
                 "amount" => $projectdata->sharevalue,
                 "ngo" => $projectdata->ngo,
                 "status" => $projectdata->status,
