@@ -102,6 +102,7 @@ $(document).ready(function(){
             <!--logo end-->
             <div class="top-nav ">
                 <!--search & user info start-->
+				<a class="btn btn-primary pull-right" href="<?php echo site_url("site/mediamanager");?>">Media Manager</a>
                 <ul class="nav pull-right top-menu">
                     <li>
                         <input type="text" class="form-control search" placeholder="Search">

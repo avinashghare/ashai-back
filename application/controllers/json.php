@@ -1360,6 +1360,7 @@ $this->load->view("json",$data);
 
     }
 
+	
 
      public function addpaymentdetails()
     {

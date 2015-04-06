@@ -4482,6 +4482,14 @@ class Site extends CI_Controller
         $data["redirect"]="site/viewworkwithus";
         $this->load->view("redirect",$data);
     }
+	public function mediamanager()
+	{
+		$access=array("1");
+        $this->checkaccess($access);
+		$data["page"]="mediamanager";
+		$data["title"]="Media Manager";
+		$this->load->view("template",$data);
+	}
 
     //end of workwithus
 
