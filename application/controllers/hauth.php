@@ -100,27 +100,37 @@ class HAuth extends CI_Controller {
 	public function posttweet()
     {
         $twitter = $this->hybridauthlib->authenticate("Twitter");
-        $message=$this->input->get_post("message");
-        $post=$this->input->get('id');
-        $project=$this->input->get('project');
-        $twitterid = $twitter->getUserProfile();
-        $twitterid = $twitterid->identifier;
+
+				if ($twitter->isUserConnected())
+				{
+						$message=$this->input->get_post("message");
+						$post=$this->input->get('id');
+						$project=$this->input->get('project');
+						$twitterid = $twitter->getUserProfile();
+						$twitterid = $twitterid->identifier;
 
 
 
-        $data["message"]=$twitter->api()->post("statuses/update.json?status=$message");
-        if(isset($data["message"]->id_str))
-        {
-            // $this->userpost_model->addpostid($data["message"]->id_str,$post);
-            $this->user_model->updatetweet($data["message"]->id_str,$project,$twitterid);
-            redirect($this->input->get_post("returnurl"));
-            $this->load->view("json",$data);
-        }
-        else
-        {
-            redirect($this->input->get_post("returnurl"));
-		  $this->load->view("json",$data);
-        }
+						$data["message"]=$twitter->api()->post("statuses/update.json?status=$message");
+						if(isset($data["message"]->id_str))
+						{
+						    // $this->userpost_model->addpostid($data["message"]->id_str,$post);
+						    $this->user_model->updatetweet($data["message"]->id_str,$project,$twitterid);
+						    redirect($this->input->get_post("returnurl"));
+						    $this->load->view("json",$data);
+						}
+						else
+						{
+						    redirect($this->input->get_post("returnurl"));
+						$this->load->view("json",$data);
+						}
+				}
+				else // Cannot authenticate user
+				{
+					show_error('Cannot authenticate user');
+				}
+
+
 
     }
     public function postfb()
@@ -131,56 +141,67 @@ class HAuth extends CI_Controller {
         $link=$this->input->get_post("link");
         $project=$this->input->get_post("project");
 //        echo "out".$message;
-        $facebookid = $facebook->getUserProfile();
-        $facebookid = $facebookid->identifier;
+
+
+				if ($facebook->isUserConnected())
+				{
+
+					$facebookid = $facebook->getUserProfile();
+	        $facebookid = $facebookid->identifier;
+
+					if($image=="")
+					{
+							$data["message"]=$facebook->api()->api("v2.2/me/feed", "post", array(
+									"message" => "$message",
+									"link"=>"$link"
+							));
+
+							if(isset($data["message"]['id']))
+							{
+	//                echo "hauth".$project;
+									$this->user_model->updatepost($data["message"]['id'],$project,$facebookid);
+									redirect($this->input->get_post("returnurl"));
+	//							$this->load->view("json",$data);
+							}
+							else
+							{
+									redirect($this->input->get_post("returnurl"));
+	//							$this->load->view("json",$data);
+							}
+					}
+					else
+					{
+							$data["message"]=$facebook->api()->api("v2.2/me/feed", "post", array(
+									"message" => "$message",
+									"picture"=> "$image",
+									"link"=>"$link"
+							));
+
+	//            print_r($data['message']["id"]);
+
+							if(isset($data["message"]["id"]))
+							{
+
+									redirect($this->input->get_post("returnurl"));
+
+							$this->load->view("json",$data);
+							}
+							else
+							{
+
+
+									redirect($this->input->get_post("returnurl"));
+									$this->load->view("json",$data);
+							}
+					}
+				}
+				else // Cannot authenticate user
+				{
+					show_error('Cannot authenticate user');
+				}
 
 
 
-        if($image=="")
-        {
-            $data["message"]=$facebook->api()->api("v2.2/me/feed", "post", array(
-                "message" => "$message",
-                "link"=>"$link"
-            ));
-
-            if(isset($data["message"]['id']))
-            {
-//                echo "hauth".$project;
-                $this->user_model->updatepost($data["message"]['id'],$project,$facebookid);
-                redirect($this->input->get_post("returnurl"));
-//							$this->load->view("json",$data);
-            }
-            else
-            {
-                redirect($this->input->get_post("returnurl"));
-//							$this->load->view("json",$data);
-            }
-        }
-        else
-        {
-            $data["message"]=$facebook->api()->api("v2.2/me/feed", "post", array(
-                "message" => "$message",
-                "picture"=> "$image",
-                "link"=>"$link"
-            ));
-
-//            print_r($data['message']["id"]);
-
-            if(isset($data["message"]["id"]))
-            {
-                
-                redirect($this->input->get_post("returnurl"));
-
-            $this->load->view("json",$data);
-            }
-            else
-            {
-
-                
-                redirect($this->input->get_post("returnurl"));
-                $this->load->view("json",$data);
-            }
-        }
 
     }
 
