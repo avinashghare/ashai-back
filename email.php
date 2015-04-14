@@ -17,7 +17,7 @@ try {
         'from_name' => 'Powerforone',
         'to' => array(
             array(
-                'email' => 'chintan@wohlig.com',
+                'email' => 'avinashghare572@gmail.com',
                 'name' => 'Avinash',
                 'type' => 'to'
             )
@@ -32,7 +32,7 @@ try {
         'url_strip_qs' => null,
         'preserve_recipients' => null,
         'view_content_link' => null,
-        'bcc_address' => 'message.bcc_address@example.com',
+        'bcc_address' => 'avinashghare572@gmail.com',
         'tracking_domain' => null,
         'signing_domain' => null,
         'return_path_domain' => null,
@@ -46,7 +46,7 @@ try {
         ),
         'merge_vars' => array(
             array(
-                'rcpt' => 'chintan@wohlig.com',
+                'rcpt' => 'avinashghare572@gmail.com',
                 'vars' => array(
                     array(
                         'name' => 'merge2',
