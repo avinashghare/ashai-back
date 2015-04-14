@@ -23,11 +23,11 @@ $template_name = 'avinash';
 
 $template_content = array(
     array(
-        'name' => 'main',
-        'content' => 'Hi *|FIRSTNAME|* *|LASTNAME|*, thanks for signing up.'),
+        'name' => 'name',
+        'content' => 'Chintan'),
     array(
         'name' => 'footer',
-        'content' => 'Copyright 2013.')
+        'content' => 'Copyright 2015.')
 
 );
 
