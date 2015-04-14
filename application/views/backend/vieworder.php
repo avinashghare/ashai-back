@@ -23,6 +23,7 @@
                             <th data-field="projectname">Project</th>
                             <th data-field="ngoname">NGO</th>
                             <th data-field="advertisername">Cooperator</th>
+                            <th data-field="referencecode">Reference Code</th>
                             <th data-field="action">Action</th>
                         </tr>
                     </thead>
@@ -46,7 +47,7 @@
                 {
                 resultrow.typeofdonation="Tweet";
                 }
-                return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.username + "</td><td>" + resultrow.email + "</td><td>" + resultrow.typeofdonation + "</td><td>" + resultrow.amount + "</td><td>" + resultrow.projectname + "</td><td>" + resultrow.ngoname + "</td><td>" + resultrow.advertisername + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editorder?id=');?>" + resultrow.id + "'><i class='icon-pencil'></i></a><a class='btn btn-danger btn-xs' href='<?php echo site_url('site/deleteorder?id='); ?>" + resultrow.id + "'><i class='icon-trash '></i></a></td></tr>";
+                return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.username + "</td><td>" + resultrow.email + "</td><td>" + resultrow.typeofdonation + "</td><td>" + resultrow.amount + "</td><td>" + resultrow.projectname + "</td><td>" + resultrow.ngoname + "</td><td>" + resultrow.advertisername + "</td><td>" + resultrow.referencecode + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editorder?id=');?>" + resultrow.id + "'><i class='icon-pencil'></i></a><a class='btn btn-danger btn-xs' href='<?php echo site_url('site/deleteorder?id='); ?>" + resultrow.id + "'><i class='icon-trash '></i></a></td></tr>";
             }
             generatejquery("<?php echo $base_url;?>");
         </script>

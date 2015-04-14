@@ -132,6 +132,11 @@ class User_model extends CI_Model
 		$query=$this->db->query("SELECT `image` FROM `user` WHERE `id`='$id'")->row();
 		return $query;
 	}
+	public function getnewregisteredusers()
+	{
+		$query=$this->db->query("SELECT COUNT(`id`) AS `count1` FROM `user` WHERE `accesslevel`=3")->row();
+		return $query->count1;
+	}
 	function deleteuser($id)
 	{
 		$query=$this->db->query("DELETE FROM `user` WHERE `id`='$id'");
@@ -643,6 +648,46 @@ class User_model extends CI_Model
             return $newdata;
         }
     }
+    
+	function getidbyemail($useremail)
+	{
+		$query = $this->db->query("SELECT `id` FROM `user`
+		WHERE `email`='$useremail'")->row();
+        $userid=$query->id;
+		return $userid;
+	}
 
+    function forgotpasswordsubmit($hashcode,$password)
+    {
+        $normalbyhash=base64_decode ($hashcode);
+        $returnvalue=explode("&",$normalbyhash);
+        print_r($returnvalue);
+        echo $returnvalue[0]."<br>";
+        $password=md5($password);
+        $query=$this->db->query("SELECT `id`,`name`,`image` FROM `user` WHERE `email`='$email' AND `password`= '$password'");
+        if($query->num_rows > 0)
+        {
+            $user=$query->row();
+
+
+
+            $newdata = array(
+                'email'     => $email,
+                'password' => $password,
+                'logged_in' => true,
+                'id'=> $user->id,
+                'image'=> $user->image,
+                'name'=> $user->name
+            );
+
+            $this->session->set_userdata($newdata);
+            //print_r($newdata);
+            return $newdata;
+        }
+        else
+        return false;
+
+
+    }
 }
 ?>

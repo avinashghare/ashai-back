@@ -1351,11 +1351,12 @@ $this->load->view("json",$data);
         $istax=$data['istax'];
         $anonymous=$data['anonymous'];
         $give=$data['give'];
+        $referencecode=$data['referral'];
 //        $user=$data['user'];
         $user=$this->session->userdata('id');
 
 
-        $data['message']=$this->restapi_model->createfrontendorder($name,$email,$mobile,$city,$address,$pan,$dob,$amount,$project,$user,$istax,$anonymous,$give);
+        $data['message']=$this->restapi_model->createfrontendorder($name,$email,$mobile,$city,$address,$pan,$dob,$amount,$project,$user,$istax,$anonymous,$give,$referencecode);
         $this->load->view('json',$data);
 
     }
@@ -1565,5 +1566,14 @@ try {
     throw $e;
 }
   }
+    
+    public function forgotpasswordsubmit()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $password=$data['password'];
+        $hashcode=$data['hashcode'];
+        $data['message']=$this->user_model->forgotpasswordsubmit($hashcode,$password);
+        $this->load->view('json',$data);
+    }
 } 
 ?>

@@ -25,6 +25,7 @@ class Site extends CI_Controller
 	{
 		$access = array("1","2");
 		$this->checkaccess($access);
+        $data['newregisteredusers']=$this->user_model->getnewregisteredusers();
 		$data[ 'page' ] = 'dashboard';
 		$data[ 'title' ] = 'Welcome';
 		$this->load->view( 'template', $data );
@@ -1779,6 +1780,12 @@ class Site extends CI_Controller
         $elements[11]->header="Project";
         $elements[11]->alias="projectname";
 
+        $elements[6]=new stdClass();
+        $elements[6]->field="`powerforone_order`.`referencecode`";
+        $elements[6]->sort="1";
+        $elements[6]->header="Referral";
+        $elements[6]->alias="referencecode";
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -1834,6 +1841,7 @@ class Site extends CI_Controller
         $this->form_validation->set_rules("istax","istax","trim");
         $this->form_validation->set_rules("anonymous","anonymous","trim");
         $this->form_validation->set_rules("give","give","trim");
+        $this->form_validation->set_rules("referencecode","referencecode","trim");
         if($this->form_validation->run()==FALSE)
         {
             $data["alerterror"]=validation_errors();
@@ -1869,7 +1877,8 @@ class Site extends CI_Controller
             $istax=$this->input->get_post("istax");
             $anonymous=$this->input->get_post("anonymous");
             $give=$this->input->get_post("give");
-            if($this->order_model->create($name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser,$mobile,$city,$address,$pan,$dob,$istax,$anonymous,$give)==0)
+            $referencecode=$this->input->get_post("referencecode");
+            if($this->order_model->create($name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser,$mobile,$city,$address,$pan,$dob,$istax,$anonymous,$give,$referencecode)==0)
                 $data["alerterror"]="New order could not be created.";
             else
                 $data["alertsuccess"]="order created Successfully.";
@@ -1916,6 +1925,7 @@ class Site extends CI_Controller
         $this->form_validation->set_rules("istax","istax","trim");
         $this->form_validation->set_rules("anonymous","anonymous","trim");
         $this->form_validation->set_rules("give","give","trim");
+        $this->form_validation->set_rules("referencecode","referencecode","trim");
         if($this->form_validation->run()==FALSE)
         {
             $data["alerterror"]=validation_errors();
@@ -1954,8 +1964,9 @@ class Site extends CI_Controller
             $istax=$this->input->get_post("istax");
             $anonymous=$this->input->get_post("anonymous");
             $give=$this->input->get_post("give");
+            $referencecode=$this->input->get_post("referencecode");
 
-            if($this->order_model->edit($id,$name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser,$mobile,$city,$address,$pan,$dob,$istax,$anonymous,$give)==0)
+            if($this->order_model->edit($id,$name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser,$mobile,$city,$address,$pan,$dob,$istax,$anonymous,$give,$referencecode)==0)
                 $data["alerterror"]="New order could not be Updated.";
             else
                 $data["alertsuccess"]="order Updated Successfully.";

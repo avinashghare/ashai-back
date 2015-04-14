@@ -3,7 +3,7 @@ if ( !defined( "BASEPATH" ) )
 exit( "No direct script access allowed" );
 class order_model extends CI_Model
 {
-    public function create($name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser,$mobile,$city,$address,$pan,$dob,$istax,$anonymous,$give)
+    public function create($name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser,$mobile,$city,$address,$pan,$dob,$istax,$anonymous,$give,$referencecode)
     {
         $data=array(
             "name" => $name,
@@ -22,6 +22,7 @@ class order_model extends CI_Model
             "dob" => $dob,
             "istax" => $istax,
             "anonymous" => $anonymous,
+            "referral" => $referencecode,
             "give" => $give,
             "project" => $project
         );
@@ -44,7 +45,7 @@ class order_model extends CI_Model
         $query=$this->db->get("powerforone_order")->row();
         return $query;
     }
-    public function edit($id,$name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser,$mobile,$city,$address,$pan,$dob,$istax,$anonymous,$give)
+    public function edit($id,$name,$email,$user,$amount,$ngo,$project,$status,$transactionid,$typeofdonation,$advertiser,$mobile,$city,$address,$pan,$dob,$istax,$anonymous,$give,$referencecode)
     {
         $data=array(
             "name" => $name,
@@ -62,6 +63,7 @@ class order_model extends CI_Model
             "dob" => $dob,
             "istax" => $istax,
             "anonymous" => $anonymous,
+            "referral" => $referencecode,
             "give" => $give,
             "project" => $project
         );

@@ -2,7 +2,12 @@
 //require 'Mandrill.php';
 require_once 'mandrill-api-php/src/Mandrill.php'; //Not required with Composer
 $mandrill = new Mandrill('JBaGvsZ2hASJrotu0sjhqg');
-
+print_r($_POST);
+$userid=$_POST["userid"];
+$email=$_POST["email"];
+$link=$_POST["link"];
+$hashvalue=$_POST["hashvalue"];
+//echo $link;
 $message = array(
     'subject' => 'Powerforone Change Password',
     'from_email' => 'avinashghare572@gmail.com',
@@ -19,15 +24,12 @@ $message = array(
                 'content' => 'g')
     ))));
 
-$template_name = 'avinash';
+$template_name = 'Forgot Password';
 
 $template_content = array(
     array(
-        'name' => 'name',
-        'content' => 'Chintan'),
-    array(
-        'name' => 'footer',
-        'content' => 'Copyright 2015.')
+        'name' => 'link',
+        'content' => $link)
 
 );
 

@@ -1,0 +1,53 @@
+<?php if ( ! defined("BASEPATH")) exit("No direct script access allowed");
+class Email extends CI_Controller
+{
+    public function forgotpassword()
+    {
+        
+        //set POST variables
+        $email=$this->input->get_post('email');
+        $userid=$this->user_model->getidbyemail($email);
+        $hashvalue=base64_encode ($userid."&powerforone");
+        $link="<a href='http://www.powerforone.org/#/resetpswd/$hashvalue'>Click here to reset your password.</a>";
+//        $normalbyhash=base64_decode ($hashvalue);
+//        $returnvalue=explode("&",$normalbyhash);
+//        print_r($returnvalue);
+//        echo $returnvalue[0]."<br>";
+//        echo $normalbyhash."<br>";
+//        echo $userid;
+//        echo $hashvalue;
+//        echo $link;
+        
+        
+        $url = base_url("email/forgetpasswordemail.php");
+        $fields = array(
+                                'userid' => urlencode($userid),
+                                'email' => urlencode($email),
+                                'link' => urlencode($link),
+                                'hashvalue' => urlencode($hashvalue)
+                        );
+
+        //url-ify the data for the POST
+        foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
+        rtrim($fields_string, '&');
+
+        //open connection
+        $ch = curl_init();
+
+        //set the url, number of POST vars, POST data
+        curl_setopt($ch,CURLOPT_URL, $url);
+        curl_setopt($ch,CURLOPT_POST, count($fields));
+        curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+
+        //execute post
+        $result = curl_exec($ch);
+
+        //close connection
+        curl_close($ch);
+    }
+} 
+//<h1>Avinash</h1>
+//<p>My name is <span mc:edit="name">Avinash</span> and I am Web Developer.</p>
+//<span mc:edit="footer">Avinash</span>
+
+?>

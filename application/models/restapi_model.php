@@ -221,7 +221,7 @@ ORDER BY `powerforone_project`.`order` ASC")->result();
         return $query;
     }
 
-    public function createfrontendorder($name,$email,$mobile,$city,$address,$pan,$dob,$amount,$project,$user,$istax,$anonymous,$give)
+    public function createfrontendorder($name,$email,$mobile,$city,$address,$pan,$dob,$amount,$project,$user,$istax,$anonymous,$give,$referencecode)
     {
         $projectdata=$this->project_model->beforeedit($project);
         $ngo=$projectdata->ngo;
@@ -243,6 +243,7 @@ ORDER BY `powerforone_project`.`order` ASC")->result();
             "give" => $give,
             "typeofdonation" => 0,
             "status" => 1,
+            "referral" => $referencecode,
             "advertiser" => $advertiser
         );
         $query=$this->db->insert( "powerforone_order", $data );

@@ -125,6 +125,14 @@
                                 <?php echo form_dropdown( "give",$give,set_value( 'give'), "class='chzn-select form-control'");?>
                             </div>
                         </div>
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Referral</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="normal-field" class="form-control" name="referencecode" value='<?php echo set_value(' referencecode ');?>'>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="normal-field">&nbsp;</label>
                             <div class="col-sm-4">
