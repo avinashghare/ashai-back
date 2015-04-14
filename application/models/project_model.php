@@ -165,9 +165,7 @@ class project_model extends CI_Model
                 $return[]=$row->similarprojectid;
             }
         }
-         return $return;
-         
-		
+         return $return;	
 	}
 }
 ?>

@@ -526,7 +526,7 @@ class Site extends CI_Controller
     {
         $access=array("1");
         $this->checkaccess($access);
-        $this->form_validation->set_rules("name","Name","trim");
+        $this->form_validation->set_rules("name","Name","trim|required");
         $this->form_validation->set_rules("parent","Parent","trim");
         $this->form_validation->set_rules("json","Json","trim");
         $this->form_validation->set_rules("order","Order","trim");
