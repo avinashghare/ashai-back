@@ -123,7 +123,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="normal-field">Referral</label>
                             <div class="col-sm-4">
-                                <input type="text" id="normal-field" class="form-control" name="referencecode" value='<?php echo set_value(' referencecode ',$before->referencecode);?>'>
+                                <input type="text" id="normal-field" class="form-control" name="referencecode" value='<?php echo set_value(' referencecode ',$before->referral);?>'>
                             </div>
                         </div>
 

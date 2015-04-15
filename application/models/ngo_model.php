@@ -72,5 +72,11 @@ class ngo_model extends CI_Model
 		$query=$this->db->query("SELECT `image` FROM `powerforone_ngo` WHERE `id`='$id'")->row();
 		return $query;
 	}
+    
+	public function getnewngo()
+	{
+		$query=$this->db->query("SELECT COUNT(`id`) AS `count1` FROM `powerforone_ngo`")->row();
+		return $query->count1;
+	}
 }
 ?>

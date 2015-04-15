@@ -126,5 +126,153 @@ class order_model extends CI_Model
 			);
 		return $give;
 	}
+    
+	public function getallorders()
+	{
+		$query=$this->db->query("SELECT COUNT(`id`) AS `count1` FROM `powerforone_order`")->row();
+		return $query->count1;
+	}
+	public function getfacebookorders()
+	{
+		$query=$this->db->query("SELECT COUNT(`id`) AS `count1` FROM `powerforone_order` WHERE `typeofdonation`=1")->row();
+		return $query->count1;
+	}
+	public function gettwitterorders()
+	{
+		$query=$this->db->query("SELECT COUNT(`id`) AS `count1` FROM `powerforone_order` WHERE `typeofdonation`=2")->row();
+		return $query->count1;
+	}
+	public function getamountorders()
+	{
+		$query=$this->db->query("SELECT COUNT(`id`) AS `count1` FROM `powerforone_order` WHERE `typeofdonation`=0")->row();
+		return $query->count1;
+	}
+	public function getorderbyid($orderid)
+	{
+		$query=$this->db->query("SELECT `powerforone_order`.`id`, `powerforone_order`.`name`,`powerforone_order`. `email`, `powerforone_order`.`user`, `powerforone_order`.`amount`, `powerforone_order`.`ngo`, `powerforone_order`.`project`, `powerforone_order`.`status`, `powerforone_order`.`transactionid`, `powerforone_order`.`typeofdonation`, `powerforone_order`.`advertiser`, `powerforone_order`.`mobile`, `powerforone_order`.`city`, `powerforone_order`.`address`, `powerforone_order`.`pan`, `powerforone_order`.`dob`, `powerforone_order`.`istax`, `powerforone_order`.`anonymous`, `powerforone_order`.`give`, `powerforone_order`.`referral` ,`powerforone_project`.`name` AS `projectname`,`powerforone_ngo`.`name` AS `ngoname`,`powerforone_advertiser`.`name` AS `corporatename`
+FROM `powerforone_order` 
+LEFT OUTER JOIN `powerforone_project` ON `powerforone_project`.`id`=`powerforone_order`.`project`
+LEFT OUTER JOIN `powerforone_ngo` ON `powerforone_ngo`.`id`=`powerforone_order`.`ngo`
+LEFT OUTER JOIN `powerforone_advertiser` ON `powerforone_advertiser`.`id`=`powerforone_order`.`advertiser`
+WHERE `powerforone_order`.`id`='$orderid'")->row();
+		return $query;
+	}
+	public function successpayment($orderid)
+	{
+        
+        //set POST variables
+        $orderdetails=$this->order_model->getorderbyid($orderid);
+        $transactionid=$orderdetails->transactionid;
+        $typeofdonation=$orderdetails->typeofdonation;
+        if($typeofdonation==0)
+        {
+        $typeofdonation="Amount";
+        }
+        else if($typeofdonation==1)
+        {
+        $typeofdonation="Facebook";
+        }
+        else
+        {
+        $typeofdonation="Twitter";
+        }
+        $projectname=$orderdetails->projectname;
+        $ngoname=$orderdetails->ngoname;
+        $amount=$orderdetails->amount;
+        $email=$orderdetails->email;
+        $table="<table border='1' class='table table-striped'>
+    <tr>
+                                <th>Transaction ID</th>
+                                <th>Type Of Donation</th>
+                                <th>Project</th>
+                                <th>NGO</th>
+                                <th>Amount</th>
+    </tr>
+    <tr>
+                                <td>$transactionid</td>
+                                <td>$typeofdonation</td>
+                                <td>$projectname</td>
+                                <td>$ngoname</td>
+                                <td>$amount</td>
+    </tr>
+                                </table>";
+        $url = base_url("email/transactionsuccessemail.php");
+        $fields = array(
+                                'projectname' => urlencode($projectname),
+                                'email' => urlencode($email),
+                                'table' => urlencode($table)
+                        );
+
+        //url-ify the data for the POST
+        foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
+        rtrim($fields_string, '&');
+
+        //open connection
+        $ch = curl_init();
+
+        //set the url, number of POST vars, POST data
+        curl_setopt($ch,CURLOPT_URL, $url);
+        curl_setopt($ch,CURLOPT_POST, count($fields));
+        curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+
+        //execute post
+        $result = curl_exec($ch);
+
+        //close connection
+        curl_close($ch);
+	}
+	public function transactionfailed($orderid)
+	{
+        
+        //set POST variables
+        $orderdetails=$this->order_model->getorderbyid($orderid);
+        $transactionid=$orderdetails->transactionid;
+        $typeofdonation=$orderdetails->typeofdonation;
+        if($typeofdonation==0)
+        {
+        $typeofdonation="Amount";
+        }
+        else if($typeofdonation==1)
+        {
+        $typeofdonation="Facebook";
+        }
+        else
+        {
+        $typeofdonation="Twitter";
+        }
+        $projectname=$orderdetails->projectname;
+        $ngoname=$orderdetails->ngoname;
+        $amount=$orderdetails->amount;
+        $email=$orderdetails->email;
+        $project=$orderdetails->project;
+        
+        $link="<a href='http://www.powerforone.org/#/campaign/$project'>Click here</a>";
+        
+        $url = base_url("email/transactionfailedemail.php");
+        $fields = array(
+                                'projectname' => urlencode($projectname),
+                                'email' => urlencode($email),
+                                'link' => urlencode($link)
+                        );
+
+        //url-ify the data for the POST
+        foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
+        rtrim($fields_string, '&');
+
+        //open connection
+        $ch = curl_init();
+
+        //set the url, number of POST vars, POST data
+        curl_setopt($ch,CURLOPT_URL, $url);
+        curl_setopt($ch,CURLOPT_POST, count($fields));
+        curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+
+        //execute post
+        $result = curl_exec($ch);
+        $data['message']=$result;
+        $this->load->view("json",$data);
+        //close connection
+        curl_close($ch);
+	}
 }
 ?>

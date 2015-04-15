@@ -167,5 +167,12 @@ class project_model extends CI_Model
         }
          return $return;	
 	}
+    
+	public function getnewproject()
+	{
+		$query=$this->db->query("SELECT COUNT(`id`) AS `count1` FROM `powerforone_project`")->row();
+//		$query=$this->db->query("SELECT COUNT(`id`) AS `count1` FROM `powerforone_project` WHERE `status`=1")->row();
+		return $query->count1;
+	}
 }
 ?>

@@ -659,35 +659,18 @@ class User_model extends CI_Model
 
     function forgotpasswordsubmit($hashcode,$password)
     {
-        $normalbyhash=base64_decode ($hashcode);
-        $returnvalue=explode("&",$normalbyhash);
-        print_r($returnvalue);
-        echo $returnvalue[0]."<br>";
+        $normalfromhash=base64_decode ($hashcode);
+        $returnvalue=explode("&",$normalfromhash);
+//        print_r($returnvalue);
+//        echo $returnvalue[0]."<br>";
+        $userid=$returnvalue[0];
         $password=md5($password);
-        $query=$this->db->query("SELECT `id`,`name`,`image` FROM `user` WHERE `email`='$email' AND `password`= '$password'");
-        if($query->num_rows > 0)
-        {
-            $user=$query->row();
-
-
-
-            $newdata = array(
-                'email'     => $email,
-                'password' => $password,
-                'logged_in' => true,
-                'id'=> $user->id,
-                'image'=> $user->image,
-                'name'=> $user->name
-            );
-
-            $this->session->set_userdata($newdata);
-            //print_r($newdata);
-            return $newdata;
-        }
-        else
-        return false;
-
-
+        $query=$this->db->query("UPDATE `user` SET `password`='$password' WHERE `id`='$userid'");
+        
+		if(!$query)
+			return  0;
+		else
+			return  1;
     }
 }
 ?>

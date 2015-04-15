@@ -68,5 +68,11 @@ class advertiser_model extends CI_Model
 		$query=$this->db->query("SELECT `image` FROM `powerforone_advertiser` WHERE `id`='$id'")->row();
 		return $query;
 	}
+    
+	public function getnewcorporate()
+	{
+		$query=$this->db->query("SELECT COUNT(`id`) AS `count1` FROM `powerforone_advertiser`")->row();
+		return $query->count1;
+	}
 }
 ?>

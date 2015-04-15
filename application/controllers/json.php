@@ -1372,8 +1372,25 @@ $this->load->view("json",$data);
 	   $postvalue["custom_fields"]=json_decode($postvalue["custom_fields"]);
         //$ourjson=json_encode($postvalue);
 
-      $transactionid=$postvalue["payment_id"];
+    
         $orderid=$postvalue["custom_fields"]->Field_43273->value;
+         
+         
+         
+         
+        $transactionid=$postvalue["payment_id"];
+         if($transactionid!="")
+         {
+             //success email for trasaction
+//             $data['redirect']="site/viewusers";
+//			 $this->load->view("redirect",$data);
+             $message=$this->order_model->successpayment($orderid);
+         }
+         else
+         {
+             //failure email
+             $message=$this->order_model->transactionfailed($orderid);
+         }
           // $orderid=$postvalue["custom_fields"]->Field_99652->value;
          $status=$postvalue["status"];
 

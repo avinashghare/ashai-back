@@ -26,6 +26,13 @@ class Site extends CI_Controller
 		$access = array("1","2");
 		$this->checkaccess($access);
         $data['newregisteredusers']=$this->user_model->getnewregisteredusers();
+        $data['newcorporate']=$this->advertiser_model->getnewcorporate();
+        $data['newngo']=$this->ngo_model->getnewngo();
+        $data['newproject']=$this->project_model->getnewproject();
+        $data['allorders']=$this->order_model->getallorders();
+        $data['facebookorders']=$this->order_model->getfacebookorders();
+        $data['twitterorders']=$this->order_model->gettwitterorders();
+        $data['amountorders']=$this->order_model->getamountorders();
 		$data[ 'page' ] = 'dashboard';
 		$data[ 'title' ] = 'Welcome';
 		$this->load->view( 'template', $data );
@@ -1781,7 +1788,7 @@ class Site extends CI_Controller
         $elements[11]->alias="projectname";
 
         $elements[6]=new stdClass();
-        $elements[6]->field="`powerforone_order`.`referencecode`";
+        $elements[6]->field="`powerforone_order`.`referral`";
         $elements[6]->sort="1";
         $elements[6]->header="Referral";
         $elements[6]->alias="referencecode";
