@@ -506,7 +506,7 @@ class User_model extends CI_Model
                 'logged_in' => true,
                 'id'=> $user
             );
-            
+
             $url = base_url("email/welcomeemail.php");
         $fields = array(
                                 'email' => urlencode($email)
@@ -529,8 +529,8 @@ class User_model extends CI_Model
 //        return $result;
         //close connection
         curl_close($ch);
-            
-            
+
+
             $this->session->set_userdata($newdata);
 
            return $newdata;
@@ -540,7 +540,7 @@ class User_model extends CI_Model
 
 
     }
-    
+
     function updatepost($id,$project,$facebookid)
     {
         $user = $this->session->userdata("id");
@@ -562,7 +562,7 @@ class User_model extends CI_Model
             );
             $query=$this->db->insert( "powerforone_order", $data );
             $id=$this->db->insert_id();
-            $this->order_model->successpayment($id);
+            // $this->order_model->successpayment($id);
             if(!$query)
             {
                 return  0;
@@ -599,8 +599,8 @@ class User_model extends CI_Model
             );
             $query=$this->db->insert( "powerforone_order", $data );
             $id=$this->db->insert_id();
-            
-            $this->order_model->successpayment($id);
+
+            // $this->order_model->successpayment($id);
             if(!$query)
             {
                 return  0;
@@ -651,7 +651,7 @@ class User_model extends CI_Model
                 'image'=> $user_profile->photoURL,
                 'logintype'=>$provider
             );
-            
+
             $email=$user_profile->email;
             $url = base_url("email/welcomeemail.php");
         $fields = array(
@@ -675,11 +675,11 @@ class User_model extends CI_Model
 //        return $result;
         //close connection
         curl_close($ch);
-            
-            
-            
-            
-            
+
+
+
+
+
             $this->session->set_userdata($newdata);
 
             return $newdata;
@@ -703,7 +703,7 @@ class User_model extends CI_Model
             return $newdata;
         }
     }
-    
+
 	function getidbyemail($useremail)
 	{
 		$query = $this->db->query("SELECT `id` FROM `user`
@@ -721,14 +721,14 @@ class User_model extends CI_Model
         $userid=$returnvalue[0];
         $password=md5($password);
         $query=$this->db->query("UPDATE `user` SET `password`='$password' WHERE `id`='$userid'");
-        
+
 		if(!$query)
 			return  0;
 		else
 			return  1;
     }
-    
-    
+
+
     function exportusers()
 	{
 		$this->load->dbutil();
@@ -740,7 +740,7 @@ class User_model extends CI_Model
        $content= $this->dbutil->csv_from_result($query);
         $timestamp=new DateTime();
         $timestamp=$timestamp->format('Y-m-d_H.i.s');
-        
+
         if ( ! write_file('./csvgenerated/users.csv', $content))
         {
 //             echo 'Unable to write the file';
