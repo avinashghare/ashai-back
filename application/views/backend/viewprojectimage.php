@@ -33,7 +33,7 @@
 							<a href="<?php echo site_url('site/editprojectimage?id=').$row->project.'&projectimageid='.$row->id;?>" class="btn btn-primary btn-xs">
 								<i class="icon-pencil"></i>
 							</a>
-							<a href="<?php echo site_url('site/deleteprojectimage?id=').$row->project.'&projectimageid='.$row->id; ?>" class="btn btn-danger btn-xs">
+							<a href="<?php echo site_url('site/deleteprojectimage?id=').$row->project.'&projectimageid='.$row->id; ?>" class="btn btn-danger btn-xs"  onclick="return confirm('Are you sure you want to delete?')" >
 								<i class="icon-trash "></i>
 							</a> 
 							

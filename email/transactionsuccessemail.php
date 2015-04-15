@@ -22,7 +22,7 @@ $message = array(
                 'content' => 'g')
     ))));
 
-$template_name = 'Forgot Password';
+$template_name = 'Transaction Success';
 
 $template_content = array(
     array(

@@ -1,7 +1,10 @@
 <div class="row" style="padding:1% 0">
-    <div class="col-md-12">
+    <div class="col-md-9">
         <a class="btn btn-primary pull-right" href="<?php echo site_url("site/createorder"); ?>"><i class="icon-plus"></i>Create </a> &nbsp;
     </div>
+    <div class="col-md-2">
+		<div class=" pull-right col-md-1 createbtn" ><a class="btn btn-primary" href="<?php echo site_url('site/exportorders'); ?>"target="_blank"><i class="icon-plus"></i>Export to CSV </a></div>
+	</div>
 </div>
 <div class="row">
     <div class="col-lg-12">
@@ -24,6 +27,7 @@
                             <th data-field="ngoname">NGO</th>
                             <th data-field="advertisername">Cooperator</th>
                             <th data-field="referencecode">Reference Code</th>
+                            <th data-field="status">Status</th>
                             <th data-field="action">Action</th>
                         </tr>
                     </thead>
@@ -47,7 +51,7 @@
                 {
                 resultrow.typeofdonation="Tweet";
                 }
-                return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.username + "</td><td>" + resultrow.email + "</td><td>" + resultrow.typeofdonation + "</td><td>" + resultrow.amount + "</td><td>" + resultrow.projectname + "</td><td>" + resultrow.ngoname + "</td><td>" + resultrow.advertisername + "</td><td>" + resultrow.referencecode + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editorder?id=');?>" + resultrow.id + "'><i class='icon-pencil'></i></a><a class='btn btn-danger btn-xs' href='<?php echo site_url('site/deleteorder?id='); ?>" + resultrow.id + "'><i class='icon-trash '></i></a></td></tr>";
+                return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.username + "</td><td>" + resultrow.email + "</td><td>" + resultrow.typeofdonation + "</td><td>" + resultrow.amount + "</td><td>" + resultrow.projectname + "</td><td>" + resultrow.ngoname + "</td><td>" + resultrow.advertisername + "</td><td>" + resultrow.referencecode + "</td><td>" + resultrow.status + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editorder?id=');?>" + resultrow.id + "'><i class='icon-pencil'></i></a></td></tr>";
             }
             generatejquery("<?php echo $base_url;?>");
         </script>

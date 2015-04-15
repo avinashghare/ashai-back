@@ -793,8 +793,8 @@ class Site extends CI_Controller
         $elements[12]=new stdClass();
         $elements[12]->field="`powerforone_project`.`status`";
         $elements[12]->sort="1";
-        $elements[12]->header="Status";
-        $elements[12]->alias="status";
+        $elements[12]->header="StatusId";
+        $elements[12]->alias="statusid";
 
         $elements[13]=new stdClass();
         $elements[13]->field="`powerforone_project`.`order`";
@@ -826,6 +826,12 @@ class Site extends CI_Controller
         $elements[17]->header="Cooperator";
         $elements[17]->alias="cooperator";
 
+        $elements[18]=new stdClass();
+        $elements[18]->field="`statuses`.`name`";
+        $elements[18]->sort="1";
+        $elements[18]->header="Status";
+        $elements[18]->alias="status";
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -840,7 +846,7 @@ class Site extends CI_Controller
             $orderby="id";
             $orderorder="ASC";
         }
-        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `powerforone_project` LEFT OUTER JOIN `powerforone_ngo` ON `powerforone_ngo`.`id`=`powerforone_project`.`ngo` LEFT OUTER JOIN `powerforone_advertiser` ON `powerforone_advertiser`.`id`=`powerforone_project`.`advertiser`");
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `powerforone_project` LEFT OUTER JOIN `powerforone_ngo` ON `powerforone_ngo`.`id`=`powerforone_project`.`ngo` LEFT OUTER JOIN `powerforone_advertiser` ON `powerforone_advertiser`.`id`=`powerforone_project`.`advertiser` LEFT OUTER JOIN `statuses` ON `statuses`.`id`=`powerforone_project`.`status`");
         $this->load->view("json",$data);
     }
 
@@ -1787,11 +1793,23 @@ class Site extends CI_Controller
         $elements[11]->header="Project";
         $elements[11]->alias="projectname";
 
-        $elements[6]=new stdClass();
-        $elements[6]->field="`powerforone_order`.`referral`";
-        $elements[6]->sort="1";
-        $elements[6]->header="Referral";
-        $elements[6]->alias="referencecode";
+        $elements[12]=new stdClass();
+        $elements[12]->field="`powerforone_order`.`referral`";
+        $elements[12]->sort="1";
+        $elements[12]->header="Referral";
+        $elements[12]->alias="referencecode";
+
+        $elements[13]=new stdClass();
+        $elements[13]->field="`powerforone_order`.`status`";
+        $elements[13]->sort="1";
+        $elements[13]->header="StatusId";
+        $elements[13]->alias="statusid";
+
+        $elements[14]=new stdClass();
+        $elements[14]->field="`orderstatus`.`name`";
+        $elements[14]->sort="1";
+        $elements[14]->header="Status";
+        $elements[14]->alias="status";
 
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
@@ -1807,7 +1825,7 @@ class Site extends CI_Controller
             $orderby="id";
             $orderorder="ASC";
         }
-        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `powerforone_order` LEFT OUTER JOIN `user` ON `powerforone_order`.`user`=`user`.`id`  LEFT OUTER JOIN `powerforone_ngo` ON `powerforone_order`.`ngo`=`powerforone_ngo`.`id` LEFT OUTER JOIN `powerforone_advertiser` ON `powerforone_order`.`advertiser`=`powerforone_advertiser`.`id` LEFT OUTER JOIN `powerforone_project` ON `powerforone_order`.`project`=`powerforone_project`.`id` ");
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `powerforone_order` LEFT OUTER JOIN `user` ON `powerforone_order`.`user`=`user`.`id`  LEFT OUTER JOIN `powerforone_ngo` ON `powerforone_order`.`ngo`=`powerforone_ngo`.`id` LEFT OUTER JOIN `powerforone_advertiser` ON `powerforone_order`.`advertiser`=`powerforone_advertiser`.`id` LEFT OUTER JOIN `powerforone_project` ON `powerforone_order`.`project`=`powerforone_project`.`id`  LEFT OUTER JOIN `orderstatus` ON `powerforone_order`.`status`=`orderstatus`.`id` ");
         $this->load->view("json",$data);
     }
 
@@ -4511,5 +4529,33 @@ class Site extends CI_Controller
 
     //end of workwithus
 
+    
+    	public function exportusers()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->user_model->exportusers();
+        $data['redirect']="site/viewusers";
+        $this->load->view("redirect",$data);
+//        $data['retailer']=$this->retailer_model->getretailersinceyesterday($currentdate);
+//        $data['topproducts']=$this->retailer_model->gettopproducts();
+//        $data['noofretailers']=sizeof($data['retailer']);
+//		$data[ 'page' ] = 'dashboard';
+//		$data[ 'title' ] = 'Welcome';
+//		$this->load->view( 'template', $data );
+            
+//		$data['table']=$this->retailer_model->viewretailer($currentdate);
+//		$data['page']='viewretailer';
+//		$data['title']='View retailer';
+//		$this->load->view('template',$data);
+	}
+    	public function exportorders()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->order_model->exportorders();
+        $data["redirect"]="site/vieworder";
+        $this->load->view("redirect",$data);
+	}
 }
 ?>

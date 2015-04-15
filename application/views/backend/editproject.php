@@ -56,23 +56,23 @@
                         </div>
                         
                         <div class="form-group">
-                            <label class="col-sm-2 control-label" for="normal-field">Times(In Words) For Share</label>
+                            <label class="col-sm-2 control-label" for="normal-field">Times(In Words)</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="normal-field" class="form-control" name="timesinword" value='<?php echo set_value(' timesinword ',$before->timesinword);?>'>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="normal-field">Raise Awareness button Text</label>
                             <div class="col-sm-4">
                                 <input type="text" id="normal-field" class="form-control" name="timesinwordforshare" value='<?php echo set_value(' timesinwordforshare ',$before->timesinwordforshare);?>'>
                             </div>
                         </div>
                         
                         <div class="form-group">
-                            <label class="col-sm-2 control-label" for="normal-field">Remember Share Value Text</label>
+                            <label class="col-sm-2 control-label" for="normal-field">Donate Button Text</label>
                             <div class="col-sm-4">
                                 <input type="text" id="normal-field" class="form-control" name="remembersharevalue" value='<?php echo set_value(' remembersharevalue ',$before->remembersharevalue);?>'>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="normal-field">Times(In Words)</label>
-                            <div class="col-sm-4">
-                                <input type="text" id="normal-field" class="form-control" name="timesinword" value='<?php echo set_value(' timesinword ',$before->timesinword);?>'>
                             </div>
                         </div>
                         

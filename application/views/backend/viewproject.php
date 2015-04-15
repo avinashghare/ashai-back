@@ -18,6 +18,7 @@
                             <th data-field="name">Name</th>
                             <th data-field="ngoname">NGO</th>
                             <th data-field="cooperator">Cooperator</th>
+                            <th data-field="status">Status</th>
 <!--
                             <th data-field="category">Category</th>
                             <th data-field="ngo">NGO</th>
@@ -51,7 +52,7 @@
         </section>
         <script>
             function drawtable(resultrow) {
-                return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.name + "</td><td>" + resultrow.ngoname + "</td><td>" + resultrow.cooperator + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editproject?id=');?>" + resultrow.id + "'><i class='icon-pencil'></i></a><a class='btn btn-danger btn-xs' href='<?php echo site_url('site/deleteproject?id='); ?>" + resultrow.id + "'><i class='icon-trash '></i></a></td></tr>";
+                return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.name + "</td><td>" + resultrow.ngoname + "</td><td>" + resultrow.cooperator + "</td><td>" + resultrow.status + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editproject?id=');?>" + resultrow.id + "'><i class='icon-pencil'></i></a><a class='btn btn-danger btn-xs'  onclick=\"return confirm('Are you sure you want to delete?')\"  href='<?php echo site_url('site/deleteproject?id='); ?>" + resultrow.id + "'><i class='icon-trash '></i></a></td></tr>";
             }
             generatejquery("<?php echo $base_url;?>");
         </script>

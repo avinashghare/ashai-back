@@ -672,5 +672,31 @@ class User_model extends CI_Model
 		else
 			return  1;
     }
+    
+    
+    function exportusers()
+	{
+		$this->load->dbutil();
+		$query=$this->db->query("SELECT `user`.`id`, `user`.`name`, `user`.`email`, `accesslevel`.`name` AS `Accesslevel`, `user`.`timestamp`, `statuses`.`name` AS `status`, `user`.`image`, `user`.`username`, `user`.`socialid`, `user`.`logintype`, `user`.`json`, `user`.`dob`, `user`.`street`, `user`.`address`, `user`.`city`, `user`.`state`, `user`.`country`, `user`.`pincode`, `user`.`facebook`, `user`.`google`, `user`.`twitter`
+        FROM `user`
+        LEFT OUTER JOIN `accesslevel` ON `accesslevel`.`id`=`user`.`accesslevel`
+        LEFT OUTER JOIN `statuses` ON `statuses`.`id`=`user`.`status`");
+
+       $content= $this->dbutil->csv_from_result($query);
+        $timestamp=new DateTime();
+        $timestamp=$timestamp->format('Y-m-d_H.i.s');
+        
+        if ( ! write_file('./csvgenerated/users.csv', $content))
+        {
+//             echo 'Unable to write the file';
+        }
+        else
+        {
+            redirect(base_url('csvgenerated/users.csv'), 'refresh');
+//             echo 'File written!';
+        }
+//        file_put_contents("gs://toykraftdealer/retailerfilefromdashboard_$timestamp.csv", $content);
+//		redirect("http://admin.toy-kraft.com/servepublic?name=retailerfilefromdashboard_$timestamp.csv", 'refresh');
+	}
 }
 ?>

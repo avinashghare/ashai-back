@@ -196,6 +196,8 @@ WHERE `powerforone_order`.`id`='$orderid'")->row();
                                 <td>$amount</td>
     </tr>
                                 </table>";
+//        echo "hello".$email;
+//        echo $table;
         $url = base_url("email/transactionsuccessemail.php");
         $fields = array(
                                 'projectname' => urlencode($projectname),
@@ -217,7 +219,7 @@ WHERE `powerforone_order`.`id`='$orderid'")->row();
 
         //execute post
         $result = curl_exec($ch);
-
+        return $result;
         //close connection
         curl_close($ch);
 	}
@@ -250,7 +252,7 @@ WHERE `powerforone_order`.`id`='$orderid'")->row();
         
         $url = base_url("email/transactionfailedemail.php");
         $fields = array(
-                                'projectname' => urlencode($projectname),
+                                'project' => urlencode($project),
                                 'email' => urlencode($email),
                                 'link' => urlencode($link)
                         );
@@ -269,10 +271,41 @@ WHERE `powerforone_order`.`id`='$orderid'")->row();
 
         //execute post
         $result = curl_exec($ch);
-        $data['message']=$result;
-        $this->load->view("json",$data);
+        return $result;
+//        $data['message']=$result;
+//        $this->load->view("json",$data);
         //close connection
         curl_close($ch);
+	}
+    
+    
+    function exportorders()
+	{
+		$this->load->dbutil();
+		$query=$this->db->query("SELECT `powerforone_order`.`id`, `powerforone_order`.`name`, `powerforone_order`.`email`, `user`.`name` AS `user`,`powerforone_order`. `amount`,`powerforone_ngo`. `name`AS `ngoname`, `powerforone_project`.`name` AS `project`, `orderstatus`.`name` AS `status`, `powerforone_order`.`transactionid`,IF(`powerforone_order`.`typeofdonation`='0','Amount', IF(`powerforone_order`.`typeofdonation`='1','Facebook', IF(`powerforone_order`.`typeofdonation`='2','Twitter','No'))) AS `Type Of Donation`, `powerforone_advertiser`.`name` AS `corporate`, `powerforone_order`.`mobile`, `powerforone_order`.`city`, `powerforone_order`.`address`, `powerforone_order`.`pan`, `powerforone_order`.`dob`, `powerforone_order`.`istax`,`powerforone_order`. `anonymous`, `powerforone_order`.`give`, `powerforone_order`.`referral`
+FROM `powerforone_order` 
+LEFT OUTER JOIN `powerforone_project` ON `powerforone_project`.`id`=`powerforone_order`.`project`
+LEFT OUTER JOIN `powerforone_category` ON `powerforone_project`.`category`=`powerforone_category`.`id`
+LEFT OUTER JOIN `powerforone_ngo` ON `powerforone_project`.`ngo`=`powerforone_ngo`.`id`
+LEFT OUTER JOIN `powerforone_advertiser` ON `powerforone_project`.`advertiser`=`powerforone_advertiser`.`id`
+LEFT OUTER JOIN `orderstatus` ON `powerforone_order`.`status`=`orderstatus`.`id`
+LEFT OUTER JOIN `user` ON `powerforone_order`.`user`=`user`.`id`");
+
+       $content= $this->dbutil->csv_from_result($query);
+        $timestamp=new DateTime();
+        $timestamp=$timestamp->format('Y-m-d_H.i.s');
+        
+        if ( ! write_file('./csvgenerated/orders.csv', $content))
+        {
+//             echo 'Unable to write the file';
+        }
+        else
+        {
+            redirect(base_url('csvgenerated/orders.csv'), 'refresh');
+//             echo 'File written!';
+        }
+//        file_put_contents("gs://toykraftdealer/retailerfilefromdashboard_$timestamp.csv", $content);
+//		redirect("http://admin.toy-kraft.com/servepublic?name=retailerfilefromdashboard_$timestamp.csv", 'refresh');
 	}
 }
 ?>

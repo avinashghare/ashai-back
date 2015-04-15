@@ -31,7 +31,7 @@
 							<a href="<?php echo site_url('site/editordercoupon?id=').$row->order.'&ordercouponid='.$row->id;?>" class="btn btn-primary btn-xs">
 								<i class="icon-pencil"></i>
 							</a>
-							<a href="<?php echo site_url('site/deleteordercoupon?id=').$row->order.'&ordercouponid='.$row->id; ?>" class="btn btn-danger btn-xs">
+							<a href="<?php echo site_url('site/deleteordercoupon?id=').$row->order.'&ordercouponid='.$row->id; ?>" class="btn btn-danger btn-xs"   onclick="return confirm('Are you sure you want to delete?')" >
 								<i class="icon-trash "></i>
 							</a> 
 							
