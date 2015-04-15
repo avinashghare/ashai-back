@@ -507,6 +507,7 @@ class User_model extends CI_Model
                 'id'=> $user
             );
             
+            $this->session->set_userdata($newdata);
             $url = base_url("email/welcomeemail.php");
         $fields = array(
                                 'email' => urlencode($email)
@@ -531,7 +532,7 @@ class User_model extends CI_Model
         curl_close($ch);
             
             
-            $this->session->set_userdata($newdata);
+            
 
            return $newdata;
         }
