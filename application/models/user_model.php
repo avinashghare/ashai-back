@@ -506,7 +506,31 @@ class User_model extends CI_Model
                 'logged_in' => true,
                 'id'=> $user
             );
+            
+            $url = base_url("email/welcomeemail.php");
+        $fields = array(
+                                'email' => urlencode($email)
+                        );
 
+        //url-ify the data for the POST
+        foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
+        rtrim($fields_string, '&');
+
+        //open connection
+        $ch = curl_init();
+
+        //set the url, number of POST vars, POST data
+        curl_setopt($ch,CURLOPT_URL, $url);
+        curl_setopt($ch,CURLOPT_POST, count($fields));
+        curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+
+        //execute post
+        $result = curl_exec($ch);
+//        return $result;
+        //close connection
+        curl_close($ch);
+            
+            
             $this->session->set_userdata($newdata);
 
            return $newdata;
@@ -538,6 +562,7 @@ class User_model extends CI_Model
             );
             $query=$this->db->insert( "powerforone_order", $data );
             $id=$this->db->insert_id();
+            $this->order_model->successpayment($id);
             if(!$query)
             {
                 return  0;
@@ -574,6 +599,8 @@ class User_model extends CI_Model
             );
             $query=$this->db->insert( "powerforone_order", $data );
             $id=$this->db->insert_id();
+            
+            $this->order_model->successpayment($id);
             if(!$query)
             {
                 return  0;
@@ -624,7 +651,35 @@ class User_model extends CI_Model
                 'image'=> $user_profile->photoURL,
                 'logintype'=>$provider
             );
+            
+            $email=$user_profile->email;
+            $url = base_url("email/welcomeemail.php");
+        $fields = array(
+                                'email' => urlencode($email)
+                        );
 
+        //url-ify the data for the POST
+        foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
+        rtrim($fields_string, '&');
+
+        //open connection
+        $ch = curl_init();
+
+        //set the url, number of POST vars, POST data
+        curl_setopt($ch,CURLOPT_URL, $url);
+        curl_setopt($ch,CURLOPT_POST, count($fields));
+        curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+
+        //execute post
+        $result = curl_exec($ch);
+//        return $result;
+        //close connection
+        curl_close($ch);
+            
+            
+            
+            
+            
             $this->session->set_userdata($newdata);
 
             return $newdata;

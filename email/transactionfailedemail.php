@@ -8,7 +8,7 @@ $email=$_POST["email"];
 //echo $link;
 $message = array(
     'subject' => 'Powerforone Payment Failed',
-    'from_email' => 'avinashghare572@gmail.com',
+    'from_email' => 'powerforone@live.com',
     'to' => array(array('email' => $email, 'name' => 'Marc')),
     'merge_vars' => array(array(
         'rcpt' => $email,

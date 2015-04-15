@@ -5,7 +5,7 @@ $mandrill = new Mandrill('JBaGvsZ2hASJrotu0sjhqg');
 
 $message = array(
     'subject' => 'Powerforone Change Password',
-    'from_email' => 'avinashghare572@gmail.com',
+    'from_email' => 'powerforone@live.com',
     'to' => array(array('email' => 'avinash@wohlig.com', 'name' => 'Marc')),
     'merge_vars' => array(array(
         'rcpt' => 'avinash@wohlig.com',

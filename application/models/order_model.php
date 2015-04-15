@@ -164,8 +164,10 @@ WHERE `powerforone_order`.`id`='$orderid'")->row();
         $orderdetails=$this->order_model->getorderbyid($orderid);
         $transactionid=$orderdetails->transactionid;
         $typeofdonation=$orderdetails->typeofdonation;
+        $ismoney=false;
         if($typeofdonation==0)
         {
+            $ismoney=true;
         $typeofdonation="Amount";
         }
         else if($typeofdonation==1)
@@ -180,6 +182,9 @@ WHERE `powerforone_order`.`id`='$orderid'")->row();
         $ngoname=$orderdetails->ngoname;
         $amount=$orderdetails->amount;
         $email=$orderdetails->email;
+        $table="";
+        if(ismoney)
+        {
         $table="<table border='1' class='table table-striped'>
     <tr>
                                 <th>Transaction ID</th>
@@ -196,6 +201,7 @@ WHERE `powerforone_order`.`id`='$orderid'")->row();
                                 <td>$amount</td>
     </tr>
                                 </table>";
+        }
 //        echo "hello".$email;
 //        echo $table;
         $url = base_url("email/transactionsuccessemail.php");
