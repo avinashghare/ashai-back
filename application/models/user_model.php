@@ -562,7 +562,7 @@ class User_model extends CI_Model
             );
             $query=$this->db->insert( "powerforone_order", $data );
             $id=$this->db->insert_id();
-            $this->order_model->successpayment($id);
+//            $this->order_model->successpayment($id);
             if(!$query)
             {
                 return  0;
@@ -600,7 +600,7 @@ class User_model extends CI_Model
             $query=$this->db->insert( "powerforone_order", $data );
             $id=$this->db->insert_id();
             
-            $this->order_model->successpayment($id);
+//            $this->order_model->successpayment($id);
             if(!$query)
             {
                 return  0;

@@ -115,14 +115,15 @@ class HAuth extends CI_Controller {
 						if(isset($data["message"]->id_str))
 						{
 						    // $this->userpost_model->addpostid($data["message"]->id_str,$post);
-						    $this->user_model->updatetweet($data["message"]->id_str,$project,$twitterid);
-						    redirect($this->input->get_post("returnurl"));
+						    $orderid=$this->user_model->updatetweet($data["message"]->id_str,$project,$twitterid);
+                            $hashvalue=base64_encode ($orderid."&powerforone");
+						    redirect($this->input->get_post("returnurl/$hashvalue"));
 						    $this->load->view("json",$data);
 						}
 						else
 						{
 						    redirect($this->input->get_post("returnurl"));
-						$this->load->view("json",$data);
+						    $this->load->view("json",$data);
 						}
 				}
 				else // Cannot authenticate user
@@ -159,8 +160,9 @@ class HAuth extends CI_Controller {
 							if(isset($data["message"]['id']))
 							{
 	//                echo "hauth".$project;
-									$this->user_model->updatepost($data["message"]['id'],$project,$facebookid);
-									redirect($this->input->get_post("returnurl"));
+									$orderid=$this->user_model->updatepost($data["message"]['id'],$project,$facebookid);
+                                    $hashvalue=base64_encode ($orderid."&powerforone");
+									redirect($this->input->get_post("returnurl/$hashvalue"));
 	//							$this->load->view("json",$data);
 							}
 							else
@@ -206,6 +208,7 @@ class HAuth extends CI_Controller {
     }
 
 }
-
+//http://www.powerforone.org/admin/index.php/hauth/postfb?message=I%20support%20%40NanhiKali%20%26%20education%20for%20girls.%20%40Themisconsult%20matched%20my%20contribution%20http%3A%2F%2Fbit.ly%2F1OCnrI8%20&project=15&returnurl=http%3A%2F%2Fwww.powerforone.org%2Fthankyou
+//http://www.powerforone.org/admin/index.php/hauth/postfb?message=I%20support%20%40NanhiKali%20%26%20education%20for%20girls.%20%40Themisconsult%20matched%20my%20contribution%20http%3A%2F%2Fbit.ly%2F1OCnrI8%20&project=15&returnurl=http%3A%2F%2Fwww.powerforone.org%2Fthankyou
 /* End of file hauth.php */
 /* Location: ./application/controllers/hauth.php */

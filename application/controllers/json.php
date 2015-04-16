@@ -1402,5 +1402,14 @@ $this->load->view("json",$data);
         $data['message']=$this->user_model->forgotpasswordsubmit($hashcode,$password);
         $this->load->view('json',$data);
     }
+    public function sendwelcomeemail()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $email=$data['email'];
+        $name=$data['name'];
+        $hashcode=$data['hashcode'];
+        $data['message']=$this->order_model->sendwelcomeemail($hashcode,$email,$name);
+        $this->load->view('json',$data);
+    }
 } 
 ?>

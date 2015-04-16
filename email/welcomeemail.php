@@ -5,7 +5,7 @@ $mandrill = new Mandrill('JBaGvsZ2hASJrotu0sjhqg');
 $email=$_POST["email"];
 $message = array(
     'subject' => 'Welcome to Power for One',
-    'from_email' => 'powerforone123@gmail.com',
+    'from_email' => 'support@powerforone.org',
     'to' => array(array('email' => $email, 'name' => 'Marc')),
     'merge_vars' => array(array(
         'rcpt' => $email,

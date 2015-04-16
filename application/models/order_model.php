@@ -188,14 +188,12 @@ WHERE `powerforone_order`.`id`='$orderid'")->row();
         $table="<table border='1' class='table table-striped'>
     <tr>
                                 <th>Transaction ID</th>
-                                <th>Type Of Donation</th>
                                 <th>Project</th>
                                 <th>NGO</th>
                                 <th>Amount</th>
     </tr>
     <tr>
                                 <td>$transactionid</td>
-                                <td>$typeofdonation</td>
                                 <td>$projectname</td>
                                 <td>$ngoname</td>
                                 <td>$amount</td>
@@ -313,5 +311,22 @@ LEFT OUTER JOIN `user` ON `powerforone_order`.`user`=`user`.`id`");
 //        file_put_contents("gs://toykraftdealer/retailerfilefromdashboard_$timestamp.csv", $content);
 //		redirect("http://admin.toy-kraft.com/servepublic?name=retailerfilefromdashboard_$timestamp.csv", 'refresh');
 	}
+    
+    
+    function sendwelcomeemail($hashcode,$email,$name)
+    {
+        $normalfromhash=base64_decode ($hashcode);
+        $returnvalue=explode("&",$normalfromhash);
+//        print_r($returnvalue);
+//        echo $returnvalue[0]."<br>";
+        $orderid=$returnvalue[0];
+        $query=$this->db->query("UPDATE `powerforone_order` SET `email`='$email',`name`='$name' WHERE `id`='$orderid'");
+        $this->order_model->successpayment($orderid);
+		if(!$query)
+			return  0;
+		else
+			return  1;
+    }
+    
 }
 ?>

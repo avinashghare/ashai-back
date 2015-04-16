@@ -10,7 +10,7 @@ $hashvalue=$_POST["hashvalue"];
 //echo $link;
 $message = array(
     'subject' => 'Powerforone Change Password',
-    'from_email' => 'powerforone@live.com',
+    'from_email' => 'support@powerforone.org',
     'to' => array(array('email' => $email, 'name' => 'Marc')),
     'merge_vars' => array(array(
         'rcpt' => $email,
