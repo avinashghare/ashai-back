@@ -100,7 +100,7 @@ class HAuth extends CI_Controller {
 	public function posttweet()
     {
         $twitter = $this->hybridauthlib->authenticate("Twitter");
-
+$message=$this->input->get_post("message");
 				if ($twitter->isUserConnected())
 				{
 						$message=$this->input->get_post("message");
@@ -108,6 +108,7 @@ class HAuth extends CI_Controller {
 						$project=$this->input->get('project');
 						$twitterid = $twitter->getUserProfile();
 						$twitterid = $twitterid->identifier;
+$message=urlencode($message);
 
 
 
@@ -117,8 +118,9 @@ class HAuth extends CI_Controller {
 						    // $this->userpost_model->addpostid($data["message"]->id_str,$post);
 						    $orderid=$this->user_model->updatetweet($data["message"]->id_str,$project,$twitterid);
                             $hashvalue=base64_encode ($orderid."&powerforone");
-						    redirect($this->input->get_post("returnurl/$hashvalue"));
-						    $this->load->view("json",$data);
+									$redirecturlvalue=$this->input->get_post("returnurl")."/".$hashvalue;
+									redirect($redirecturlvalue);
+						 //   $this->load->view("json",$data);
 						}
 						else
 						{
@@ -138,6 +140,7 @@ class HAuth extends CI_Controller {
     {
         $facebook = $this->hybridauthlib->authenticate("Facebook");
         $message=$this->input->get_post("message");
+$message=urlencode($message);
         $image=$this->input->get_post("image");
         $link=$this->input->get_post("link");
         $project=$this->input->get_post("project");
@@ -152,6 +155,7 @@ class HAuth extends CI_Controller {
 
 					if($image=="")
 					{
+
 							$data["message"]=$facebook->api()->api("v2.2/me/feed", "post", array(
 									"message" => "$message",
 									"link"=>"$link"
@@ -162,12 +166,14 @@ class HAuth extends CI_Controller {
 	//                echo "hauth".$project;
 									$orderid=$this->user_model->updatepost($data["message"]['id'],$project,$facebookid);
                                     $hashvalue=base64_encode ($orderid."&powerforone");
-									redirect($this->input->get_post("returnurl/$hashvalue"));
+									$redirecturlvalue=$this->input->get_post("returnurl")."/".$hashvalue;
+									redirect($redirecturlvalue);
 	//							$this->load->view("json",$data);
 							}
 							else
 							{
-									redirect($this->input->get_post("returnurl"));
+                                $redirecturlvalue=$this->input->get_post("returnurl")."/".$hashvalue;
+									redirect($redirecturlvalue);
 	//							$this->load->view("json",$data);
 							}
 					}

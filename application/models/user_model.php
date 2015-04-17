@@ -598,7 +598,7 @@ class User_model extends CI_Model
                 "project" => $project
             );
             $query=$this->db->insert( "powerforone_order", $data );
-            $id=$this->db->insert_id();
+            $id2=$this->db->insert_id();
             
 //            $this->order_model->successpayment($id);
             if(!$query)
@@ -613,7 +613,7 @@ class User_model extends CI_Model
             );
             $this->db->where( 'id', $project );
             $query=$this->db->update( 'powerforone_project', $data );
-                return  $id;
+                return  $id2;
             }
         }
     }
