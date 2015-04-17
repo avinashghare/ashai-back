@@ -529,15 +529,10 @@ class User_model extends CI_Model
 //        return $result;
         //close connection
         curl_close($ch);
-<<<<<<< HEAD
-            
-            
-            
-=======
 
 
             $this->session->set_userdata($newdata);
->>>>>>> origin/master
+
 
            return $newdata;
         }
@@ -568,11 +563,6 @@ class User_model extends CI_Model
             );
             $query=$this->db->insert( "powerforone_order", $data );
             $id=$this->db->insert_id();
-<<<<<<< HEAD
-//            $this->order_model->successpayment($id);
-=======
-            // $this->order_model->successpayment($id);
->>>>>>> 715f265f1575aae0eb8dbadee7b1919e1fed6c1e
             if(!$query)
             {
                 return  0;
@@ -608,15 +598,8 @@ class User_model extends CI_Model
                 "project" => $project
             );
             $query=$this->db->insert( "powerforone_order", $data );
-<<<<<<< HEAD
             $id2=$this->db->insert_id();
             
-//            $this->order_model->successpayment($id);
-=======
-            $id=$this->db->insert_id();
-
-            // $this->order_model->successpayment($id);
->>>>>>> 715f265f1575aae0eb8dbadee7b1919e1fed6c1e
             if(!$query)
             {
                 return  0;
