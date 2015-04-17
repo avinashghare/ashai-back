@@ -16,7 +16,7 @@ class Email extends CI_Controller
         else
         {
         $hashvalue=base64_encode ($userid."&powerforone");
-        $link="<a href='http://www.powerforone.org/#/resetpswd/$hashvalue'>Click here to reset your password.</a>";
+        $link="<a href='http://www.powerforone.org/#/resetpswd/$hashvalue'>Click here </a>";
 //        $normalbyhash=base64_decode ($hashvalue);
 //        $returnvalue=explode("&",$normalbyhash);
 //        print_r($returnvalue);

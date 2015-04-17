@@ -140,7 +140,7 @@ $message=urlencode($message);
     {
         $facebook = $this->hybridauthlib->authenticate("Facebook");
         $message=$this->input->get_post("message");
-$message=urlencode($message);
+//$message=urlencode($message);
         $image=$this->input->get_post("image");
         $link=$this->input->get_post("link");
         $project=$this->input->get_post("project");
